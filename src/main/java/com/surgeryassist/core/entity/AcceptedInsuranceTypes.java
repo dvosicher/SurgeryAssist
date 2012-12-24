@@ -42,7 +42,7 @@ public class AcceptedInsuranceTypes {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<UserInfo> userInfoIDs;
 	
-	@JoinColumn(name = "insurance_type_id")
+	@JoinColumn(name = "insurance_id")
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<InsuranceType> insuranceTypeIDs;
 	

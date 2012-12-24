@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity
-@Table(name = "user")
+@Table(name = "application_user")
 @Configurable
 public class ApplicationUser {
 	
@@ -34,11 +35,11 @@ public class ApplicationUser {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_type_code")
     private UserTypeCode userTypeCode;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "is_verified")
     private VerificationStatus verificationStatus;
 
