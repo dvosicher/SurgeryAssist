@@ -21,6 +21,8 @@ Thumbs.db
 .classpath
 .settings/
 .loadpath
+.project
+bin/**
 
 # Compiler files #
 ##################
