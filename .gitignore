@@ -24,6 +24,11 @@ Thumbs.db
 .project
 bin/**
 
+# IntelliJ garbage #
+####################
+.idea/
+*.iml
+
 # Compiler files #
 ##################
 MANIFEST.MF
