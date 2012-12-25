@@ -26,6 +26,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class UserInfo {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_info_id")
+    private Integer userInfoID;
+
+	@Version
+    @Column(name = "version")
+    private Integer version;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -208,15 +217,6 @@ public class UserInfo {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_info_id")
-    private Integer userInfoID;
-
-	@Version
-    @Column(name = "version")
-    private Integer version;
 
 	public Integer getUserInfoID() {
         return this.userInfoID;
