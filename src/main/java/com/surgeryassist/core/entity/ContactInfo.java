@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity
-@Table(name = "contact_info")
+@Table(schema = "SurgeryAssist", name = "contact_info")
 @Configurable
 public class ContactInfo {
 	

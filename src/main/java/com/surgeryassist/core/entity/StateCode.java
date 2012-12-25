@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "state_code")
+@Table(schema = "MetaData", name = "state_code")
 public class StateCode {
 	
 	@Id

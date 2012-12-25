@@ -25,7 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity
-@Table(name = "accepted_insurance_types")
+@Table(schema = "SurgeryAssist", name = "accepted_insurance_types")
 @Configurable
 public class AcceptedInsuranceTypes {
 	

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "insurance_type")
+@Table(schema = "MetaData", name = "insurance_type")
 public class InsuranceType {
 	
 	@Column(name = "insurance_code", length = 10)

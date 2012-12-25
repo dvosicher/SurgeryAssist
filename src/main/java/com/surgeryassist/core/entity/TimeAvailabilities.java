@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "time_availabilities")
+@Table(schema = "SurgeryAssist", name = "time_availabilities")
 public class TimeAvailabilities {
 
 	@ManyToOne

@@ -76,7 +76,8 @@ public class ApplicationUserDataOnDemand {
     }
 
 	public void setUserInfoID(ApplicationUser obj, int index) {
-        UserInfo userInfoID = null;
+        UserInfo userInfoID = new UserInfo();
+
         obj.setUserInfoID(userInfoID);
     }
 

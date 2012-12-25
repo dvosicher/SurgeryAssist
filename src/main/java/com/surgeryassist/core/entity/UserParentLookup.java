@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "user_parent_lookup")
+@Table(schema = "SurgeryAssist", name = "user_parent_lookup")
 public class UserParentLookup {
 	
 	@OneToMany

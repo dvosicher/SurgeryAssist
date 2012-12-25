@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configurable
 @Entity
-@Table(name = "location")
+@Table(schema = "SurgeryAssist", name = "location")
 public class Location {
 
     @Column(name = "address")
