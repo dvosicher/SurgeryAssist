@@ -105,10 +105,6 @@ public class ApplicationUser {
         return entityManager().createQuery("SELECT COUNT(o) FROM ApplicationUser o", Long.class).getSingleResult();
     }
 
-	public static List<ApplicationUser> findAllApplicationUsers() {
-        return entityManager().createQuery("SELECT o FROM ApplicationUser o", ApplicationUser.class).getResultList();
-    }
-
 	public static ApplicationUser findApplicationUser(Integer userID) {
         if (userID == null) return null;
         return entityManager().find(ApplicationUser.class, userID);

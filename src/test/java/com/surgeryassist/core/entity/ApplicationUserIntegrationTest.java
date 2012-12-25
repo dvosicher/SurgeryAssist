@@ -42,16 +42,6 @@ public class ApplicationUserIntegrationTest {
     }
 
 	@Test
-    public void testFindAllApplicationUsers() {
-        Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", dod.getRandomApplicationUser());
-        long count = ApplicationUser.countApplicationUsers();
-        Assert.assertTrue("Too expensive to perform a find all test for 'ApplicationUser', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<ApplicationUser> result = ApplicationUser.findAllApplicationUsers();
-        Assert.assertNotNull("Find all method for 'ApplicationUser' illegally returned null", result);
-        Assert.assertTrue("Find all method for 'ApplicationUser' failed to return any data", result.size() > 0);
-    }
-
-	@Test
     public void testFindApplicationUserEntries() {
         Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", dod.getRandomApplicationUser());
         long count = ApplicationUser.countApplicationUsers();
