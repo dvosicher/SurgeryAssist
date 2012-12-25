@@ -15,13 +15,16 @@ import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import com.surgeryassist.core.UserTypeCode;
-import com.surgeryassist.core.VerificationStatus;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+
 
 /**
  * @author atyagi
  *
  */
+@Component
+@Configurable
 public class UserInfoDataOnDemand {
 
 	private Random rnd = new SecureRandom();
@@ -88,7 +91,7 @@ public class UserInfoDataOnDemand {
 	}
 
 
-	public UserInfo getSpecificApplicationUser(int index) {
+	public UserInfo getSpecificUserInfo(int index) {
 		init();
 		if (index < 0) {
 			index = 0;
@@ -101,7 +104,7 @@ public class UserInfoDataOnDemand {
 		return UserInfo.findUserInfo(id);
 	}
 
-	public UserInfo getRandomApplicationUser() {
+	public UserInfo getRandomUserInfo() {
 		init();
 		UserInfo obj = data.get(rnd.nextInt(data.size()));
 		Integer id = obj.getUserInfoID();
