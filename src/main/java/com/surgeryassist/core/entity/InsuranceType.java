@@ -2,6 +2,7 @@ package com.surgeryassist.core.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,16 +28,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Table(schema = "MetaData", name = "insurance_type")
 public class InsuranceType {
 	
+    @OneToMany(mappedBy = "insuranceTypeId")
+    private Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses;
+    
+    @OneToMany(mappedBy = "insuranceCode")
+    private Set<Patient> patients;
+	
 	@Column(name = "insurance_code", length = 10)
 	private String insuranceCode;
 	
-	@Column(name = "insurance_name")
+	@Column(name = "insurance_name", length = 100)
 	private String insuranceName;
 	
-	@Column(name = "insurance_description")
+	@Column(name = "insurance_description", length = 512)
 	private String insuranceDescription;
 	
-	@Column(name = "insurance_policy_number")
+	@Column(name = "insurance_policy_number", length = 255)
 	private String insurancePolicyNumber;
 	
 	@Column(name = "created_by", updatable = false)

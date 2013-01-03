@@ -2,11 +2,13 @@ package com.surgeryassist.core.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,154 +25,171 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "MetaData", name = "state_code")
 public class StateCode {
-	
+
+	@OneToMany(mappedBy = "stateCode")
+	private Set<Location> locations;
+
 	@Id
 	@Column(name = "state_code", length = 2, updatable = false)
 	private String stateCodeID;
-	
+
 	@Column(name = "state_name")
 	private String stateName;
-	
-    @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
 
-    @Column(name = "created_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Date createdDate;
+	@Column(name = "created_by", updatable = false)
+	private Integer createdBy;
 
-    @Column(name = "modified_by")
-    private Integer modifiedBy;
+	@Column(name = "created_date", updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	private Date createdDate;
 
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+	@Column(name = "modified_by")
+	private Integer modifiedBy;
+
+	@Column(name = "modified_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	private Date modifiedDate;
 
 	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public String getStateCodeID() {
-        return this.stateCodeID;
-    }
+		return this.stateCodeID;
+	}
 
 	public void setStateCodeID(String stateCodeID) {
-        this.stateCodeID = stateCodeID;
-    }
+		this.stateCodeID = stateCodeID;
+	}
 
 	public String getStateName() {
-        return this.stateName;
-    }
+		return this.stateName;
+	}
 
 	public void setStateName(String stateName) {
-        this.stateName = stateName;
-    }
+		this.stateName = stateName;
+	}
 
 	public Integer getCreatedBy() {
-        return this.createdBy;
-    }
+		return this.createdBy;
+	}
 
 	public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
+		this.createdBy = createdBy;
+	}
 
 	public Date getCreatedDate() {
-        return this.createdDate;
-    }
+		return this.createdDate;
+	}
 
 	public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+		this.createdDate = createdDate;
+	}
 
 	public Integer getModifiedBy() {
-        return this.modifiedBy;
-    }
+		return this.modifiedBy;
+	}
 
 	public void setModifiedBy(Integer modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
+		this.modifiedBy = modifiedBy;
+	}
 
 	public Date getModifiedDate() {
-        return this.modifiedDate;
-    }
+		return this.modifiedDate;
+	}
 
 	public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * @return the locations
+	 */
+	public Set<Location> getLocations() {
+		return locations;
+	}
+
+	/**
+	 * @param locations the locations to set
+	 */
+	public void setLocations(Set<Location> locations) {
+		this.locations = locations;
+	}
 
 	@PersistenceContext
-    transient EntityManager entityManager;
+	transient EntityManager entityManager;
 
 	public static final EntityManager entityManager() {
-        EntityManager em = new StateCode().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
-        return em;
-    }
+		EntityManager em = new StateCode().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
 
 	public static long countStateCodes() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM StateCode o", Long.class).getSingleResult();
-    }
+		return entityManager().createQuery("SELECT COUNT(o) FROM StateCode o", Long.class).getSingleResult();
+	}
 
 	public static List<StateCode> findAllStateCodes() {
-        return entityManager().createQuery("SELECT o FROM StateCode o", StateCode.class).getResultList();
-    }
+		return entityManager().createQuery("SELECT o FROM StateCode o", StateCode.class).getResultList();
+	}
 
 	public static StateCode findStateCode(String stateCodeID) {
-        if (stateCodeID == null || stateCodeID.length() == 0) return null;
-        return entityManager().find(StateCode.class, stateCodeID);
-    }
+		if (stateCodeID == null || stateCodeID.length() == 0) return null;
+		return entityManager().find(StateCode.class, stateCodeID);
+	}
 
 	public static List<StateCode> findStateCodeEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM StateCode o", StateCode.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
-    }
+		return entityManager().createQuery("SELECT o FROM StateCode o", StateCode.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+	}
 
 	@Transactional
-    public void persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
 
 	@Transactional
-    public void remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        if (this.entityManager.contains(this)) {
-            this.entityManager.remove(this);
-        } else {
-            StateCode attached = StateCode.findStateCode(this.stateCodeID);
-            this.entityManager.remove(attached);
-        }
-    }
+	public void remove() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		if (this.entityManager.contains(this)) {
+			this.entityManager.remove(this);
+		} else {
+			StateCode attached = StateCode.findStateCode(this.stateCodeID);
+			this.entityManager.remove(attached);
+		}
+	}
 
 	@Transactional
-    public void flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.flush();
-    }
+	public void flush() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.flush();
+	}
 
 	@Transactional
-    public void clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.clear();
-    }
+	public void clear() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.clear();
+	}
 
 	@Transactional
-    public StateCode merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        StateCode merged = this.entityManager.merge(this);
-        this.entityManager.flush();
-        return merged;
-    }
+	public StateCode merge() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		StateCode merged = this.entityManager.merge(this);
+		this.entityManager.flush();
+		return merged;
+	}
 
 	@Version
-    @Column(name = "version")
-    private Integer version;
+	@Column(name = "version")
+	private Integer version;
 
 	public Integer getVersion() {
-        return this.version;
-    }
+		return this.version;
+	}
 
 	public void setVersion(Integer version) {
-        this.version = version;
-    }
+		this.version = version;
+	}
 }

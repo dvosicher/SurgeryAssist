@@ -1,7 +1,8 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,13 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.Max;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -29,19 +30,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Table(schema = "SurgeryAssist", name = "location")
 public class Location {
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "zip_code")
-    @Max(99999)
-    private Integer zipCode;
+	@OneToMany(mappedBy = "locationId")
+    private Set<UserInfo> userInfoes;
     
-    @OneToOne
-    @JoinColumn(name = "state_code")
-    private StateCode state;
+    @ManyToOne
+    @JoinColumn(name = "state_code", referencedColumnName = "state_code", nullable = false)
+    private StateCode stateCode;
+    
+    @Column(name = "address", length = 500)
+    private String address;
+    
+    @Column(name = "city", length = 250)
+    private String city;
+    
+    @Column(name = "zip_code")
+    private Integer zipCode;
     
     @Column(name = "created_by", updatable = false)
     private Integer createdBy;
@@ -49,7 +52,7 @@ public class Location {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -57,7 +60,7 @@ public class Location {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 	public String getAddress() {
         return this.address;
@@ -83,14 +86,6 @@ public class Location {
         this.zipCode = zipCode;
     }
 
-	public StateCode getState() {
-        return this.state;
-    }
-
-	public void setState(StateCode state) {
-        this.state = state;
-    }
-
 	public Integer getCreatedBy() {
         return this.createdBy;
     }
@@ -99,11 +94,11 @@ public class Location {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -115,13 +110,41 @@ public class Location {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+	/**
+	 * @return the userInfoes
+	 */
+	public Set<UserInfo> getUserInfoes() {
+		return userInfoes;
+	}
+
+	/**
+	 * @param userInfoes the userInfoes to set
+	 */
+	public void setUserInfoes(Set<UserInfo> userInfoes) {
+		this.userInfoes = userInfoes;
+	}
+
+	/**
+	 * @return the stateCode
+	 */
+	public StateCode getStateCode() {
+		return stateCode;
+	}
+
+	/**
+	 * @param stateCode the stateCode to set
+	 */
+	public void setStateCode(StateCode stateCode) {
+		this.stateCode = stateCode;
+	}
 
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);

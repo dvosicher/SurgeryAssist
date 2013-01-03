@@ -1,17 +1,16 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,13 +37,13 @@ public class AcceptedInsuranceTypes {
     @Column(name = "version")
     private Integer version;
 	
-	@JoinColumn(name = "user_info_id")
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<UserInfo> userInfoIDs;
+    @ManyToOne
+    @JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
+    private UserInfo userInfoId;
 	
-	@JoinColumn(name = "insurance_id")
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<InsuranceType> insuranceTypeIDs;
+    @ManyToOne
+    @JoinColumn(name = "insurance_type_id", referencedColumnName = "insurance_id", nullable = false)
+    private InsuranceType insuranceTypeId;
 	
 	@Column(name = "created_by", updatable = false)
     private Integer createdBy;
@@ -52,7 +51,7 @@ public class AcceptedInsuranceTypes {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -60,7 +59,7 @@ public class AcceptedInsuranceTypes {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -145,21 +144,33 @@ public class AcceptedInsuranceTypes {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public List<UserInfo> getUserInfoIDs() {
-        return this.userInfoIDs;
-    }
+	/**
+	 * @return the userInfoId
+	 */
+	public UserInfo getUserInfoId() {
+		return userInfoId;
+	}
 
-	public void setUserInfoIDs(List<UserInfo> userInfoIDs) {
-        this.userInfoIDs = userInfoIDs;
-    }
+	/**
+	 * @param userInfoId the userInfoId to set
+	 */
+	public void setUserInfoId(UserInfo userInfoId) {
+		this.userInfoId = userInfoId;
+	}
 
-	public List<InsuranceType> getInsuranceTypeIDs() {
-        return this.insuranceTypeIDs;
-    }
+	/**
+	 * @return the insuranceTypeId
+	 */
+	public InsuranceType getInsuranceTypeId() {
+		return insuranceTypeId;
+	}
 
-	public void setInsuranceTypeIDs(List<InsuranceType> insuranceTypeIDs) {
-        this.insuranceTypeIDs = insuranceTypeIDs;
-    }
+	/**
+	 * @param insuranceTypeId the insuranceTypeId to set
+	 */
+	public void setInsuranceTypeId(InsuranceType insuranceTypeId) {
+		this.insuranceTypeId = insuranceTypeId;
+	}
 
 	public Integer getCreatedBy() {
         return this.createdBy;
@@ -169,11 +180,11 @@ public class AcceptedInsuranceTypes {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -185,11 +196,11 @@ public class AcceptedInsuranceTypes {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 }

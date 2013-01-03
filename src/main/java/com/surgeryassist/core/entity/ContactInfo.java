@@ -1,7 +1,8 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +28,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class ContactInfo {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "contact_info_id")
+    private Integer contactInfoID;
+
+	@Version
+    @Column(name = "version")
+    private Integer version;
+	
+    @OneToMany(mappedBy = "contactInfoId")
+    private Set<UserInfo> userInfoes;
+	
 	@Column(name = "phone_number")
 	private Integer phoneNumber;
 	
@@ -41,7 +55,7 @@ public class ContactInfo {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -49,7 +63,7 @@ public class ContactInfo {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -114,15 +128,6 @@ public class ContactInfo {
         return merged;
     }
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "contact_info_id")
-    private Integer contactInfoID;
-
-	@Version
-    @Column(name = "version")
-    private Integer version;
-
 	public Integer getContactInfoID() {
         return this.contactInfoID;
     }
@@ -175,11 +180,11 @@ public class ContactInfo {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -191,11 +196,11 @@ public class ContactInfo {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 }

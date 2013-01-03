@@ -1,7 +1,9 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -9,7 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,19 +38,25 @@ public class UserInfo {
     @Column(name = "version")
     private Integer version;
 
-    @Column(name = "first_name")
+    @OneToMany(mappedBy = "userInfoId")
+    private Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses;
+    
+    @OneToMany(mappedBy = "userInfoId")
+    private Set<ApplicationUser> applicationUsers;
+    
+    @ManyToOne
+    @JoinColumn(name = "contact_info_id", referencedColumnName = "contact_info_id", nullable = false)
+    private ContactInfo contactInfoId;
+    
+    @ManyToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    private Location locationId;
+    
+    @Column(name = "first_name", length = 100)
     private String firstName;
-
-    @Column(name = "last_name")
+    
+    @Column(name = "last_name", length = 100)
     private String lastName;
-    
-    @OneToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
-    
-    @OneToOne
-    @JoinColumn(name = "contact_info_id")
-    private ContactInfo contactInfo;
 
     @Column(name = "photograph_file_path")
     private String photoFilePath;
@@ -61,7 +70,7 @@ public class UserInfo {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -69,7 +78,7 @@ public class UserInfo {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 	public String getFirstName() {
         return this.firstName;
@@ -85,22 +94,6 @@ public class UserInfo {
 
 	public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-	public Location getLocation() {
-        return this.location;
-    }
-
-	public void setLocation(Location location) {
-        this.location = location;
-    }
-
-	public ContactInfo getContactInfo() {
-        return this.contactInfo;
-    }
-
-	public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
     }
 
 	public String getPhotoFilePath() {
@@ -119,6 +112,63 @@ public class UserInfo {
         this.videoFilePath = videoFilePath;
     }
 
+	/**
+	 * @return the acceptedInsuranceTypeses
+	 */
+	public Set<AcceptedInsuranceTypes> getAcceptedInsuranceTypeses() {
+		return acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @param acceptedInsuranceTypeses the acceptedInsuranceTypeses to set
+	 */
+	public void setAcceptedInsuranceTypeses(
+			Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses) {
+		this.acceptedInsuranceTypeses = acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @return the applicationUsers
+	 */
+	public Set<ApplicationUser> getApplicationUsers() {
+		return applicationUsers;
+	}
+
+	/**
+	 * @param applicationUsers the applicationUsers to set
+	 */
+	public void setApplicationUsers(Set<ApplicationUser> applicationUsers) {
+		this.applicationUsers = applicationUsers;
+	}
+
+	/**
+	 * @return the contactInfoId
+	 */
+	public ContactInfo getContactInfoId() {
+		return contactInfoId;
+	}
+
+	/**
+	 * @param contactInfoId the contactInfoId to set
+	 */
+	public void setContactInfoId(ContactInfo contactInfoId) {
+		this.contactInfoId = contactInfoId;
+	}
+
+	/**
+	 * @return the locationId
+	 */
+	public Location getLocationId() {
+		return locationId;
+	}
+
+	/**
+	 * @param locationId the locationId to set
+	 */
+	public void setLocationId(Location locationId) {
+		this.locationId = locationId;
+	}
+
 	public Integer getCreatedBy() {
         return this.createdBy;
     }
@@ -127,11 +177,11 @@ public class UserInfo {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -143,11 +193,11 @@ public class UserInfo {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

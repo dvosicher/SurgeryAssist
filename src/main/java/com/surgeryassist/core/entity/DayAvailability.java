@@ -2,6 +2,8 @@ package com.surgeryassist.core.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
@@ -26,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class DayAvailability {
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<ApplicationUser> userIDs;
+    @OneToMany(mappedBy = "availabilityId")
+    private Set<TimeAvailabilities> timeAvailabilitieses;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private ApplicationUser userId;
 
     @Column(name = "date_of_availability")
     @Temporal(TemporalType.TIMESTAMP)
@@ -141,14 +147,6 @@ public class DayAvailability {
         DayAvailability merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
-    }
-
-	public List<ApplicationUser> getUserIDs() {
-        return this.userIDs;
-    }
-
-	public void setUserIDs(List<ApplicationUser> userIDs) {
-        this.userIDs = userIDs;
     }
 
 	public Date getDateOfAvailability() {

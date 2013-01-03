@@ -28,7 +28,7 @@ public class TimeAvailabilities {
 
 	@ManyToOne
 	@JoinColumn(name = "availability_id")
-	private DayAvailability dayAvailability;
+	private DayAvailability availabilityId;
 	
     @Column(name = "start_time")
     @Temporal(TemporalType.TIMESTAMP)
@@ -125,11 +125,11 @@ public class TimeAvailabilities {
     }
 
 	public DayAvailability getDayAvailability() {
-        return this.dayAvailability;
+        return this.availabilityId;
     }
 
 	public void setDayAvailability(DayAvailability dayAvailability) {
-        this.dayAvailability = dayAvailability;
+        this.availabilityId = dayAvailability;
     }
 
 	public Date getStartTime() {

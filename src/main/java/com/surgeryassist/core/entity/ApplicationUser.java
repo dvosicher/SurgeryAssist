@@ -2,8 +2,11 @@ package com.surgeryassist.core.entity;
 
 import com.surgeryassist.core.UserTypeCode;
 import com.surgeryassist.core.VerificationStatus;
-import java.util.Date;
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -13,13 +16,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -31,9 +34,42 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class ApplicationUser {
 	
-    @NotNull
-    @Column(name = "user_email")
+    @OneToMany(mappedBy = "userId")
+    private Set<DayAvailability> availabilities;
+    
+    @OneToMany(mappedBy = "bookingCreatorId")
+    private Set<Bookings> bookingss;
+    
+    @OneToMany(mappedBy = "bookingLocationId")
+    private Set<Bookings> bookingss1;
+    
+    @OneToMany(mappedBy = "userId")
+    private Set<Entitlement> entitlements;
+
+    @OneToMany(mappedBy = "userId")
+    private Set<HomepageSettings> homepageSettingss;
+    
+    @OneToMany(mappedBy = "userFavorite")
+    private Set<UserFavorites> userFavoriteses;
+    
+    @OneToMany(mappedBy = "userId")
+    private Set<UserFavorites> userFavoriteses1;
+    
+    @OneToMany(mappedBy = "parentId")
+    private Set<UserParentLookup> userParentLookups;
+    
+    @OneToMany(mappedBy = "userId")
+    private Set<UserParentLookup> userParentLookups1;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
+    private UserInfo userInfoId;
+    
+    @Column(name = "user_email", length = 100)
     private String userEmail;
+    
+    @Column(name = "user_pass", length = 512)
+    private String userPass;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type_code")
@@ -48,20 +84,16 @@ public class ApplicationUser {
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    @DateTimeFormat(style = "MM")
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
-
-    @OneToOne
-    @JoinColumn(name = "user_info_id")
-    private UserInfo userInfoID;
+    @DateTimeFormat(style = "MM")
+    private Calendar modifiedDate;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -183,11 +215,11 @@ public class ApplicationUser {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -199,19 +231,166 @@ public class ApplicationUser {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
-	public UserInfo getUserInfoID() {
-        return this.userInfoID;
-    }
+	/**
+	 * @return the userParentLookups
+	 */
+	public Set<UserParentLookup> getUserParentLookups() {
+		return userParentLookups;
+	}
 
-	public void setUserInfoID(UserInfo userInfoID) {
-        this.userInfoID = userInfoID;
-    }
+	/**
+	 * @param userParentLookups the userParentLookups to set
+	 */
+	public void setUserParentLookups(Set<UserParentLookup> userParentLookups) {
+		this.userParentLookups = userParentLookups;
+	}
+
+	/**
+	 * @return the userParentLookups1
+	 */
+	public Set<UserParentLookup> getUserParentLookups1() {
+		return userParentLookups1;
+	}
+
+	/**
+	 * @param userParentLookups1 the userParentLookups1 to set
+	 */
+	public void setUserParentLookups1(Set<UserParentLookup> userParentLookups1) {
+		this.userParentLookups1 = userParentLookups1;
+	}
+
+	/**
+	 * @return the userInfoId
+	 */
+	public UserInfo getUserInfoId() {
+		return userInfoId;
+	}
+
+	/**
+	 * @param userInfoId the userInfoId to set
+	 */
+	public void setUserInfoId(UserInfo userInfoId) {
+		this.userInfoId = userInfoId;
+	}
+
+	/**
+	 * @return the userPass
+	 */
+	public String getUserPass() {
+		return userPass;
+	}
+
+	/**
+	 * @param userPass the userPass to set
+	 */
+	public void setUserPass(String userPass) {
+		this.userPass = userPass;
+	}
+
+	/**
+	 * @return the availabilities
+	 */
+	public Set<DayAvailability> getAvailabilities() {
+		return availabilities;
+	}
+
+	/**
+	 * @param availabilities the availabilities to set
+	 */
+	public void setAvailabilities(Set<DayAvailability> availabilities) {
+		this.availabilities = availabilities;
+	}
+
+	/**
+	 * @return the bookingss
+	 */
+	public Set<Bookings> getBookingss() {
+		return bookingss;
+	}
+
+	/**
+	 * @param bookingss the bookingss to set
+	 */
+	public void setBookingss(Set<Bookings> bookingss) {
+		this.bookingss = bookingss;
+	}
+
+	/**
+	 * @return the bookingss1
+	 */
+	public Set<Bookings> getBookingss1() {
+		return bookingss1;
+	}
+
+	/**
+	 * @param bookingss1 the bookingss1 to set
+	 */
+	public void setBookingss1(Set<Bookings> bookingss1) {
+		this.bookingss1 = bookingss1;
+	}
+
+	/**
+	 * @return the entitlements
+	 */
+	public Set<Entitlement> getEntitlements() {
+		return entitlements;
+	}
+
+	/**
+	 * @param entitlements the entitlements to set
+	 */
+	public void setEntitlements(Set<Entitlement> entitlements) {
+		this.entitlements = entitlements;
+	}
+
+	/**
+	 * @return the homepageSettingss
+	 */
+	public Set<HomepageSettings> getHomepageSettingss() {
+		return homepageSettingss;
+	}
+
+	/**
+	 * @param homepageSettingss the homepageSettingss to set
+	 */
+	public void setHomepageSettingss(Set<HomepageSettings> homepageSettingss) {
+		this.homepageSettingss = homepageSettingss;
+	}
+
+	/**
+	 * @return the userFavoriteses
+	 */
+	public Set<UserFavorites> getUserFavoriteses() {
+		return userFavoriteses;
+	}
+
+	/**
+	 * @param userFavoriteses the userFavoriteses to set
+	 */
+	public void setUserFavoriteses(Set<UserFavorites> userFavoriteses) {
+		this.userFavoriteses = userFavoriteses;
+	}
+
+	/**
+	 * @return the userFavoriteses1
+	 */
+	public Set<UserFavorites> getUserFavoriteses1() {
+		return userFavoriteses1;
+	}
+
+	/**
+	 * @param userFavoriteses1 the userFavoriteses1 to set
+	 */
+	public void setUserFavoriteses1(Set<UserFavorites> userFavoriteses1) {
+		this.userFavoriteses1 = userFavoriteses1;
+	}
+
 }

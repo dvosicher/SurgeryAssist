@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,13 +28,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Table(schema = "SurgeryAssist", name = "user_parent_lookup")
 public class UserParentLookup {
 	
-	@OneToMany
-	@JoinColumn(name = "user_id")
-	private List<ApplicationUser> userIDs;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "upl_id")
+    private Integer userParentLookupID;
+
+	@Version
+    @Column(name = "version")
+    private Integer version;
 	
-	@OneToMany
-	@JoinColumn(name = "user_id")
-	private List<ApplicationUser> parentIDs;
+	@ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private ApplicationUser userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "user_id", nullable = false)
+    private ApplicationUser parentId;
 	
 	@Column(name = "created_by", updatable = false)
     private Integer createdBy;
@@ -115,15 +124,6 @@ public class UserParentLookup {
         return merged;
     }
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "upl_id")
-    private Integer userParentLookupID;
-
-	@Version
-    @Column(name = "version")
-    private Integer version;
-
 	public Integer getUserParentLookupID() {
         return this.userParentLookupID;
     }
@@ -140,24 +140,36 @@ public class UserParentLookup {
         this.version = version;
     }
 
+	/**
+	 * @return the userId
+	 */
+	public ApplicationUser getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(ApplicationUser userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public ApplicationUser getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(ApplicationUser parentId) {
+		this.parentId = parentId;
+	}
+
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	public List<ApplicationUser> getUserIDs() {
-        return this.userIDs;
-    }
-
-	public void setUserIDs(List<ApplicationUser> userIDs) {
-        this.userIDs = userIDs;
-    }
-
-	public List<ApplicationUser> getParentIDs() {
-        return this.parentIDs;
-    }
-
-	public void setParentIDs(List<ApplicationUser> parentIDs) {
-        this.parentIDs = parentIDs;
     }
 
 	public Integer getCreatedBy() {
