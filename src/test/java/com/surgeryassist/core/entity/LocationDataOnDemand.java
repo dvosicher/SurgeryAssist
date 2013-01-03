@@ -75,6 +75,7 @@ public class LocationDataOnDemand {
 	}
 
 	public void setStateCode(Location obj, int index) {
+		//using a hack to allow tests to pull correct value
 		StateCode stateCode = dod.getNewTransientStateCode();
 		obj.setStateCode(stateCode);
 	}

@@ -14,6 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import com.surgeryassist.core.entity.InsuranceType;
+import com.surgeryassist.core.entity.InsuranceTypeDataOnDemand;
+import com.surgeryassist.core.entity.AcceptedInsuranceTypes;
+import com.surgeryassist.core.entity.UserInfo;
+import com.surgeryassist.core.entity.UserInfoDataOnDemand;
+
 @Configurable
 @Component
 public class AcceptedInsuranceTypesDataOnDemand {
@@ -21,6 +27,9 @@ public class AcceptedInsuranceTypesDataOnDemand {
 	private Random rnd = new SecureRandom();
 
 	private List<AcceptedInsuranceTypes> data;
+
+	@Autowired
+	InsuranceTypeDataOnDemand insuranceTypeDataOnDemand;
 
 	@Autowired
 	UserInfoDataOnDemand userInfoDataOnDemand;
@@ -47,7 +56,7 @@ public class AcceptedInsuranceTypesDataOnDemand {
 	}
 
 	public void setInsuranceTypeId(AcceptedInsuranceTypes obj, int index) {
-		InsuranceType insuranceTypeId = null;
+		InsuranceType insuranceTypeId = insuranceTypeDataOnDemand.getRandomInsuranceType();
 		obj.setInsuranceTypeId(insuranceTypeId);
 	}
 
