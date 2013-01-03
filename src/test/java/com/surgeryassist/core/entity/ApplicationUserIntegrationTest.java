@@ -20,10 +20,18 @@ public class ApplicationUserIntegrationTest {
 	@Autowired
     ApplicationUserDataOnDemand dod;
     
+	/**
+	 * Used to remove JDBC connection startup time
+	 * away from other test methods. This test will
+	 * fail only if the JDBC connection is inactive
+	 */
 	@Test
     public void testMarkerMethod() {
     }
 	
+	/**
+	 * Test method for counting total number of users
+	 */
     @Test
     public void testCountApplicationUsers() {
         Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", dod.getRandomApplicationUser());

@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class LocationDataOnDemand {
 	private Random rnd = new SecureRandom();
 
 	private List<Location> data;
+	
+	@Autowired
+	private StateCodeDataOnDemand dod;
 
 	public Location getNewTransientLocation(int index) {
 		Location obj = new Location();
@@ -71,9 +75,7 @@ public class LocationDataOnDemand {
 	}
 
 	public void setStateCode(Location obj, int index) {
-		StateCode stateCode = new StateCode();
-		stateCode.setStateName("California");
-		stateCode.setStateCodeID("CA");
+		StateCode stateCode = dod.getNewTransientStateCode();
 		obj.setStateCode(stateCode);
 	}
 
