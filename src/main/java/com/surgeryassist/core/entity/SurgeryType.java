@@ -148,4 +148,116 @@ public class SurgeryType {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	/**
+	 * @return the patients
+	 */
+	public Set<Patient> getPatients() {
+		return patients;
+	}
+
+	/**
+	 * @param patients the patients to set
+	 */
+	public void setPatients(Set<Patient> patients) {
+		this.patients = patients;
+	}
+
+	/**
+	 * @return the surgeryTypeCode
+	 */
+	public String getSurgeryTypeCode() {
+		return surgeryTypeCode;
+	}
+
+	/**
+	 * @param surgeryTypeCode the surgeryTypeCode to set
+	 */
+	public void setSurgeryTypeCode(String surgeryTypeCode) {
+		this.surgeryTypeCode = surgeryTypeCode;
+	}
+
+	/**
+	 * @return the surgeryFullName
+	 */
+	public String getSurgeryFullName() {
+		return surgeryFullName;
+	}
+
+	/**
+	 * @param surgeryFullName the surgeryFullName to set
+	 */
+	public void setSurgeryFullName(String surgeryFullName) {
+		this.surgeryFullName = surgeryFullName;
+	}
+
+	/**
+	 * @return the surgeryDescription
+	 */
+	public String getSurgeryDescription() {
+		return surgeryDescription;
+	}
+
+	/**
+	 * @param surgeryDescription the surgeryDescription to set
+	 */
+	public void setSurgeryDescription(String surgeryDescription) {
+		this.surgeryDescription = surgeryDescription;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Calendar getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Calendar createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Integer getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Integer modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Calendar getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate the modifiedDate to set
+	 */
+	public void setModifiedDate(Calendar modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
 }

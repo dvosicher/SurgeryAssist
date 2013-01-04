@@ -1,6 +1,6 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,12 +33,12 @@ public class TimeAvailabilities {
     @Column(name = "start_time")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date startTime;
+    private Calendar startTime;
 
     @Column(name = "end_time")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date endTime;
+    private Calendar endTime;
     
     @Column(name = "created_by", updatable = false)
     private Integer createdBy;
@@ -46,7 +46,7 @@ public class TimeAvailabilities {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -54,7 +54,7 @@ public class TimeAvailabilities {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 
 	@PersistenceContext
@@ -132,19 +132,19 @@ public class TimeAvailabilities {
         this.availabilityId = dayAvailability;
     }
 
-	public Date getStartTime() {
+	public Calendar getStartTime() {
         return this.startTime;
     }
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }
 
-	public Date getEndTime() {
+	public Calendar getEndTime() {
         return this.endTime;
     }
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(Calendar endTime) {
         this.endTime = endTime;
     }
 
@@ -156,11 +156,11 @@ public class TimeAvailabilities {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -172,11 +172,11 @@ public class TimeAvailabilities {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
