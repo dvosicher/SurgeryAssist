@@ -1,6 +1,6 @@
 package com.surgeryassist.core.entity;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +39,7 @@ public class DayAvailability {
     @Column(name = "date_of_availability")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dateOfAvailability;
+    private Calendar dateOfAvailability;
     
 	@Column(name = "created_by", updatable = false)
     private Integer createdBy;
@@ -47,7 +47,7 @@ public class DayAvailability {
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date createdDate;
+    private Calendar createdDate;
 
     @Column(name = "modified_by")
     private Integer modifiedBy;
@@ -55,7 +55,7 @@ public class DayAvailability {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Date modifiedDate;
+    private Calendar modifiedDate;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -149,11 +149,11 @@ public class DayAvailability {
         return merged;
     }
 
-	public Date getDateOfAvailability() {
+	public Calendar getDateOfAvailability() {
         return this.dateOfAvailability;
     }
 
-	public void setDateOfAvailability(Date dateOfAvailability) {
+	public void setDateOfAvailability(Calendar dateOfAvailability) {
         this.dateOfAvailability = dateOfAvailability;
     }
 
@@ -165,11 +165,11 @@ public class DayAvailability {
         this.createdBy = createdBy;
     }
 
-	public Date getCreatedDate() {
+	public Calendar getCreatedDate() {
         return this.createdDate;
     }
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -181,11 +181,39 @@ public class DayAvailability {
         this.modifiedBy = modifiedBy;
     }
 
-	public Date getModifiedDate() {
+	public Calendar getModifiedDate() {
         return this.modifiedDate;
     }
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+	/**
+	 * @return the timeAvailabilitieses
+	 */
+	public Set<TimeAvailabilities> getTimeAvailabilitieses() {
+		return timeAvailabilitieses;
+	}
+
+	/**
+	 * @param timeAvailabilitieses the timeAvailabilitieses to set
+	 */
+	public void setTimeAvailabilitieses(Set<TimeAvailabilities> timeAvailabilitieses) {
+		this.timeAvailabilitieses = timeAvailabilitieses;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public ApplicationUser getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(ApplicationUser userId) {
+		this.userId = userId;
+	}
 }
