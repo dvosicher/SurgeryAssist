@@ -101,16 +101,4 @@ public class ContactInfoIntegrationTest {
 		Assert.assertNotNull("Expected 'ContactInfo' identifier to no longer be null", obj.getContactInfoID());
 	}
 
-	@Test
-	public void testRemove() {
-		ContactInfo obj = dod.getRandomContactInfo();
-		Assert.assertNotNull("Data on demand for 'ContactInfo' failed to initialize correctly", obj);
-		Integer id = obj.getContactInfoID();
-		Assert.assertNotNull("Data on demand for 'ContactInfo' failed to provide an identifier", id);
-		obj = ContactInfo.findContactInfo(id);
-		obj.remove();
-		obj.flush();
-		Assert.assertNull("Failed to remove 'ContactInfo' with identifier '" + id + "'", ContactInfo.findContactInfo(id));
-	}
-
 }

@@ -101,17 +101,5 @@ public class ApplicationUserIntegrationTest {
         obj.flush();
         Assert.assertNotNull("Expected 'ApplicationUser' identifier to no longer be null", obj.getUserID());
     }
-    
-    @Test
-    public void testRemove() {
-        ApplicationUser obj = dod.getRandomApplicationUser();
-        Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", obj);
-        Integer id = obj.getUserID();
-        Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to provide an identifier", id);
-        obj = ApplicationUser.findApplicationUser(id);
-        obj.remove();
-        obj.flush();
-        Assert.assertNull("Failed to remove 'ApplicationUser' with identifier '" + id + "'", ApplicationUser.findApplicationUser(id));
-    }
 	
 }
