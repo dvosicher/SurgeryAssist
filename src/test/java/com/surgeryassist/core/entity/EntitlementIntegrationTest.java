@@ -18,6 +18,7 @@ import com.surgeryassist.core.entity.Entitlement;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
 public class EntitlementIntegrationTest {
+
 	@Autowired
 	EntitlementDataOnDemand dod;
 
