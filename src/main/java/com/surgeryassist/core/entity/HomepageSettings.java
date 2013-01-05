@@ -90,6 +90,18 @@ public class HomepageSettings {
         return entityManager().createQuery("SELECT o FROM HomepageSettings o", HomepageSettings.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
+    public static List<HomepageSettings> findHomepageSettingsByHomepageWidget(HomepageWidget widget) {
+    	if(widget == null) {
+    		return null;
+    	}
+    	@SuppressWarnings("unchecked")
+		List<HomepageSettings> returnObj = entityManager()
+    			.createQuery("SELECT o FROM HomepageSettings o WHERE o.widgetId = :widgetId")
+    			.setParameter("widgetId", widget)
+    			.getResultList();
+    	return returnObj;
+    }
+    
     @Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();

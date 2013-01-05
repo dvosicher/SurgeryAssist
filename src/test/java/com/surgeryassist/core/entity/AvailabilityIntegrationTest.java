@@ -109,6 +109,12 @@ public class AvailabilityIntegrationTest {
 		Assert.assertNotNull("Data on demand for 'Availability' failed to initialize correctly", obj);
 		Integer id = obj.getAvailabilityID();
 		Assert.assertNotNull("Data on demand for 'Availability' failed to provide an identifier", id);
+		List<TimeAvailabilities> timeAvails = TimeAvailabilities.findTimeAvailabilitiesByDayAvailability(obj);
+		Assert.assertNotNull("TimeAvailabilities query failed", timeAvails);
+		for(TimeAvailabilities timeAvail : timeAvails) {
+			timeAvail.remove();
+			timeAvail.flush();
+		}
 		obj = DayAvailability.findDayAvailability(id);
 		obj.remove();
 		obj.flush();

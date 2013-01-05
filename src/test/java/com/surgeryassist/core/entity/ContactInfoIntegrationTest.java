@@ -18,6 +18,7 @@ import com.surgeryassist.core.entity.ContactInfo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
 public class ContactInfoIntegrationTest {
+
 	@Autowired
 	ContactInfoDataOnDemand dod;
 

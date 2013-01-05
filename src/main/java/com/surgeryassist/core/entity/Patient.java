@@ -105,17 +105,6 @@ public class Patient {
     }
     
     @Transactional
-    public void remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        if (this.entityManager.contains(this)) {
-            this.entityManager.remove(this);
-        } else {
-            Patient attached = findPatient(this.patientId);
-            this.entityManager.remove(attached);
-        }
-    }
-    
-    @Transactional
     public void flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();

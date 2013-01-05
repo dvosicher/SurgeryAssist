@@ -102,16 +102,4 @@ public class LocationIntegrationTest {
 		Assert.assertNotNull("Expected 'Location' identifier to no longer be null", obj.getLocationID());
 	}
 
-	@Test
-	public void testRemove() {
-		Location obj = dod.getRandomLocation();
-		Assert.assertNotNull("Data on demand for 'Location' failed to initialize correctly", obj);
-		Integer id = obj.getLocationID();
-		Assert.assertNotNull("Data on demand for 'Location' failed to provide an identifier", id);
-		obj = Location.findLocation(id);
-		obj.remove();
-		obj.flush();
-		Assert.assertNull("Failed to remove 'Location' with identifier '" + id + "'", Location.findLocation(id));
-	}
-
 }

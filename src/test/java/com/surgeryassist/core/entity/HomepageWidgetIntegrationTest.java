@@ -108,6 +108,12 @@ public class HomepageWidgetIntegrationTest {
         Assert.assertNotNull("Data on demand for 'HomepageWidget' failed to initialize correctly", obj);
         Integer id = obj.getWidgetId();
         Assert.assertNotNull("Data on demand for 'HomepageWidget' failed to provide an identifier", id);
+        List<HomepageSettings> settings = HomepageSettings.findHomepageSettingsByHomepageWidget(obj);
+        Assert.assertNotNull("HomepageSettings query failed", settings);
+        for(HomepageSettings setting : settings) {
+        	setting.remove();
+        	setting.flush();
+        }
         obj = HomepageWidget.findHomepageWidget(id);
         obj.remove();
         obj.flush();

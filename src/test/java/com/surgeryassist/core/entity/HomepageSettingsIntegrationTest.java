@@ -18,6 +18,7 @@ import com.surgeryassist.core.entity.HomepageSettings;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
 public class HomepageSettingsIntegrationTest {
+	
 	@Autowired
 	HomepageSettingsDataOnDemand dod;
 
@@ -59,6 +60,19 @@ public class HomepageSettingsIntegrationTest {
 		List<HomepageSettings> result = HomepageSettings.findHomepageSettingsEntries(firstResult, maxResults);
 		Assert.assertNotNull("Find entries method for 'HomepageSettings' illegally returned null", result);
 		Assert.assertEquals("Find entries method for 'HomepageSettings' returned an incorrect number of entries", count, result.size());
+	}
+	
+	@Test
+	public void testFindHomepageSettingsByHomepageWidget() {
+		HomepageSettings setting = dod.getRandomHomepageSettings();
+		HomepageWidget widget = setting.getWidgetId();
+		Assert.assertNotNull("Data on demand for 'HomepageSettings' failed", setting);
+		List<HomepageSettings> obj = HomepageSettings.findHomepageSettingsByHomepageWidget(widget);
+    	Assert.assertNotNull("No settings available for the provided day availability", obj);
+    	Assert.assertFalse("The size of the returned list is 0", obj.isEmpty());
+    	Assert.assertTrue("The returned list has the provided setting", obj.contains(setting));
+    	int index = obj.indexOf(setting);
+    	Assert.assertEquals("The returned object is not equal to the expected", setting, obj.get(index));
 	}
 
 	@Test

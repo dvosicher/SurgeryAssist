@@ -78,6 +78,18 @@ public class TimeAvailabilities {
         if (timeAvailabilityID == null) return null;
         return entityManager().find(TimeAvailabilities.class, timeAvailabilityID);
     }
+	
+	public static List<TimeAvailabilities> findTimeAvailabilitiesByDayAvailability(DayAvailability dayAvailabilityID) {
+		if(dayAvailabilityID == null) {
+			return null;
+		}
+		@SuppressWarnings("unchecked")
+		List<TimeAvailabilities> returnObj = entityManager()
+				.createQuery("SELECT o FROM TimeAvailabilities o WHERE o.availabilityId = :dayAvailabilityID")
+				.setParameter("dayAvailabilityID", dayAvailabilityID)
+				.getResultList();
+		return returnObj;
+	}
 
 	public static List<TimeAvailabilities> findTimeAvailabilitiesEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM TimeAvailabilities o", TimeAvailabilities.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

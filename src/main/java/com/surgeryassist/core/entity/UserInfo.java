@@ -234,17 +234,6 @@ public class UserInfo {
     }
 
 	@Transactional
-    public void remove() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        if (this.entityManager.contains(this)) {
-            this.entityManager.remove(this);
-        } else {
-            UserInfo attached = UserInfo.findUserInfo(this.userInfoID);
-            this.entityManager.remove(attached);
-        }
-    }
-
-	@Transactional
     public void flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
