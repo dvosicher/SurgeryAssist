@@ -52,6 +52,7 @@ public class StateCode {
 	@DateTimeFormat(style = "M-")
 	private Calendar modifiedDate;
 
+	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
