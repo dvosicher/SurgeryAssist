@@ -33,3 +33,7 @@ bin/**
 ##################
 MANIFEST.MF
 target/
+
+# JRebel #
+##########
+rebel.xml
