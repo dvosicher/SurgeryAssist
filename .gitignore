@@ -12,7 +12,6 @@ Thumbs.db
 # Java specific garbage #
 #########################
 *.class
-*.jar
 *.war
 *.ear
 
