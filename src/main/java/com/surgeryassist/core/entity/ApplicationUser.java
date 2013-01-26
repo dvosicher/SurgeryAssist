@@ -145,6 +145,17 @@ public class ApplicationUser {
 	public static List<ApplicationUser> findApplicationUserEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM ApplicationUser o", ApplicationUser.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+	
+	public static ApplicationUser findApplicationUserByEmailAddress(String emailAddress) {
+		if(emailAddress == null) {
+			return null;
+		}
+		ApplicationUser returnObj = (ApplicationUser) entityManager()
+				.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress")
+				.setParameter("emailAddress", emailAddress)
+				.getSingleResult();
+		return returnObj; 
+	}
 
 	@Transactional
     public void persist() {

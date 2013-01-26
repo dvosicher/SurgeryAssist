@@ -51,6 +51,16 @@ public class ApplicationUserIntegrationTest {
     }
     
     @Test
+    public void testFindApplicationUserByEmailAddress() {
+    	ApplicationUser obj = dod.getRandomApplicationUser();
+    	Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", obj);
+    	String emailAddress = obj.getUserEmail();
+    	ApplicationUser objInQuestion = ApplicationUser.findApplicationUserByEmailAddress(emailAddress);
+    	Assert.assertNotNull("Find by email address returned null" , objInQuestion);
+    	Assert.assertEquals("Find by emails method did not find the correct user", obj, objInQuestion);
+    }
+    
+    @Test
     public void testFindApplicationUserEntries() {
         Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", dod.getRandomApplicationUser());
         long count = ApplicationUser.countApplicationUsers();
