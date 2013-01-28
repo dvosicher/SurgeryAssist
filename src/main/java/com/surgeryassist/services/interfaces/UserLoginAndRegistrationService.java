@@ -10,7 +10,7 @@ import com.surgeryassist.core.entity.ApplicationUser;
  * 
  * @author Ankit Tyagi
  */
-public interface UserLoginService extends UserDetailsService {
+public interface UserLoginAndRegistrationService extends UserDetailsService {
 
 	public User convertApplicationUserToSpringUser(ApplicationUser applicationUser);
 	

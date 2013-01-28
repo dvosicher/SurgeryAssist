@@ -7,7 +7,6 @@
       <div class="errors">
         <p>
           <spring:message code="security_login_unsuccessful" />
-          <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
           .
         </p>
       </div>
@@ -54,6 +53,10 @@
         <spring:message code="button_reset" var="reset_label" htmlEscape="false" />
         <input id="reset" type="reset" value="${fn:escapeXml(reset_label)}" />
       </div>
+    </form>
+    <form>
+	    <spring:message code="button_register" var="register_label" htmlEscape="false" />
+        <input id="register" type="submit" value="${fn:escapeXml(register_label)}" />
     </form>
   </util:panel>
 </div>
