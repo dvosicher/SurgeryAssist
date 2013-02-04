@@ -1,0 +1,32 @@
+extends layout
+
+append style
+  link(rel='stylesheet', href='/stylesheets/calendar.css')
+
+block content
+  br
+  h3 Welcome, Surgeon!
+  br
+  #calendar
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    #daytitles
+      - var d = new Date()
+      #date.daytitle
+        span #{d.toDateString()}
+      each day in days
+        .daytitle(id= day + "title")
+          span #{day}
+    #days
+      .day(id= 'times')
+        - for (var i = 0; i < 18; i++) {
+          - d.setHours(4 + i, 0, 0)
+          div(class= i) #{d.toTimeString()}
+        - }
+      each day in days
+        .day(id= day)
+          - for (var i = 0; i < 18; i++)
+            div(class= i)
+  #upcomingengagements
+    #upcomingheader
+      span Upcoming Engagements
+    #upcominglist
