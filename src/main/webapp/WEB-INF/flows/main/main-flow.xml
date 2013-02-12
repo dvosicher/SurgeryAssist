@@ -11,10 +11,10 @@
 		<!-- <on-render>
 			<evaluate expression="bookingService.findBookings(currentUser?.name)" result="viewScope.bookings" result-type="dataModel" />
 		</on-render> -->
-		<transition on="search" to="reviewHotels">
-		<transition on="cancelBooking">
-			<!-- <evaluate expression="bookingService.cancelBooking(bookings.selectedRow)" /> -->
-		</transition>
+		<transition on="search" to="reviewHotels" />
+		<!-- <transition on="cancelBooking">
+			<evaluate expression="bookingService.cancelBooking(bookings.selectedRow)" />
+		</transition> -->
 	</view-state>
 	
 	<view-state id="reviewHotels">
