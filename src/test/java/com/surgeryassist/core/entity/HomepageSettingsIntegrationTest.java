@@ -16,7 +16,7 @@ import com.surgeryassist.core.entity.HomepageSettings;
 @Configurable
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath:/META-INF/config/applicationContext*.xml")
 public class HomepageSettingsIntegrationTest {
 	
 	@Autowired
