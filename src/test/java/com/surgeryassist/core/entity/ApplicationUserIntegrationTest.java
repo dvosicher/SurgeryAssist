@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath*:/META-INF/config/applicationContext*.xml")
 @Transactional
 @Configurable
 public class ApplicationUserIntegrationTest {
