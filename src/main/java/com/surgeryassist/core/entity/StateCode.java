@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "MetaData", name = "state_code")
-public class StateCode {
+public class StateCode implements Serializable {
+
+	private static final long serialVersionUID = -1882532832660713743L;
 
 	@OneToMany(mappedBy = "stateCode")
 	private Set<Location> locations;

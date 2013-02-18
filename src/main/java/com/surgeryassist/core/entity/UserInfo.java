@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "user_info")
 @Configurable
-public class UserInfo {
+public class UserInfo implements Serializable {
+
+	private static final long serialVersionUID = -4253239702030861956L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

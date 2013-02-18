@@ -14,8 +14,8 @@
 		<!-- Configure these elements to secure URIs in your application -->
         <security:intercept-url pattern="/spring/resources/**" access="permitAll" />
         <security:intercept-url pattern="/spring/login/**" access="permitAll" />
+        <security:intercept-url pattern="/spring/register/**" access="permitAll" />
         <security:intercept-url pattern="/spring/main/**" access="isAuthenticated()" />
-        <!-- <intercept-url pattern="/**" access="permitAll" />  -->
 	</security:http>
     
 	<!-- Configure Authentication mechanism -->
@@ -23,8 +23,10 @@
     	class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
     	<property name="userDetailsService" ref="userLoginAndRegistrationService"/>	
     	<property name="passwordEncoder" ref="passwordEncoder" />
+    	<property name="saltSource" ref="saltSource" />
     </bean>
     
+    <!-- auth management system. -->
     <bean id="authenticationManager"
     	class="org.springframework.security.authentication.ProviderManager">
     	<property name="providers">
@@ -34,8 +36,10 @@
     	</property>
     </bean>
     
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
+    <!-- password encoder  -->
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
     
+    <!-- salting mechanism -->
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
     	<property name="userPropertyToUse" value="username"></property>
     </bean>
@@ -43,7 +47,7 @@
 	<!-- Use custom login and registration service --> 
     <security:authentication-manager>
     	<security:authentication-provider user-service-ref="userLoginAndRegistrationService">
-    		<security:password-encoder hash="sha" />
+    		<security:password-encoder ref="passwordEncoder" />
     	</security:authentication-provider>
     </security:authentication-manager>
 

@@ -3,6 +3,7 @@ package com.surgeryassist.core.entity;
 import com.surgeryassist.core.UserTypeCode;
 import com.surgeryassist.core.VerificationStatus;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -33,9 +34,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "application_user")
 @Configurable
-public class ApplicationUser {
+public class ApplicationUser implements Serializable {
 	
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+	private static final long serialVersionUID = -6314608411402226894L;
+
+	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private Set<DayAvailability> availabilities;
     
     @OneToMany(mappedBy = "bookingCreatorId", fetch = FetchType.LAZY)
@@ -99,7 +102,7 @@ public class ApplicationUser {
     @DateTimeFormat(style = "MM")
     private Calendar modifiedDate;
     
-    @Column(name = "is_enabled")
+    @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled;
 
 	@Id

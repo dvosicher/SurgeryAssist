@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+				template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="notes">
+	
+</ui:define>
+				
+<ui:define name="content">
+	<div id="register_div">
+		<h1>Register here</h1>
+		<p>
+			<h:form id="registrationForm">
+				Email Address:
+				<br />
+					<h:inputText value="#{newApplicationUser.userEmail}" />
+				<br />
+				Password:
+				<br />
+					<h:inputSecret value="#{newApplicationUser.userPass}" />
+				<br />
+				First Name:
+				<br />
+					<h:inputText value="#{newUserInfo.firstName}" />
+				<br />
+				Last Name:
+				<br />
+					<h:inputText value="#{newUserInfo.lastName}" />
+				<br />
+				User Type:
+				<br />
+					<h:selectOneMenu value="#{newApplicationUser.userTypeCode}">
+						<f:selectItems value="#{flowScope.dropdownMap[userTypeCode]}" var="userTypeCodes" 
+							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
+					</h:selectOneMenu>
+				<br />
+				Photo (put dummy file path for now):
+				<br />
+					<h:inputText value="#{newUserInfo.photoFilePath}" />
+				<br />
+				Video (put dummy file path for now):
+				<br />
+					<h:inputText value="#{newUserInfo.videoFilePath}" />
+				<br />
+				Phone Number:
+				<br />
+					<h:inputText value="#{newContactInfo.phoneNumber}" />
+				<br />
+				Fax Number:
+				<br />
+					<h:inputText value="#{newContactInfo.faxNumber}" />
+				<br />
+				State:
+				<br />
+					<h:selectOneMenu value="#{newApplicationUser.userTypeCode}">
+						<f:selectItems value="#{flowScope.dropdownMap[stateCode]}" var="stateCode" 
+							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
+					</h:selectOneMenu>
+				<br />
+					<h:commandButton action="registerUser" value="Register Now"/>
+			</h:form>
+		</p>
+	</div>
+</ui:define>
+				
+</ui:composition>
