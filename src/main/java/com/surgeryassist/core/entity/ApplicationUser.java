@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,16 +35,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class ApplicationUser {
 	
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private Set<DayAvailability> availabilities;
     
-    @OneToMany(mappedBy = "bookingCreatorId")
+    @OneToMany(mappedBy = "bookingCreatorId", fetch = FetchType.LAZY)
     private Set<Bookings> bookingss;
     
-    @OneToMany(mappedBy = "bookingLocationId")
+    @OneToMany(mappedBy = "bookingLocationId", fetch = FetchType.LAZY)
     private Set<Bookings> bookingss1;
     
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private Set<Entitlement> entitlements;
 
     @OneToMany(mappedBy = "userId")
@@ -61,7 +62,10 @@ public class ApplicationUser {
     @OneToMany(mappedBy = "userId")
     private Set<UserParentLookup> userParentLookups1;
     
-    @ManyToOne
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    private Set<Authorities> authorities;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
     private UserInfo userInfoId;
     
@@ -94,6 +98,9 @@ public class ApplicationUser {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
     private Calendar modifiedDate;
+    
+    @Column(name = "is_enabled")
+    private Boolean isEnabled;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -150,10 +157,12 @@ public class ApplicationUser {
 		if(emailAddress == null) {
 			return null;
 		}
+		
 		ApplicationUser returnObj = (ApplicationUser) entityManager()
 				.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress")
 				.setParameter("emailAddress", emailAddress)
 				.getSingleResult();
+		
 		return returnObj; 
 	}
 
@@ -391,6 +400,34 @@ public class ApplicationUser {
 	 */
 	public void setUserFavoriteses1(Set<UserFavorites> userFavoriteses1) {
 		this.userFavoriteses1 = userFavoriteses1;
+	}
+
+	/**
+	 * @return the isEnabled
+	 */
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	/**
+	 * @param isEnabled the isEnabled to set
+	 */
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	/**
+	 * @return the authorities
+	 */
+	public Set<Authorities> getAuthorities() {
+		return authorities;
+	}
+
+	/**
+	 * @param authorities the authorities to set
+	 */
+	public void setAuthorities(Set<Authorities> authorities) {
+		this.authorities = authorities;
 	}
 
 }
