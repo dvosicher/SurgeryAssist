@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.model.SelectItem;
+import javax.persistence.Entity;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -23,7 +25,10 @@ import com.surgeryassist.core.UserTypeCode;
 import com.surgeryassist.core.VerificationStatus;
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.Authorities;
+import com.surgeryassist.core.entity.ContactInfo;
+import com.surgeryassist.core.entity.Location;
 import com.surgeryassist.core.entity.StateCode;
+import com.surgeryassist.core.entity.UserInfo;
 import com.surgeryassist.services.interfaces.UserLoginAndRegistrationService;
 
 /**
@@ -82,9 +87,11 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 	}
 
 	@Override
-	public void registerUser(ApplicationUser applicationUser) {
-		//set defaults
-		applicationUser = this.createDefaultApplicationUser(applicationUser);
+	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location) {
+		
+		//create an insertable applicationUser
+		applicationUser = this.createDefaultApplicationUser(applicationUser, userInfo, contactInfo, location);
+		
 		
 		//salt it, might be ugly/not work...
 		Object salt = saltSource.getSalt(
@@ -92,7 +99,6 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 						applicationUser.getUserPass(), 
 						new ArrayList<GrantedAuthority>()));
 		
-		//TODO: test this with new salting
 		String encodedPass = passwordEncoder.encodePassword(applicationUser.getUserPass(), salt);
 		applicationUser.setUserPass(encodedPass);
 		
@@ -104,15 +110,81 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 	
 	@Override
 	public ApplicationUser createDefaultApplicationUser(
-			ApplicationUser newApplicationUser) {
+			ApplicationUser newApplicationUser, UserInfo userInfo,
+			ContactInfo contactInfo, Location location) {
 		
-		newApplicationUser.setCreatedBy(APPLICATION_IDENTIFIER);
-		newApplicationUser.setModifiedBy(APPLICATION_IDENTIFIER);
+		contactInfo = (ContactInfo) this.setHistoricalInfo(contactInfo);
+		location = (Location) this.setHistoricalInfo(location);
+		userInfo = (UserInfo) this.setHistoricalInfo(userInfo);
+		newApplicationUser = (ApplicationUser) this.setHistoricalInfo(newApplicationUser);
+		
+		//persist location and contact info to save values
+		contactInfo.persist();
+		contactInfo.flush();
+		
+		location.persist();
+		location.flush();
+		
+		//build the userInfo
+		userInfo.setLocationId(location);
+		userInfo.setContactInfoId(contactInfo);
+
+		newApplicationUser.setUserInfoId(userInfo);
 		newApplicationUser.setIsEnabled(Boolean.TRUE);
-		newApplicationUser.setCreatedDate(Calendar.getInstance());
-		newApplicationUser.setModifiedDate(Calendar.getInstance());
+		newApplicationUser.setVerificationStatus(VerificationStatus.WAITING_VERIFICATION);
 		
 		return newApplicationUser;
+	}
+	
+	/**
+	 * Sets historical information (created by, created date, 
+	 * modified by, modified date) for an entity object via 
+	 * reflection
+	 * @param obj The Entity object to set history info
+	 * @return The entity object to return
+	 */
+	private Object setHistoricalInfo(Object obj) {
+		try {
+			//if the object is an entity in the entity package, then set it
+			if(obj.getClass().isAnnotationPresent(Entity.class) && 
+					obj.getClass().getPackage().getName().contains("com.surgeryassist.core.entity")) {
+				
+				//only set the values if they are accessible
+				if(obj.getClass().getField("createdBy").isAccessible()) {
+					obj.getClass().getField("createdBy").set(obj, new Integer(1));
+				}
+				if(obj.getClass().getField("modifiedBy").isAccessible()) {
+					obj.getClass().getField("modifiedBy").set(obj, new Integer(1));
+				}
+				if(obj.getClass().getField("createdDate").isAccessible()) {
+					obj.getClass().getField("createdDate").set(obj, Calendar.getInstance());
+				}
+				if(obj.getClass().getField("modifiedDate").isAccessible()) {
+					obj.getClass().getField("modifiedDate").set(obj, Calendar.getInstance());
+				}
+			}
+		} 
+		//catch errors
+		catch(IllegalAccessException e) {
+			//tried to access something illegally
+			e.printStackTrace();
+		}
+		catch(IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		catch(ExceptionInInitializerError e) {
+			e.printStackTrace();
+		}
+		catch(NullPointerException e) {
+			//null pointer. oops
+			e.printStackTrace();
+		}
+		catch(NoSuchFieldException e) {
+			//field doesn't exist
+			e.printStackTrace();
+		}
+		//return the object regardless
+		return obj;
 	}
 	
 	@Override
@@ -126,19 +198,19 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		//get state codes, convert them into SelectItems, and put them into map
 		List<StateCode> stateCodesEntityList = StateCode.findAllStateCodes();
 		for(StateCode stateCode : stateCodesEntityList) {
-			stateCodeList.add(new SelectItem(stateCode, stateCode.getStateCodeID()));
+			stateCodeList.add(new SelectItem(stateCode.getStateName(), stateCode.getStateCodeID()));
 		}
 		mapOfSelectItems.put("stateCode", stateCodeList);
 		
 		//get user type codes
 		for(UserTypeCode userTypeCode : UserTypeCode.values()) {
-			userTypeCodeList.add(new SelectItem(userTypeCode, userTypeCode.name()));
+			userTypeCodeList.add(new SelectItem(userTypeCode, StringUtils.capitalize(userTypeCode.name().toLowerCase())));
 		}
 		mapOfSelectItems.put("userTypeCode", userTypeCodeList);
 		
 		//get verification status
 		for(VerificationStatus verificationStatus : VerificationStatus.values()) {
-			verificationStatusList.add(new SelectItem(verificationStatus, verificationStatus.name()));
+			verificationStatusList.add(new SelectItem(verificationStatus, StringUtils.capitalize(verificationStatus.name())));
 		}
 		mapOfSelectItems.put("verificationStatus", verificationStatusList);
 		

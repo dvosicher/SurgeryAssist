@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
@@ -29,7 +30,7 @@ public class StateCode implements Serializable {
 
 	private static final long serialVersionUID = -1882532832660713743L;
 
-	@OneToMany(mappedBy = "stateCode")
+	@OneToMany(mappedBy = "stateCode", fetch = FetchType.LAZY)
 	private Set<Location> locations;
 
 	@Id

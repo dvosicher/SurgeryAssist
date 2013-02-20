@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.surgeryassist.core.entity.ApplicationUser;
+import com.surgeryassist.core.entity.ContactInfo;
+import com.surgeryassist.core.entity.Location;
+import com.surgeryassist.core.entity.UserInfo;
 
 /**
  * Custom Login authentication handler for SurgeryAssist
@@ -28,16 +31,22 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	/**
 	 * Registers a user based on Spring Security protocols.
 	 * Includes password hashing (SHA + SALT)
-	 * @param applicationUser
+	 * @param applicationUser The {@link ApplicationUser} entity
+	 * @param userInfo The {@link UserInfo} entity
+	 * @param contactInfo The {@link ContactInfo} entity
+	 * @param location The {@link Location} entity
 	 */
-	public void registerUser(ApplicationUser applicationUser);
+	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
 	
 	/**
 	 * Creates a default {@link ApplicationUser} based on the parameters
 	 * @param newApplicationUser the new applicationUser to be returned
+	 * @param userInfo the new {@link UserInfo}
+	 * @param contactInfo the new {@link ContactInfo}
+	 * @param location the new {@link Location}
 	 * @return An application user ready to be inserted into the database
 	 */
-	public ApplicationUser createDefaultApplicationUser(ApplicationUser newApplicationUser);
+	public ApplicationUser createDefaultApplicationUser(ApplicationUser newApplicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
 	
 	/**
 	 * Returns a map tying a String to a List

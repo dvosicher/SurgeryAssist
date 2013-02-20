@@ -34,7 +34,7 @@
 				User Type:
 				<br />
 					<h:selectOneMenu value="#{newApplicationUser.userTypeCode}">
-						<f:selectItems value="#{flowScope.dropdownMap[userTypeCode]}" var="userTypeCodes" 
+						<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
 							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
 					</h:selectOneMenu>
 				<br />
@@ -54,14 +54,26 @@
 				<br />
 					<h:inputText value="#{newContactInfo.faxNumber}" />
 				<br />
+				Address:
+				<br />
+					<h:inputText value="#{newLocation.address}" />
+				<br />
+				City:
+				<br />
+					<h:inputText value="#{newLocation.city}" />
+				<br />
 				State:
 				<br />
-					<h:selectOneMenu value="#{newApplicationUser.userTypeCode}">
-						<f:selectItems value="#{flowScope.dropdownMap[stateCode]}" var="stateCode" 
+					<h:selectOneMenu value="#{newLocation.stateCode}">
+						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
 							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
 					</h:selectOneMenu>
 				<br />
-					<h:commandButton action="registerUser" value="Register Now"/>
+				Zip:
+				<br />
+					<h:inputText value="#{newLocation.zipCode}" />
+				<br />
+				<h:commandButton action="registerUser" value="Register Now"/>
 			</h:form>
 		</p>
 	</div>
