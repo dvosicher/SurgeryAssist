@@ -136,14 +136,8 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		return newApplicationUser;
 	}
 	
-	/**
-	 * Sets historical information (created by, created date, 
-	 * modified by, modified date) for an entity object via 
-	 * reflection
-	 * @param obj The Entity object to set history info
-	 * @return The entity object to return
-	 */
-	private Object setHistoricalInfo(Object obj) {
+	@Override
+	public Object setHistoricalInfo(Object obj) {
 		try {
 			//if the object is an entity in the entity package, then set it
 			if(obj.getClass().isAnnotationPresent(Entity.class) && 

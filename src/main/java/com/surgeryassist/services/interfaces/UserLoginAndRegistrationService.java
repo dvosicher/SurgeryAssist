@@ -60,4 +60,14 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * 		state drop downs (AL, Alabama) etc.
 	 */
 	public Map<String, List<SelectItem>> getDropdownMenuValues();
+	
+	/**
+	 * Sets historical information (created by, created date, 
+	 * modified by, modified date) for an entity object via 
+	 * reflection
+	 * @param obj The Entity object to set history info
+	 * @return The entity object to return
+	 */
+	public Object setHistoricalInfo(Object obj);
+	
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
 				template="/WEB-INF/layouts/standard.xhtml">
 
 <ui:define name="notes">
@@ -17,63 +17,68 @@
 			<h:form id="registrationForm">
 				Email Address:
 				<br />
-					<h:inputText value="#{newApplicationUser.userEmail}" />
+					<h:inputText id="userEmail" value="#{newApplicationUser.userEmail}" />
 				<br />
 				Password:
 				<br />
-					<h:inputSecret value="#{newApplicationUser.userPass}" />
+					<h:inputSecret id="userPass" value="#{newApplicationUser.userPass}" />
 				<br />
 				First Name:
 				<br />
-					<h:inputText value="#{newUserInfo.firstName}" />
+					<h:inputText id="firstName" value="#{newUserInfo.firstName}" />
 				<br />
 				Last Name:
 				<br />
-					<h:inputText value="#{newUserInfo.lastName}" />
+					<h:inputText id="lastName" value="#{newUserInfo.lastName}" />
 				<br />
 				User Type:
 				<br />
-					<h:selectOneMenu value="#{newApplicationUser.userTypeCode}">
+					<h:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}">
 						<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
 							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
 					</h:selectOneMenu>
 				<br />
 				Photo (put dummy file path for now):
 				<br />
-					<h:inputText value="#{newUserInfo.photoFilePath}" />
+					<h:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
 				<br />
 				Video (put dummy file path for now):
 				<br />
-					<h:inputText value="#{newUserInfo.videoFilePath}" />
+					<h:inputText id="video" value="#{newUserInfo.videoFilePath}" />
 				<br />
 				Phone Number:
 				<br />
-					<h:inputText value="#{newContactInfo.phoneNumber}" />
+					<h:inputText id="phone" value="#{newContactInfo.phoneNumber}">
+						<f:converter converterId="phoneNumberConverter" />
+					</h:inputText>
 				<br />
 				Fax Number:
 				<br />
-					<h:inputText value="#{newContactInfo.faxNumber}" />
+					<h:inputText id="fax" value="#{newContactInfo.faxNumber}">
+						<f:converter converterId="phoneNumberConverter" />
+					</h:inputText>
 				<br />
 				Address:
 				<br />
-					<h:inputText value="#{newLocation.address}" />
+					<h:inputText id="address" value="#{newLocation.address}" />
+					
 				<br />
 				City:
 				<br />
-					<h:inputText value="#{newLocation.city}" />
+					<h:inputText id="city" value="#{newLocation.city}" />
 				<br />
 				State:
 				<br />
-					<h:selectOneMenu value="#{newLocation.stateCode}">
+					<h:selectOneMenu id="state" value="#{newLocation.stateCode}">
 						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
 							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
 					</h:selectOneMenu>
 				<br />
 				Zip:
 				<br />
-					<h:inputText value="#{newLocation.zipCode}" />
+					<h:inputText id="zip" value="#{newLocation.zipCode}" />
 				<br />
-				<h:commandButton action="registerUser" value="Register Now"/>
+				<h:commandButton id="registerButton" action="registerUser" value="Register Now"/>
 			</h:form>
 		</p>
 	</div>
