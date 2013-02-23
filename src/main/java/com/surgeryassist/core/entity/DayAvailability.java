@@ -102,6 +102,18 @@ public class DayAvailability {
 	public static List<DayAvailability> findAllDayAvailabilitys() {
         return entityManager().createQuery("SELECT o FROM DayAvailability o", DayAvailability.class).getResultList();
     }
+	
+	public static List<DayAvailability> findAllDayAvailabilitysByCity (String city) {
+		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.city = :city", DayAvailability.class)
+				.setParameter("city", city)
+				.getResultList();
+	}
+	
+	public static List<DayAvailability> findAllDayAvailabilitysByZipCode (Integer zipCode) {
+		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.zipCode = :zipCode", DayAvailability.class)
+				.setParameter("zipCode", zipCode)
+				.getResultList();
+	}
 
 	public static DayAvailability findDayAvailability(Integer availabilityID) {
         if (availabilityID == null) return null;

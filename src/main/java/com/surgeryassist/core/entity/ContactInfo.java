@@ -41,10 +41,10 @@ public class ContactInfo {
     private Set<UserInfo> userInfoes;
 	
 	@Column(name = "phone_number")
-	private Integer phoneNumber;
+	private String phoneNumber;
 	
 	@Column(name = "fax_number")
-	private Integer faxNumber;
+	private String faxNumber;
 	
 	@Column(name = "secondary_email")
 	private String secondaryEmail;
@@ -137,19 +137,19 @@ public class ContactInfo {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-	public Integer getFaxNumber() {
+	public String getFaxNumber() {
         return this.faxNumber;
     }
 
-	public void setFaxNumber(Integer faxNumber) {
+	public void setFaxNumber(String faxNumber) {
         this.faxNumber = faxNumber;
     }
 
