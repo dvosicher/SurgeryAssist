@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "SurgeryAssist", name = "location")
-public class Location {
+public class Location implements Serializable {
+
+	private static final long serialVersionUID = -1731798035243878275L;
 
 	@OneToMany(mappedBy = "locationId")
     private Set<UserInfo> userInfoes;
@@ -47,20 +50,20 @@ public class Location {
     private Integer zipCode;
     
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	public String getAddress() {
         return this.address;

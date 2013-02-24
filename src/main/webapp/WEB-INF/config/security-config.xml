@@ -11,28 +11,44 @@
 		<security:form-login login-page="/spring/login" login-processing-url="/spring/loginProcess" 
 			default-target-url="/spring/main" authentication-failure-url="/spring/login?login_error=1" />
 		<security:logout logout-url="/spring/logout" logout-success-url="/spring/logoutSuccess" />
-		<security:intercept-url pattern="/secure" method="POST" access="hasRole('ROLE_SUPERVISOR')"/>
+		<!-- Configure these elements to secure URIs in your application -->
+        <security:intercept-url pattern="/spring/resources/**" access="permitAll" />
+        <security:intercept-url pattern="/spring/login/**" access="permitAll" />
+        <security:intercept-url pattern="/spring/register/**" access="permitAll" />
+        <security:intercept-url pattern="/spring/main/**" access="isAuthenticated()" />
 	</security:http>
     
-	<!--
-		Define local authentication provider, a real app would use an external provider (JDBC, LDAP, CAS, etc)
-		
-		usernames/passwords are:
-			keith/melbourne
-			erwin/leuven
-			jeremy/atlanta
-			scott/rochester
-	-->
-	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:password-encoder hash="md5" />
-			<security:user-service>
-				<security:user name="keith" password="417c7382b16c395bc25b5da1398cf076" authorities="ROLE_USER, ROLE_SUPERVISOR" />
-				<security:user name="erwin" password="12430911a8af075c6f41c6976af22b09" authorities="ROLE_USER, ROLE_SUPERVISOR" />
-				<security:user name="jeremy" password="57c6cbff0d421449be820763f03139eb" authorities="ROLE_USER" />
-				<security:user name="scott" password="942f2339bf50796de535a384f0d1af3e" authorities="ROLE_USER" />
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>	
+    <!-- salting mechanism -->
+    <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+    	<property name="userPropertyToUse" value="username"/>
+    </bean>
+    
+	<!-- Configure Authentication mechanism -->
+    <bean id="daoAuthenticationProvider"
+    	class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    	<property name="userDetailsService" ref="userLoginAndRegistrationService"/>	
+    	<property name="passwordEncoder" ref="passwordEncoder" />
+    	<property name="saltSource" ref="saltSource" />
+    </bean>
+    
+    <!-- auth management system. -->
+    <bean id="authenticationManager"
+    	class="org.springframework.security.authentication.ProviderManager">
+    	<property name="providers">
+    		<list>
+    			<ref local="daoAuthenticationProvider"/>
+    		</list>
+    	</property>
+    </bean>
+    
+    <!-- password encoder  -->
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+    	<constructor-arg value="256" />
+    </bean>
+    
+	<!-- Use custom login and registration service --> 
+    <security:authentication-manager>
+    	<security:authentication-provider ref="daoAuthenticationProvider" />
+    </security:authentication-manager>
 
 </beans>
