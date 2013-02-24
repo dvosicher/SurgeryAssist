@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
@@ -35,402 +36,406 @@ import org.springframework.transaction.annotation.Transactional;
 @Table(schema = "SurgeryAssist", name = "application_user")
 @Configurable
 public class ApplicationUser implements Serializable {
-	
+
 	private static final long serialVersionUID = -6314608411402226894L;
 
 	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private Set<DayAvailability> availabilities;
-    
-    @OneToMany(mappedBy = "bookingCreatorId", fetch = FetchType.LAZY)
-    private Set<Bookings> bookingss;
-    
-    @OneToMany(mappedBy = "bookingLocationId", fetch = FetchType.LAZY)
-    private Set<Bookings> bookingss1;
-    
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    private Set<Entitlement> entitlements;
+	private Set<DayAvailability> availabilities;
 
-    @OneToMany(mappedBy = "userId")
-    private Set<HomepageSettings> homepageSettingss;
-    
-    @OneToMany(mappedBy = "userFavorite")
-    private Set<UserFavorites> userFavoriteses;
-    
-    @OneToMany(mappedBy = "userId")
-    private Set<UserFavorites> userFavoriteses1;
-    
-    @OneToMany(mappedBy = "parentId")
-    private Set<UserParentLookup> userParentLookups;
-    
-    @OneToMany(mappedBy = "userId")
-    private Set<UserParentLookup> userParentLookups1;
-    
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
-    private Set<Authorities> authorities;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
-    private UserInfo userInfoId;
-    
-    @Column(name = "user_email", length = 100)
-    private String userEmail;
-    
-    @Column(name = "user_pass", length = 512)
-    private String userPass;
+	@OneToMany(mappedBy = "bookingCreatorId", fetch = FetchType.LAZY)
+	private Set<Bookings> bookingss;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_type_code")
-    private UserTypeCode userTypeCode;
+	@OneToMany(mappedBy = "bookingLocationId", fetch = FetchType.LAZY)
+	private Set<Bookings> bookingss1;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "is_verified")
-    private VerificationStatus verificationStatus;
+	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+	private Set<Entitlement> entitlements;
 
-    @Column(name = "created_by", updatable = false)
-    public Integer createdBy;
+	@OneToMany(mappedBy = "userId")
+	private Set<HomepageSettings> homepageSettingss;
 
-    @Column(name = "created_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    public Calendar createdDate;
+	@OneToMany(mappedBy = "userFavorite")
+	private Set<UserFavorites> userFavoriteses;
 
-    @Column(name = "modified_by")
-    public Integer modifiedBy;
+	@OneToMany(mappedBy = "userId")
+	private Set<UserFavorites> userFavoriteses1;
 
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    public Calendar modifiedDate;
-    
-    @Column(name = "is_enabled", nullable = false)
-    private Boolean isEnabled;
+	@OneToMany(mappedBy = "parentId")
+	private Set<UserParentLookup> userParentLookups;
+
+	@OneToMany(mappedBy = "userId")
+	private Set<UserParentLookup> userParentLookups1;
+
+	@OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+	private Set<Authorities> authorities;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
+	private UserInfo userInfoId;
+
+	@Column(name = "user_email", length = 100)
+	private String userEmail;
+
+	@Column(name = "user_pass", length = 512)
+	private String userPass;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "user_type_code")
+	private UserTypeCode userTypeCode;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "is_verified")
+	private VerificationStatus verificationStatus;
+
+	@Column(name = "created_by", updatable = false)
+	public Integer createdBy;
+
+	@Column(name = "created_date", updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "MM")
+	public Calendar createdDate;
+
+	@Column(name = "modified_by")
+	public Integer modifiedBy;
+
+	@Column(name = "modified_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "MM")
+	public Calendar modifiedDate;
+
+	@Column(name = "is_enabled", nullable = false)
+	private Boolean isEnabled;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private Integer userID;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private Integer userID;
 
 	@Version
-    @Column(name = "version")
-    private Integer version;
+	@Column(name = "version")
+	private Integer version;
 
 	public Integer getUserID() {
-        return this.userID;
-    }
+		return this.userID;
+	}
 
 	public void setUserID(Integer id) {
-        this.userID = id;
-    }
+		this.userID = id;
+	}
 
 	public Integer getVersion() {
-        return this.version;
-    }
+		return this.version;
+	}
 
 	public void setVersion(Integer version) {
-        this.version = version;
-    }
+		this.version = version;
+	}
 
 	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	@PersistenceContext
-    transient EntityManager entityManager;
+	transient EntityManager entityManager;
 
 	public static final EntityManager entityManager() {
-        EntityManager em = new ApplicationUser().entityManager;
-        if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
-        return em;
-    }
+		EntityManager em = new ApplicationUser().entityManager;
+		if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
+		return em;
+	}
 
 	public static long countApplicationUsers() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM ApplicationUser o", Long.class).getSingleResult();
-    }
+		return entityManager().createQuery("SELECT COUNT(o) FROM ApplicationUser o", Long.class).getSingleResult();
+	}
 
 	public static ApplicationUser findApplicationUser(Integer userID) {
-        if (userID == null) return null;
-        return entityManager().find(ApplicationUser.class, userID);
-    }
+		if (userID == null) return null;
+		return entityManager().find(ApplicationUser.class, userID);
+	}
 
 	public static List<ApplicationUser> findApplicationUserEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM ApplicationUser o", ApplicationUser.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
-    }
-	
+		return entityManager().createQuery("SELECT o FROM ApplicationUser o", ApplicationUser.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+	}
+
 	public static ApplicationUser findApplicationUserByEmailAddress(String emailAddress) {
-		if(emailAddress == null) {
-			return null;
+		ApplicationUser returnObj = null;
+		if(emailAddress != null) {
+			try {
+				returnObj = (ApplicationUser) entityManager()
+						.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress")
+						.setParameter("emailAddress", emailAddress)
+						.getSingleResult();
+			}
+			catch(NonUniqueResultException e) {
+				e.printStackTrace();
+				
+			}
 		}
-		
-		ApplicationUser returnObj = (ApplicationUser) entityManager()
-				.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress")
-				.setParameter("emailAddress", emailAddress)
-				.getSingleResult();
-		
 		return returnObj; 
 	}
 
 	@Transactional
-    public void persist() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.persist(this);
-    }
+	public void persist() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.persist(this);
+	}
 
 	@Transactional
-    public void flush() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.flush();
-    }
+	public void flush() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.flush();
+	}
 
 	@Transactional
-    public void clear() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        this.entityManager.clear();
-    }
+	public void clear() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		this.entityManager.clear();
+	}
 
 	@Transactional
-    public ApplicationUser merge() {
-        if (this.entityManager == null) this.entityManager = entityManager();
-        ApplicationUser merged = this.entityManager.merge(this);
-        this.entityManager.flush();
-        return merged;
-    }
+	public ApplicationUser merge() {
+		if (this.entityManager == null) this.entityManager = entityManager();
+		ApplicationUser merged = this.entityManager.merge(this);
+		this.entityManager.flush();
+		return merged;
+	}
 
 	public String getUserEmail() {
-        return this.userEmail;
-    }
+		return this.userEmail;
+	}
 
 	public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
+		this.userEmail = userEmail;
+	}
 
 	public UserTypeCode getUserTypeCode() {
-        return this.userTypeCode;
-    }
+		return this.userTypeCode;
+	}
 
 	public void setUserTypeCode(UserTypeCode userTypeCode) {
-        this.userTypeCode = userTypeCode;
-    }
+		this.userTypeCode = userTypeCode;
+	}
 
 	public VerificationStatus getVerificationStatus() {
-        return this.verificationStatus;
-    }
+		return this.verificationStatus;
+	}
 
 	public void setVerificationStatus(VerificationStatus verificationStatus) {
-        this.verificationStatus = verificationStatus;
-    }
+		this.verificationStatus = verificationStatus;
+	}
 
 	public Integer getCreatedBy() {
-        return this.createdBy;
-    }
+		return this.createdBy;
+	}
 
 	public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
+		this.createdBy = createdBy;
+	}
 
 	public Calendar getCreatedDate() {
-        return this.createdDate;
-    }
+		return this.createdDate;
+	}
 
 	public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
-    }
+		this.createdDate = createdDate;
+	}
 
 	public Integer getModifiedBy() {
-        return this.modifiedBy;
-    }
+		return this.modifiedBy;
+	}
 
 	public void setModifiedBy(Integer modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
+		this.modifiedBy = modifiedBy;
+	}
 
 	public Calendar getModifiedDate() {
-        return this.modifiedDate;
-    }
+		return this.modifiedDate;
+	}
 
 	public void setModifiedDate(Calendar modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+		this.modifiedDate = modifiedDate;
+	}
 
 	/**
 	 * @return the userParentLookups
 	 */
-	public Set<UserParentLookup> getUserParentLookups() {
+	 public Set<UserParentLookup> getUserParentLookups() {
 		return userParentLookups;
 	}
 
 	/**
 	 * @param userParentLookups the userParentLookups to set
 	 */
-	public void setUserParentLookups(Set<UserParentLookup> userParentLookups) {
-		this.userParentLookups = userParentLookups;
-	}
+	 public void setUserParentLookups(Set<UserParentLookup> userParentLookups) {
+		 this.userParentLookups = userParentLookups;
+	 }
 
-	/**
-	 * @return the userParentLookups1
-	 */
-	public Set<UserParentLookup> getUserParentLookups1() {
-		return userParentLookups1;
-	}
+	 /**
+	  * @return the userParentLookups1
+	  */
+	 public Set<UserParentLookup> getUserParentLookups1() {
+		 return userParentLookups1;
+	 }
 
-	/**
-	 * @param userParentLookups1 the userParentLookups1 to set
-	 */
-	public void setUserParentLookups1(Set<UserParentLookup> userParentLookups1) {
-		this.userParentLookups1 = userParentLookups1;
-	}
+	 /**
+	  * @param userParentLookups1 the userParentLookups1 to set
+	  */
+	 public void setUserParentLookups1(Set<UserParentLookup> userParentLookups1) {
+		 this.userParentLookups1 = userParentLookups1;
+	 }
 
-	/**
-	 * @return the userInfoId
-	 */
-	public UserInfo getUserInfoId() {
-		return userInfoId;
-	}
+	 /**
+	  * @return the userInfoId
+	  */
+	 public UserInfo getUserInfoId() {
+		 return userInfoId;
+	 }
 
-	/**
-	 * @param userInfoId the userInfoId to set
-	 */
-	public void setUserInfoId(UserInfo userInfoId) {
-		this.userInfoId = userInfoId;
-	}
+	 /**
+	  * @param userInfoId the userInfoId to set
+	  */
+	 public void setUserInfoId(UserInfo userInfoId) {
+		 this.userInfoId = userInfoId;
+	 }
 
-	/**
-	 * @return the userPass
-	 */
-	public String getUserPass() {
-		return userPass;
-	}
+	 /**
+	  * @return the userPass
+	  */
+	 public String getUserPass() {
+		 return userPass;
+	 }
 
-	/**
-	 * @param userPass the userPass to set
-	 */
-	public void setUserPass(String userPass) {
-		this.userPass = userPass;
-	}
+	 /**
+	  * @param userPass the userPass to set
+	  */
+	 public void setUserPass(String userPass) {
+		 this.userPass = userPass;
+	 }
 
-	/**
-	 * @return the availabilities
-	 */
-	public Set<DayAvailability> getAvailabilities() {
-		return availabilities;
-	}
+	 /**
+	  * @return the availabilities
+	  */
+	 public Set<DayAvailability> getAvailabilities() {
+		 return availabilities;
+	 }
 
-	/**
-	 * @param availabilities the availabilities to set
-	 */
-	public void setAvailabilities(Set<DayAvailability> availabilities) {
-		this.availabilities = availabilities;
-	}
+	 /**
+	  * @param availabilities the availabilities to set
+	  */
+	 public void setAvailabilities(Set<DayAvailability> availabilities) {
+		 this.availabilities = availabilities;
+	 }
 
-	/**
-	 * @return the bookingss
-	 */
-	public Set<Bookings> getBookingss() {
-		return bookingss;
-	}
+	 /**
+	  * @return the bookingss
+	  */
+	 public Set<Bookings> getBookingss() {
+		 return bookingss;
+	 }
 
-	/**
-	 * @param bookingss the bookingss to set
-	 */
-	public void setBookingss(Set<Bookings> bookingss) {
-		this.bookingss = bookingss;
-	}
+	 /**
+	  * @param bookingss the bookingss to set
+	  */
+	 public void setBookingss(Set<Bookings> bookingss) {
+		 this.bookingss = bookingss;
+	 }
 
-	/**
-	 * @return the bookingss1
-	 */
-	public Set<Bookings> getBookingss1() {
-		return bookingss1;
-	}
+	 /**
+	  * @return the bookingss1
+	  */
+	 public Set<Bookings> getBookingss1() {
+		 return bookingss1;
+	 }
 
-	/**
-	 * @param bookingss1 the bookingss1 to set
-	 */
-	public void setBookingss1(Set<Bookings> bookingss1) {
-		this.bookingss1 = bookingss1;
-	}
+	 /**
+	  * @param bookingss1 the bookingss1 to set
+	  */
+	 public void setBookingss1(Set<Bookings> bookingss1) {
+		 this.bookingss1 = bookingss1;
+	 }
 
-	/**
-	 * @return the entitlements
-	 */
-	public Set<Entitlement> getEntitlements() {
-		return entitlements;
-	}
+	 /**
+	  * @return the entitlements
+	  */
+	 public Set<Entitlement> getEntitlements() {
+		 return entitlements;
+	 }
 
-	/**
-	 * @param entitlements the entitlements to set
-	 */
-	public void setEntitlements(Set<Entitlement> entitlements) {
-		this.entitlements = entitlements;
-	}
+	 /**
+	  * @param entitlements the entitlements to set
+	  */
+	 public void setEntitlements(Set<Entitlement> entitlements) {
+		 this.entitlements = entitlements;
+	 }
 
-	/**
-	 * @return the homepageSettingss
-	 */
-	public Set<HomepageSettings> getHomepageSettingss() {
-		return homepageSettingss;
-	}
+	 /**
+	  * @return the homepageSettingss
+	  */
+	 public Set<HomepageSettings> getHomepageSettingss() {
+		 return homepageSettingss;
+	 }
 
-	/**
-	 * @param homepageSettingss the homepageSettingss to set
-	 */
-	public void setHomepageSettingss(Set<HomepageSettings> homepageSettingss) {
-		this.homepageSettingss = homepageSettingss;
-	}
+	 /**
+	  * @param homepageSettingss the homepageSettingss to set
+	  */
+	 public void setHomepageSettingss(Set<HomepageSettings> homepageSettingss) {
+		 this.homepageSettingss = homepageSettingss;
+	 }
 
-	/**
-	 * @return the userFavoriteses
-	 */
-	public Set<UserFavorites> getUserFavoriteses() {
-		return userFavoriteses;
-	}
+	 /**
+	  * @return the userFavoriteses
+	  */
+	 public Set<UserFavorites> getUserFavoriteses() {
+		 return userFavoriteses;
+	 }
 
-	/**
-	 * @param userFavoriteses the userFavoriteses to set
-	 */
-	public void setUserFavoriteses(Set<UserFavorites> userFavoriteses) {
-		this.userFavoriteses = userFavoriteses;
-	}
+	 /**
+	  * @param userFavoriteses the userFavoriteses to set
+	  */
+	 public void setUserFavoriteses(Set<UserFavorites> userFavoriteses) {
+		 this.userFavoriteses = userFavoriteses;
+	 }
 
-	/**
-	 * @return the userFavoriteses1
-	 */
-	public Set<UserFavorites> getUserFavoriteses1() {
-		return userFavoriteses1;
-	}
+	 /**
+	  * @return the userFavoriteses1
+	  */
+	 public Set<UserFavorites> getUserFavoriteses1() {
+		 return userFavoriteses1;
+	 }
 
-	/**
-	 * @param userFavoriteses1 the userFavoriteses1 to set
-	 */
-	public void setUserFavoriteses1(Set<UserFavorites> userFavoriteses1) {
-		this.userFavoriteses1 = userFavoriteses1;
-	}
+	 /**
+	  * @param userFavoriteses1 the userFavoriteses1 to set
+	  */
+	 public void setUserFavoriteses1(Set<UserFavorites> userFavoriteses1) {
+		 this.userFavoriteses1 = userFavoriteses1;
+	 }
 
-	/**
-	 * @return the isEnabled
-	 */
-	public Boolean getIsEnabled() {
-		return isEnabled;
-	}
+	 /**
+	  * @return the isEnabled
+	  */
+	 public Boolean getIsEnabled() {
+		 return isEnabled;
+	 }
 
-	/**
-	 * @param isEnabled the isEnabled to set
-	 */
-	public void setIsEnabled(Boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
+	 /**
+	  * @param isEnabled the isEnabled to set
+	  */
+	 public void setIsEnabled(Boolean isEnabled) {
+		 this.isEnabled = isEnabled;
+	 }
 
-	/**
-	 * @return the authorities
-	 */
-	public Set<Authorities> getAuthorities() {
-		return authorities;
-	}
+	 /**
+	  * @return the authorities
+	  */
+	 public Set<Authorities> getAuthorities() {
+		 return authorities;
+	 }
 
-	/**
-	 * @param authorities the authorities to set
-	 */
-	public void setAuthorities(Set<Authorities> authorities) {
-		this.authorities = authorities;
-	}
+	 /**
+	  * @param authorities the authorities to set
+	  */
+	 public void setAuthorities(Set<Authorities> authorities) {
+		 this.authorities = authorities;
+	 }
 
 }

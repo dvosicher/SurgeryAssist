@@ -25,6 +25,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * for Spring Security
 	 * @param applicationUser The ApplicationUser to convert
 	 * @return The spring security user class
+	 * @author Ankit Tyagi
 	 */
 	public UserDetails convertApplicationUserToSpringUser(ApplicationUser applicationUser);
 	
@@ -35,6 +36,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * @param userInfo The {@link UserInfo} entity
 	 * @param contactInfo The {@link ContactInfo} entity
 	 * @param location The {@link Location} entity
+	 * @author Ankit Tyagi
 	 */
 	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
 	
@@ -45,6 +47,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * @param contactInfo the new {@link ContactInfo}
 	 * @param location the new {@link Location}
 	 * @return An application user ready to be inserted into the database
+	 * @author Ankit Tyagi
 	 */
 	public ApplicationUser createDefaultApplicationUser(ApplicationUser newApplicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
 	
@@ -60,6 +63,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * </ul>
 	 * @return Map with following example: pair "state" with list of
 	 * 		state drop downs (AL, Alabama) etc.
+	 * @author Ankit Tyagi
 	 */
 	public Map<String, List<SelectItem>> getDropdownMenuValues();
 	
@@ -69,6 +73,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * reflection. Note that these fields need to be public
 	 * @param obj The Entity object to set history info
 	 * @return The entity object to return
+	 * @author Ankit Tyagi
 	 */
 	public Object setHistoricalInfo(Object obj);
 	

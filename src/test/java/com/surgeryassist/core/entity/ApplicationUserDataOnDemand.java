@@ -32,7 +32,8 @@ public class ApplicationUserDataOnDemand {
 		ApplicationUser obj = new ApplicationUser();
 		setCreatedBy(obj, index);
 		setCreatedDate(obj, index);
-		setIsVerified(obj, index);
+		setIsVerified(obj);
+		setIsEnabled(obj);
 		setModifiedBy(obj, index);
 		setModifiedDate(obj, index);
 		setUserEmail(obj, index);
@@ -46,13 +47,17 @@ public class ApplicationUserDataOnDemand {
 		Integer createdBy = new Integer(index);
 		obj.setCreatedBy(createdBy);
 	}
+	
+	public void setIsEnabled(ApplicationUser obj) {
+		obj.setIsEnabled(true);
+	}
 
 	public void setCreatedDate(ApplicationUser obj, int index) {
 		Calendar createdDate = Calendar.getInstance();
 		obj.setCreatedDate(createdDate);
 	}
 
-	public void setIsVerified(ApplicationUser obj, int index) {
+	public void setIsVerified(ApplicationUser obj) {
 		obj.setVerificationStatus(VerificationStatus.VERIFIED);
 	}
 

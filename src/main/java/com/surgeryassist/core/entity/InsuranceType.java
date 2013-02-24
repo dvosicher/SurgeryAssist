@@ -217,4 +217,32 @@ public class InsuranceType {
         this.entityManager.flush();
         return merged;
     }
+
+	/**
+	 * @return the acceptedInsuranceTypeses
+	 */
+	public Set<AcceptedInsuranceTypes> getAcceptedInsuranceTypeses() {
+		return acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @param acceptedInsuranceTypeses the acceptedInsuranceTypeses to set
+	 */
+	public void setAcceptedInsuranceTypeses(Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses) {
+		this.acceptedInsuranceTypeses = acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @return the patients
+	 */
+	public Set<Patient> getPatients() {
+		return patients;
+	}
+
+	/**
+	 * @param patients the patients to set
+	 */
+	public void setPatients(Set<Patient> patients) {
+		this.patients = patients;
+	}
 }
