@@ -54,6 +54,7 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 
 		UserDetails springSecurityUser = null;
 		ApplicationUser databaseUser = ApplicationUser.findApplicationUserByEmailAddress(username);
+		
 		if(databaseUser == null) {
 			throw new UsernameNotFoundException("User not found");
 		}
@@ -92,7 +93,6 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		//create an insertable applicationUser
 		applicationUser = this.createDefaultApplicationUser(applicationUser, userInfo, contactInfo, location);
 		
-		
 		//salt it, might be ugly/not work...
 		Object salt = saltSource.getSalt(
 				new User(applicationUser.getUserEmail(), 
@@ -128,6 +128,8 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		//build the userInfo
 		userInfo.setLocationId(location);
 		userInfo.setContactInfoId(contactInfo);
+		userInfo.persist();
+		userInfo.flush();
 
 		newApplicationUser.setUserInfoId(userInfo);
 		newApplicationUser.setIsEnabled(Boolean.TRUE);
@@ -143,19 +145,21 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 			if(obj.getClass().isAnnotationPresent(Entity.class) && 
 					obj.getClass().getPackage().getName().contains("com.surgeryassist.core.entity")) {
 				
-				//only set the values if they are accessible
-				if(obj.getClass().getField("createdBy").isAccessible()) {
-					obj.getClass().getField("createdBy").set(obj, new Integer(1));
-				}
-				if(obj.getClass().getField("modifiedBy").isAccessible()) {
-					obj.getClass().getField("modifiedBy").set(obj, new Integer(1));
-				}
-				if(obj.getClass().getField("createdDate").isAccessible()) {
-					obj.getClass().getField("createdDate").set(obj, Calendar.getInstance());
-				}
-				if(obj.getClass().getField("modifiedDate").isAccessible()) {
-					obj.getClass().getField("modifiedDate").set(obj, Calendar.getInstance());
-				}
+				obj.getClass().getDeclaredField("createdBy").setAccessible(true);
+				obj.getClass().getDeclaredField("createdBy").set(obj, new Integer(1));
+				obj.getClass().getDeclaredField("createdBy").setAccessible(false);
+
+				obj.getClass().getDeclaredField("createdDate").setAccessible(true);
+				obj.getClass().getDeclaredField("createdDate").set(obj, Calendar.getInstance());
+				obj.getClass().getDeclaredField("createdDate").setAccessible(false);
+				
+				obj.getClass().getDeclaredField("modifiedBy").setAccessible(true);
+				obj.getClass().getDeclaredField("modifiedBy").set(obj, new Integer(1));
+				obj.getClass().getDeclaredField("modifiedBy").setAccessible(false);
+				
+				obj.getClass().getDeclaredField("modifiedDate").setAccessible(true);
+				obj.getClass().getDeclaredField("modifiedDate").set(obj, Calendar.getInstance());
+				obj.getClass().getDeclaredField("modifiedDate").setAccessible(false);
 			}
 		} 
 		//catch errors
@@ -177,6 +181,9 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 			//field doesn't exist
 			e.printStackTrace();
 		}
+		catch (SecurityException e) {
+			e.printStackTrace();
+		}
 		//return the object regardless
 		return obj;
 	}
@@ -192,7 +199,7 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		//get state codes, convert them into SelectItems, and put them into map
 		List<StateCode> stateCodesEntityList = StateCode.findAllStateCodes();
 		for(StateCode stateCode : stateCodesEntityList) {
-			stateCodeList.add(new SelectItem(stateCode.getStateName(), stateCode.getStateCodeID()));
+			stateCodeList.add(new SelectItem(stateCode, stateCode.getStateName()));
 		}
 		mapOfSelectItems.put("stateCode", stateCodeList);
 		

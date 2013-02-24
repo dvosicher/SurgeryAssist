@@ -48,15 +48,11 @@
 				<br />
 				Phone Number:
 				<br />
-					<h:inputText id="phone" value="#{newContactInfo.phoneNumber}">
-						<f:converter converterId="phoneNumberConverter" />
-					</h:inputText>
+					<h:inputText id="phone" value="#{newContactInfo.phoneNumber}" />
 				<br />
 				Fax Number:
 				<br />
-					<h:inputText id="fax" value="#{newContactInfo.faxNumber}">
-						<f:converter converterId="phoneNumberConverter" />
-					</h:inputText>
+					<h:inputText id="fax" value="#{newContactInfo.faxNumber}" />
 				<br />
 				Address:
 				<br />
@@ -72,6 +68,7 @@
 					<h:selectOneMenu id="state" value="#{newLocation.stateCode}">
 						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
 							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
+						<f:converter converterId="stateCodeConverter" />
 					</h:selectOneMenu>
 				<br />
 				Zip:

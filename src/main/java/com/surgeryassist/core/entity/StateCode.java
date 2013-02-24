@@ -197,4 +197,11 @@ public class StateCode implements Serializable {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof StateCode) {
+			return ((StateCode) obj).getStateCodeID().equals(this.stateCodeID);
+		}
+		return false;
+	}
 }

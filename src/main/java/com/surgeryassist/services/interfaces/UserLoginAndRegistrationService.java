@@ -55,6 +55,8 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * Includes the following: 
 	 * <ul>
 	 * 	<li>State Code</li>
+	 * 	<li>User Type Code</li>
+	 * 	<li>Verification Status</li>
 	 * </ul>
 	 * @return Map with following example: pair "state" with list of
 	 * 		state drop downs (AL, Alabama) etc.
@@ -64,7 +66,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	/**
 	 * Sets historical information (created by, created date, 
 	 * modified by, modified date) for an entity object via 
-	 * reflection
+	 * reflection. Note that these fields need to be public
 	 * @param obj The Entity object to set history info
 	 * @return The entity object to return
 	 */

@@ -41,7 +41,7 @@
     
     <!-- salting mechanism -->
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-    	<property name="userPropertyToUse" value="username"></property>
+    	<property name="userPropertyToUse" value="username" />
     </bean>
     
 	<!-- Use custom login and registration service --> 

@@ -44,29 +44,29 @@ public class ContactInfo implements Serializable {
     private Set<UserInfo> userInfoes;
 	
 	@Column(name = "phone_number")
-	private Integer phoneNumber;
+	private String phoneNumber;
 	
 	@Column(name = "fax_number")
-	private Integer faxNumber;
+	private String faxNumber;
 	
 	@Column(name = "secondary_email")
 	private String secondaryEmail;
 	
 	@Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -140,19 +140,19 @@ public class ContactInfo implements Serializable {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-	public Integer getFaxNumber() {
+	public String getFaxNumber() {
         return this.faxNumber;
     }
 
-	public void setFaxNumber(Integer faxNumber) {
+	public void setFaxNumber(String faxNumber) {
         this.faxNumber = faxNumber;
     }
 
