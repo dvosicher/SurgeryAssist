@@ -93,10 +93,14 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		//create an insertable applicationUser
 		applicationUser = this.createDefaultApplicationUser(applicationUser, userInfo, contactInfo, location);
 		
-		//salt it, might be ugly/not work...
+		//salt it
 		Object salt = saltSource.getSalt(
 				new User(applicationUser.getUserEmail(), 
 						applicationUser.getUserPass(), 
+						applicationUser.getIsEnabled(),
+						applicationUser.getIsEnabled(),
+						applicationUser.getIsEnabled(),
+						applicationUser.getIsEnabled(),
 						new ArrayList<GrantedAuthority>()));
 		
 		String encodedPass = passwordEncoder.encodePassword(applicationUser.getUserPass(), salt);
