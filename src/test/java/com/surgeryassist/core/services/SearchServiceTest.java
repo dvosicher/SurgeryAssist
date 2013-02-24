@@ -48,6 +48,14 @@ public class SearchServiceTest {
 		long count1 = DayAvailability.countDayAvailabilitys();
 		Assert.assertTrue("more than 0", count1 > 0);
 		Assert.assertTrue ("Our counts match111", res1.size() == 7);
+		
+		// testing SearchByZipCode
+		ArrayList<DayAvailability> res2 = (ArrayList<DayAvailability>) searchService.searchByZipCode(3);
+		Assert.assertNotNull ("", res2);
+		System.out.println(res2.size());
+		long count2 = DayAvailability.countDayAvailabilitys();
+		Assert.assertTrue("more than 0", count2 > 0);
+		Assert.assertTrue ("Our counts match111", res2.size() == 7);
 	}
 
 }
