@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -26,8 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "contact_info")
 @Configurable
-public class ContactInfo {
+public class ContactInfo implements Serializable {
 	
+	private static final long serialVersionUID = -5491997484622582038L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "contact_info_id")
@@ -50,20 +53,20 @@ public class ContactInfo {
 	private String secondaryEmail;
 	
 	@Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -192,4 +195,18 @@ public class ContactInfo {
 	public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+	/**
+	 * @return the userInfoes
+	 */
+	public Set<UserInfo> getUserInfoes() {
+		return userInfoes;
+	}
+
+	/**
+	 * @param userInfoes the userInfoes to set
+	 */
+	public void setUserInfoes(Set<UserInfo> userInfoes) {
+		this.userInfoes = userInfoes;
+	}
 }

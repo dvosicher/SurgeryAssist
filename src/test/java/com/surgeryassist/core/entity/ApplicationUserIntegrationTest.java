@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath*:/META-INF/config/applicationContext*.xml")
 @Transactional
 @Configurable
 public class ApplicationUserIntegrationTest {
@@ -48,6 +48,16 @@ public class ApplicationUserIntegrationTest {
         obj = ApplicationUser.findApplicationUser(id);
         Assert.assertNotNull("Find method for 'ApplicationUser' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'ApplicationUser' returned the incorrect identifier", id, obj.getUserID());
+    }
+    
+    @Test
+    public void testFindApplicationUserByEmailAddress() {
+    	ApplicationUser obj = dod.getRandomApplicationUser();
+    	Assert.assertNotNull("Data on demand for 'ApplicationUser' failed to initialize correctly", obj);
+    	String emailAddress = obj.getUserEmail();
+    	ApplicationUser objInQuestion = ApplicationUser.findApplicationUserByEmailAddress(emailAddress);
+    	Assert.assertNotNull("Find by email address returned null" , objInQuestion);
+    	Assert.assertEquals("Find by emails method did not find the correct user", obj, objInQuestion);
     }
     
     @Test
