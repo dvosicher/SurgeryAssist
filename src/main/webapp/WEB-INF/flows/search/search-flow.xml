@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="searchString" class="java.lang.String"/>
+	<var name="searchType" class="java.lang.String" />
+	
+	<view-state id="enterSearchCriteria">
+		<on-entry>
+			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
+		</on-entry>
+		<transition on="search" to="reviewSearchResults">
+			<evaluate expression="searchService.searchAll()" result="flowScope.dayAvailabilitiesList" />
+		</transition>
+	</view-state>
+	
+	<view-state id="reviewSearchResults">
+	</view-state>
+			
+	<end-state id="finish" />
+	
+</flow>
