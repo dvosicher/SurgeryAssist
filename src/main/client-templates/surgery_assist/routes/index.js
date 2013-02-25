@@ -11,6 +11,18 @@ exports.login = function(req, res) {
   res.render('bootstrap/login');
 };
 
-exports.header = function(req, res) {
-  res.render('bootstrap/surgeonheader');
-}
+exports.registration = function(req, res) {
+  res.render('bootstrap/registration');
+};
+
+exports.forgotpassword = function(req, res) {
+  res.render('bootstrap/forgotpassword');
+};
+
+exports.surgeon = function(req, res) {
+  res.render('bootstrap/surgeon');
+};
+
+exports.asc = function(req, res) {
+  res.render('bootstrap/asc');
+};

@@ -31,7 +31,10 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/login', routes.login);
-app.get('/header', routes.header);
+app.get('/registration', routes.registration);
+app.get('/forgotpassword', routes.forgotpassword);
+app.get('/surgeon', routes.surgeon);
+app.get('/asc', routes.asc);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
