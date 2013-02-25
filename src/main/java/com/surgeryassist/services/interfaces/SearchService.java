@@ -3,6 +3,7 @@ package com.surgeryassist.services.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 import com.surgeryassist.core.entity.DayAvailability;
+import com.surgeryassist.core.entity.TimeAvailabilities;
 
 /**
  * Allows for searching for different records
@@ -16,7 +17,7 @@ public interface SearchService {
 	 * Returns a dump of all day availabilities
 	 * @return {@link ArrayList} of {@link DayAvailability}
 	 */
-	public List<DayAvailability> searchAll();
+	public List<TimeAvailabilities> searchAll();
 	
 	/**
 	 * Returns a list of {@link DayAvailability}

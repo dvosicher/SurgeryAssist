@@ -26,8 +26,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +67,7 @@ public class ApplicationUser implements Serializable {
 	@OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
 	private Set<Authorities> authorities;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
 	private UserInfo userInfoId;
 
@@ -129,10 +127,6 @@ public class ApplicationUser implements Serializable {
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	@PersistenceContext

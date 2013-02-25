@@ -8,9 +8,11 @@ import java.util.Map;
 import javax.faces.model.SelectItem;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.SearchType;
 import com.surgeryassist.core.entity.DayAvailability;
+import com.surgeryassist.core.entity.TimeAvailabilities;
 import com.surgeryassist.services.interfaces.SearchService;
 
 /**
@@ -22,12 +24,13 @@ import com.surgeryassist.services.interfaces.SearchService;
 public class SearchServiceImpl implements SearchService {
 
 	@Override
-	public List<DayAvailability> searchAll() {
-		List<DayAvailability> result = DayAvailability.findAllDayAvailabilitys();
+	@Transactional
+	public List<TimeAvailabilities> searchAll() {
+		List<TimeAvailabilities> result = TimeAvailabilities.findAllTimeAvailabilitieses();
 		
 		if (result != null)
 			return result;
-		return new ArrayList<DayAvailability>();
+		return new ArrayList<TimeAvailabilities>();
 	}
 
 	@Override

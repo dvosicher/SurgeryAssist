@@ -1,10 +1,12 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,9 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "SurgeryAssist", name = "time_availabilities")
-public class TimeAvailabilities {
+public class TimeAvailabilities implements Serializable {
 
-	@ManyToOne
+	private static final long serialVersionUID = -8110342378591294302L;
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "availability_id")
 	private DayAvailability availabilityId;
 	
@@ -136,13 +140,7 @@ public class TimeAvailabilities {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public DayAvailability getDayAvailability() {
-        return this.availabilityId;
-    }
 
-	public void setDayAvailability(DayAvailability dayAvailability) {
-        this.availabilityId = dayAvailability;
-    }
 
 	public Calendar getStartTime() {
         return this.startTime;
@@ -216,4 +214,18 @@ public class TimeAvailabilities {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	/**
+	 * @return the availabilityId
+	 */
+	public DayAvailability getAvailabilityId() {
+		return availabilityId;
+	}
+
+	/**
+	 * @param availabilityId the availabilityId to set
+	 */
+	public void setAvailabilityId(DayAvailability availabilityId) {
+		this.availabilityId = availabilityId;
+	}
 }

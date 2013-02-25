@@ -13,11 +13,12 @@
 			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
 		</on-entry>
 		<transition on="search" to="reviewSearchResults">
-			<evaluate expression="searchService.searchAll()" result="flowScope.dayAvailabilitiesList" />
+			<evaluate expression="searchService.searchAll()" result="flowScope.timeAvailabilitiesList" />
 		</transition>
 	</view-state>
 	
 	<view-state id="reviewSearchResults">
+		<transition on="changeSearch" to="enterSearchCriteria" />
 	</view-state>
 			
 	<end-state id="finish" />
