@@ -17,7 +17,7 @@ import com.surgeryassist.core.entity.AvailabilityDataOnDemand;
 @Configurable
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath:/META-INF/config/applicationContext*.xml")
 public class AvailabilityIntegrationTest {
 	
 	@Autowired

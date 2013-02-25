@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath:/META-INF/config/applicationContext*.xml")
 public class AcceptedInsuranceTypesIntegrationTest {
 
 	@Autowired

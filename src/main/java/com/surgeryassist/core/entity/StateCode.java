@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
@@ -24,9 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "MetaData", name = "state_code")
-public class StateCode {
+public class StateCode implements Serializable {
 
-	@OneToMany(mappedBy = "stateCode")
+	private static final long serialVersionUID = -1882532832660713743L;
+
+	@OneToMany(mappedBy = "stateCode", fetch = FetchType.LAZY)
 	private Set<Location> locations;
 
 	@Id
@@ -192,5 +196,12 @@ public class StateCode {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof StateCode) {
+			return ((StateCode) obj).getStateCodeID().equals(this.stateCodeID);
+		}
+		return false;
 	}
 }

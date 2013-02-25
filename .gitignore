@@ -22,6 +22,10 @@ Thumbs.db
 .loadpath
 .project
 bin/**
+bin/
+.springBean
+.jsfdia
+.faces-config.xml.jsfdia
 
 # IntelliJ garbage #
 ####################
