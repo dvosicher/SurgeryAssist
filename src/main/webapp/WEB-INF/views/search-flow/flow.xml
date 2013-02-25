@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+    
+    <view-state id="enterCriteria" view="search-flow/searchCriteria">
+    	<transition on="search" to="displayResults" />
+    	<transition on="cancel" to="end-state" />
+    </view-state>
+    
+    <view-state id="displayResults" view="search-flow/searchResults">
+    	<transition on="newSearch" to="enterCriteria" />
+    	<!-- <transition on="select" to="view-details" /> -->
+    </view-state>
+    
+    <end-state id="end-state" view="search-flow/end-state"/>
+</flow>

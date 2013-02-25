@@ -47,7 +47,7 @@ public class SearchServiceTest {
 		System.out.println(res1.size());
 		long count1 = DayAvailability.countDayAvailabilitys();
 		Assert.assertTrue("more than 0", count1 > 0);
-		Assert.assertTrue ("Our counts match111", res1.size() == 7);
+		Assert.assertTrue ("City counts don't match", res1.size() == 3);
 		
 		// testing SearchByZipCode
 		ArrayList<DayAvailability> res2 = (ArrayList<DayAvailability>) searchService.searchByZipCode(3);
@@ -55,7 +55,7 @@ public class SearchServiceTest {
 		System.out.println(res2.size());
 		long count2 = DayAvailability.countDayAvailabilitys();
 		Assert.assertTrue("more than 0", count2 > 0);
-		Assert.assertTrue ("Our counts match111", res2.size() == 7);
+		Assert.assertTrue ("ZipCode counts don't match", res2.size() == 3);
 	}
 
 }
