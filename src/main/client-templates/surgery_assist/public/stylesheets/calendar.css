@@ -1,29 +1,36 @@
+#content {
+  padding: 30px;
+}
 #upcomingengagements {
   height: 400px;
+  background-color: #fff;
   width: 280px;
   border-radius: 5px;
-  box-shadow: 0px 0px 0px 2px #ff7400 inset;
   float: left;
-  margin: 20px;
+}
+#upcomingheader {
+  height: 50px;
 }
 #calendar {
   height: 400px;
+  overflow: hidden;
+  background-color: #fff;
   float: left;
-  margin: 20px;
+  margin-right: 20px;
   position: relative;
   width: 900px;
-  box-shadow: 0px 0px 0px 2px #ff7400 inset;
+  box-shadow: 0px 0px 0px 2px #ff9640 inset;
   border-radius: 5px;
 }
 #daytitles {
   height: 50px;
   clear: both;
-  box-shadow: 0px 0px 0px 2px #ff7400 inset;
+  box-shadow: 0px 0px 0px 2px #ff9640 inset;
   border-radius: 5px;
 }
 .daytitle {
   height: 100%;
-  box-shadow: 4px 0px 0px -2px #ff7400 inset;
+  box-shadow: 4px 0px 0px -2px #ff9640 inset;
 }
 .daytitle:first-of-type {
   box-shadow: none;
@@ -35,7 +42,7 @@
 }
 .daytitle > div,
 .day > div {
-  box-shadow: 4px -4px 0px -2px #ff7400 inset;
+  box-shadow: 4px -4px 0px -2px #ff9640 inset;
   height: 50px;
 }
 #days {

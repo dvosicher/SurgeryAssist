@@ -1,0 +1,23 @@
+extends bootstrap
+
+block content
+  .container
+    .row
+      .span8.offset2
+        .page-header
+          //h1 Welcome to SurgeryAssist
+          //p SurgeryAssist is a tool that connects practicing surgeons to surgery centers in their area for short-term room bookings.
+          img(src='/images/SurgeryAssistPNG24.png')
+        .row
+          .span4
+            form
+              fieldset
+                label Login/Email
+                input(type='text', placeholder='Login/Email')
+                label Password
+                input(type='password', placeholder='Password')
+                a(href='')
+                  small.help-block Forgot Password?
+              .btn-toolbar
+                button.btn.btn-large.btn-primary(type='submit') LOGIN
+                button.btn.btn-large.btn-primary(type='button') REGISTER

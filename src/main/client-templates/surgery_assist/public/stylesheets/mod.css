@@ -1,0 +1,22 @@
+.top-buf {
+  margin-top: 20px;
+}
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
+  color: #08c;
+  background-color: #fff;
+  font-weight: bold;
+}
+.row {
+  margin-right: -30px;
+}
+.flip {
+  color: #fff;
+  background-color: #51a6ee;
+  overflow: auto;
+}
+.table {
+  color: #08c;
+  background-color: #fff;
+}
