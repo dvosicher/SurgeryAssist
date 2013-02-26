@@ -1,7 +1,13 @@
 package com.surgeryassist.services.interfaces;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.faces.model.SelectItem;
+
+import com.surgeryassist.core.SearchType;
 import com.surgeryassist.core.entity.DayAvailability;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 
@@ -25,13 +31,17 @@ public interface SearchService {
 	 * @param city String of city name
 	 * @return {@link ArrayList} of {@link DayAvailability}
 	 */
-	public List<DayAvailability> searchByCity(String city);
+	public List<TimeAvailabilities> searchByCriteria(String city, String zipCode, 
+			Date startDate, Date endDate);
 	
 	/**
-	 * Returns a list of {@link DayAvailability}
-	 * for a zip code (fuzzy search)
-	 * @param zipCode Integer of the zipcode
-	 * @return {@link ArrayList} of {@link DayAvailability}
+	 * Creates a map containing all SelectItems used by the
+	 * front end. Currently includes the following:
+	 * <ul>
+	 * 	<li>{@link SearchType}</li>
+	 * </ul>
+	 * @return
 	 */
-	public List<DayAvailability> searchByZipCode(Integer zipCode);
+	public Map<String, List<SelectItem>> getSelectItemValues();
+
 }

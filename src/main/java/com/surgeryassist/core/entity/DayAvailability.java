@@ -31,7 +31,7 @@ public class DayAvailability implements Serializable {
 
 	private static final long serialVersionUID = 1276990934583890060L;
 
-	@OneToMany(mappedBy = "availabilityId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "availabilityId", fetch = FetchType.LAZY)
     private Set<TimeAvailabilities> timeAvailabilitieses;
     
     @ManyToOne(fetch = FetchType.EAGER)
@@ -101,13 +101,13 @@ public class DayAvailability implements Serializable {
         return entityManager().createQuery("SELECT o FROM DayAvailability o", DayAvailability.class).getResultList();
     }
 	
-	public static List<DayAvailability> findAllDayAvailabilitysByCity (String city) {
+	public static List<DayAvailability> findAllDayAvailabilitysByCity(String city) {
 		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.city = :city", DayAvailability.class)
 				.setParameter("city", city)
 				.getResultList();
 	}
 	
-	public static List<DayAvailability> findAllDayAvailabilitysByZipCode (Integer zipCode) {
+	public static List<DayAvailability> findAllDayAvailabilitysByZipCode(Integer zipCode) {
 		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.zipCode = :zipCode", DayAvailability.class)
 				.setParameter("zipCode", zipCode)
 				.getResultList();

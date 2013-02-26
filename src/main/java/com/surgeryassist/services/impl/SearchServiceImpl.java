@@ -1,17 +1,18 @@
 package com.surgeryassist.services.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.SearchType;
-import com.surgeryassist.core.entity.DayAvailability;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 import com.surgeryassist.services.interfaces.SearchService;
 
@@ -24,7 +25,7 @@ import com.surgeryassist.services.interfaces.SearchService;
 public class SearchServiceImpl implements SearchService {
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<TimeAvailabilities> searchAll() {
 		List<TimeAvailabilities> result = TimeAvailabilities.findAllTimeAvailabilitieses();
 		
@@ -32,27 +33,8 @@ public class SearchServiceImpl implements SearchService {
 			return result;
 		return new ArrayList<TimeAvailabilities>();
 	}
-
-	@Override
-	public List<DayAvailability> searchByCity(String city) {
-		List<DayAvailability> result = DayAvailability.findAllDayAvailabilitysByCity(city);
-		
-		if (result != null) {
-			return result;
-		}
-		return new ArrayList<DayAvailability>();
-	}
-
-	@Override
-	public List<DayAvailability> searchByZipCode(Integer zipCode) {
-		List<DayAvailability> result = DayAvailability.findAllDayAvailabilitysByZipCode(zipCode);
-		
-		if (result != null) {
-			return result;
-		}
-		return new ArrayList<DayAvailability>();
-	}
 	
+	@Override
 	public Map<String, List<SelectItem>> getSelectItemValues() {
 		Map<String, List<SelectItem>> mapOfSelectItems = new HashMap<String, List<SelectItem>>();
 		List<SelectItem> searchTypeSelectList = new ArrayList<SelectItem>();
@@ -63,6 +45,26 @@ public class SearchServiceImpl implements SearchService {
 		mapOfSelectItems.put("searchType", searchTypeSelectList);
 		
 		return mapOfSelectItems;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<TimeAvailabilities> searchByCriteria(String city,
+			String zipCode, Date startDate, Date endDate) {
+		List<TimeAvailabilities> returnList = new ArrayList<TimeAvailabilities>();
+		Integer zipCodeInt = null;
+		
+		if(StringUtils.isEmpty(city)) {
+			city = null;
+		}
+		if(!StringUtils.isEmpty(zipCode)) {
+			zipCodeInt = Integer.parseInt(zipCode);
+		}
+		
+		returnList = TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(
+				city, zipCodeInt, startDate, endDate);
+		
+		return returnList;
 	}
 
 }

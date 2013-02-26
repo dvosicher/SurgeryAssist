@@ -43,7 +43,7 @@ public class TimeAvailabilitiesIntegrationTest {
     @Test
     public void testFindTimeAvailabilitiesByDayAvailability() {
     	TimeAvailabilities timeAvail = dod.getRandomTimeAvailabilities();
-    	DayAvailability dayAvail = timeAvail.getDayAvailability();
+    	DayAvailability dayAvail = timeAvail.getAvailabilityId();
     	Assert.assertNotNull("Data on demand for 'DayAvailabilities' failed to initialize correctly", dayAvail);
     	List<TimeAvailabilities> obj = TimeAvailabilities.findTimeAvailabilitiesByDayAvailability(dayAvail);
     	Assert.assertNotNull("No time availabilities available for the provided day availability", obj);

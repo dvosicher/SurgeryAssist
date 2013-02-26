@@ -41,7 +41,7 @@ public class TimeAvailabilitiesDataOnDemand {
 
 	public void setAvailabilityId(TimeAvailabilities obj, int index) {
 		DayAvailability availabilityId = availabilityDataOnDemand.getRandomAvailability();
-		obj.setDayAvailability(availabilityId);
+		obj.setAvailabilityId(availabilityId);
 	}
 
 	public void setCreatedBy(TimeAvailabilities obj, int index) {

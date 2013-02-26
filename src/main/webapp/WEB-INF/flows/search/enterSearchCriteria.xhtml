@@ -16,22 +16,24 @@
 </ui:define>
 
 <ui:define name="content">
-
-	<p:panel header="Search Hotels" toggleable="true" toggleSpeed="100">
-		<h:form>
-			<p:messages globalOnly="true" />
-			<h:panelGrid columns="1">
-				<h:selectOneRadio value="#{searchType}">
-					<f:selectItems value="#{selectItemMap['searchType']}" />
-				</h:selectOneRadio>
-				<h:outputLabel />
-				<h:outputLabel for="searchString">Search String: </h:outputLabel>
-				<h:inputText id="searchString" value="#{searchString}" />
-				<p:commandButton id="findHotels" value="Find Hotels" action="search" update="@form" />
+	
+	<p:panel header="Search Availabilities" toggleable="true" toggleSpeed="100" collapsed="false">
+		<h:form id="searchAllForm">
+			<h:panelGrid columns="4">
+				<h:outputLabel for="cityName">City Name: </h:outputLabel>
+				<h:inputText id="cityName" value="#{cityName}" />
+				<h:outputLabel for="zipCode">Zip Code: </h:outputLabel>
+				<h:inputText id="zipCode" value="#{zipCode}" />
+				<h:outputLabel for="startDate">Start Date: </h:outputLabel>
+				<p:calendar id="startDate" value="#{startDate}" />
+				<h:outputLabel for="endDate">End Date: </h:outputLabel>
+				<p:calendar id="endDate" value="#{endDate}" />
+			
+				<p:commandButton id="searchAllButton" value="See All Availabilities" action="searchAll"/>
+				<h:outputLabel /><h:outputLabel />
+				<p:commandButton id="searchByCriteria" value="Search By Criteria" action="searchByCriteria" />
 			</h:panelGrid>
-			<p:tooltip for="searchString" targetPosition="topRight" position="bottomLeft"
-				value="Search bookings by city or zip." style="cream" />
-		</h:form>			  
+		</h:form>
 	</p:panel>
 
 </ui:define>

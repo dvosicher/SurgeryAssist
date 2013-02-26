@@ -5,15 +5,22 @@
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="searchString" class="java.lang.String"/>
-	<var name="searchType" class="java.lang.String" />
+	<var name="cityName" class="java.lang.String"/>
+	<var name="zipCode" class="java.lang.String" />
+	<var name="startDate" class="java.util.Date" />
+	<var name="endDate" class="java.util.Date" />
 	
 	<view-state id="enterSearchCriteria">
 		<on-entry>
 			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
 		</on-entry>
-		<transition on="search" to="reviewSearchResults">
+		
+		<transition on="searchAll" to="reviewSearchResults">
 			<evaluate expression="searchService.searchAll()" result="flowScope.timeAvailabilitiesList" />
+		</transition>
+		<transition on="searchByCriteria" to="reviewSearchResults">
+			<evaluate expression="searchService.searchByCriteria(cityName, zipCode, startDate, endDate)" 
+				result="flowScope.timeAvailabilitiesList" />
 		</transition>
 	</view-state>
 	
