@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="cityName" class="java.lang.String"/>
+	<var name="zipCode" class="java.lang.String" />
+	<var name="startDate" class="java.util.Date" />
+	<var name="endDate" class="java.util.Date" />
+	
+	<view-state id="enterSearchCriteria">
+		<on-entry>
+			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
+		</on-entry>
+		
+		<transition on="searchAll" to="reviewSearchResults">
+			<evaluate expression="searchService.searchAll()" result="flowScope.timeAvailabilitiesList" />
+		</transition>
+		<transition on="searchByCriteria" to="reviewSearchResults">
+			<evaluate expression="searchService.searchByCriteria(cityName, zipCode, startDate, endDate)" 
+				result="flowScope.timeAvailabilitiesList" />
+		</transition>
+	</view-state>
+	
+	<view-state id="reviewSearchResults">
+		<transition on="changeSearch" to="enterSearchCriteria" />
+	</view-state>
+			
+	<end-state id="finish" />
+	
+</flow>

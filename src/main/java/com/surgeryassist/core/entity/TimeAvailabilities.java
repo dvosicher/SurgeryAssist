@@ -1,10 +1,13 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,8 +18,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +33,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "SurgeryAssist", name = "time_availabilities")
-public class TimeAvailabilities {
+public class TimeAvailabilities implements Serializable {
 
-	@ManyToOne
+	private static final long serialVersionUID = -8110342378591294302L;
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "availability_id")
 	private DayAvailability availabilityId;
 	
@@ -94,7 +105,36 @@ public class TimeAvailabilities {
 	public static List<TimeAvailabilities> findTimeAvailabilitiesEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM TimeAvailabilities o", TimeAvailabilities.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
-
+	
+	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
+			Integer zipCode, Date startDate, Date endDate) {
+		
+		//create the session and criteria for the query
+		Session session = entityManager().unwrap(Session.class);
+		Criteria criteria = session.createCriteria(TimeAvailabilities.class);
+		
+		//add the city
+		if(city != null && !StringUtils.isEmpty(city)) {
+			criteria.add(
+					Restrictions.ilike(
+							"availabilityId.userId.userInfoId.locationId.city", city, MatchMode.ANYWHERE));
+		}
+		if(zipCode != null) {
+			criteria.add(
+					Restrictions.ilike(
+							"availabilityId.userId.userInfoId.locationId.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
+		}
+		if(startDate != null && endDate != null) {
+			criteria.add(
+					Restrictions.between(
+							"availabilityId.dateOfAvailability", startDate, endDate));
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<TimeAvailabilities> result = criteria.list();
+		return result;
+	}
+	
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -136,13 +176,7 @@ public class TimeAvailabilities {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public DayAvailability getDayAvailability() {
-        return this.availabilityId;
-    }
 
-	public void setDayAvailability(DayAvailability dayAvailability) {
-        this.availabilityId = dayAvailability;
-    }
 
 	public Calendar getStartTime() {
         return this.startTime;
@@ -216,4 +250,18 @@ public class TimeAvailabilities {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	/**
+	 * @return the availabilityId
+	 */
+	public DayAvailability getAvailabilityId() {
+		return availabilityId;
+	}
+
+	/**
+	 * @param availabilityId the availabilityId to set
+	 */
+	public void setAvailabilityId(DayAvailability availabilityId) {
+		this.availabilityId = availabilityId;
+	}
 }
