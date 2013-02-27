@@ -12,6 +12,10 @@
 	
 	<view-state id="enterSearchCriteria">
 		<on-entry>
+			<set name="cityName" value="''" />
+			<set name="zipCode" value="''" />
+			<set name="startDate" value="new java.util.Date()" />
+			<set name="endDate" value="new java.util.Date()" />
 			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
 		</on-entry>
 		

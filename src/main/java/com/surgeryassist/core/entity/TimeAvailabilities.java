@@ -23,12 +23,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.surgeryassist.util.SurgeryAssistUtil;
 
 @Configurable
 @Entity
@@ -113,21 +116,29 @@ public class TimeAvailabilities implements Serializable {
 		Session session = entityManager().unwrap(Session.class);
 		Criteria criteria = session.createCriteria(TimeAvailabilities.class);
 		
+		//join all the appropriate tables
+		criteria.setFetchMode("availabilityId", FetchMode.DEFAULT).createAlias("availabilityId", "aid");
+		criteria.setFetchMode("aid.userId", FetchMode.DEFAULT).createAlias("aid.userId", "uid");
+		criteria.setFetchMode("uid.userInfoId", FetchMode.DEFAULT).createAlias("uid.userInfoId", "uiid");
+		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
+		
+		Calendar calStartDate = SurgeryAssistUtil.DateToCalendar(startDate);
+		Calendar calEndDate = SurgeryAssistUtil.DateToCalendar(endDate);
+		
 		//add the city
 		if(city != null && !StringUtils.isEmpty(city)) {
-			criteria.add(
-					Restrictions.ilike(
-							"availabilityId.userId.userInfoId.locationId.city", city, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike(
+				"lid.city", city, MatchMode.ANYWHERE));
 		}
+		//add zip code
 		if(zipCode != null) {
-			criteria.add(
-					Restrictions.ilike(
-							"availabilityId.userId.userInfoId.locationId.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike(
+				"lid.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
 		}
+		//check the start/end dates
 		if(startDate != null && endDate != null) {
-			criteria.add(
-					Restrictions.between(
-							"availabilityId.dateOfAvailability", startDate, endDate));
+			criteria.add(Restrictions
+				.between("aid.dateOfAvailability", calStartDate, calEndDate));
 		}
 		
 		@SuppressWarnings("unchecked")
