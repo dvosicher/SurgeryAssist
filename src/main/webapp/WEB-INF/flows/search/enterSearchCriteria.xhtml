@@ -21,13 +21,13 @@
 		<h:form id="searchAllForm">
 			<h:panelGrid columns="4">
 				<h:outputLabel for="cityName">City Name: </h:outputLabel>
-				<h:inputText id="cityName" value="#{cityName}" />
+				<h:inputText id="cityName" value="#{searchCriteriaDTO.cityName}" />
 				<h:outputLabel for="zipCode">Zip Code: </h:outputLabel>
-				<h:inputText id="zipCode" value="#{zipCode}" />
+				<h:inputText id="zipCode" value="#{searchCriteriaDTO.zipCode}" />
 				<h:outputLabel for="startDate">Start Date: </h:outputLabel>
-				<p:calendar id="startDate" value="#{startDate}" />
+				<p:calendar id="startDate" value="#{searchCriteriaDTO.startDate}" />
 				<h:outputLabel for="endDate">End Date: </h:outputLabel>
-				<p:calendar id="endDate" value="#{endDate}" />
+				<p:calendar id="endDate" value="#{searchCriteriaDTO.endDate}" />
 			
 				<p:commandButton id="searchAllButton" value="See All Availabilities" action="searchAll"/>
 				<h:outputLabel /><h:outputLabel />

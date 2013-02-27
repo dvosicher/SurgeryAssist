@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.faces.model.SelectItem;
 
 import com.surgeryassist.core.SearchType;
+import com.surgeryassist.core.dto.SearchCriteriaDTO;
 import com.surgeryassist.core.entity.DayAvailability;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 
@@ -31,8 +32,7 @@ public interface SearchService {
 	 * @param city String of city name
 	 * @return {@link ArrayList} of {@link DayAvailability}
 	 */
-	public List<TimeAvailabilities> searchByCriteria(String city, String zipCode, 
-			Date startDate, Date endDate);
+	public List<TimeAvailabilities> searchByCriteria(SearchCriteriaDTO searchCriteria);
 	
 	/**
 	 * Creates a map containing all SelectItems used by the
