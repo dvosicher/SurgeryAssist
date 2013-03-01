@@ -3,6 +3,8 @@ package com.surgeryassist.core.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.surgeryassist.core.entity.TimeAvailabilities;
+
 /**
  * DTO to hold SearchCriteria Data
  * @author atyagi
@@ -19,6 +21,8 @@ public class SearchCriteriaDTO implements Serializable {
 	private Date startDate;
 	
 	private Date endDate;
+	
+	private TimeAvailabilities selectedAvailability;
 	
 	public SearchCriteriaDTO() {
 		this.startDate = new Date();
@@ -79,6 +83,20 @@ public class SearchCriteriaDTO implements Serializable {
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the selectedAvailability
+	 */
+	public TimeAvailabilities getSelectedAvailability() {
+		return selectedAvailability;
+	}
+
+	/**
+	 * @param selectedAvailability the selectedAvailability to set
+	 */
+	public void setSelectedAvailability(TimeAvailabilities selectedAvailability) {
+		this.selectedAvailability = selectedAvailability;
 	}
 
 	

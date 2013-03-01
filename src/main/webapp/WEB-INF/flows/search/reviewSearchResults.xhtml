@@ -17,26 +17,30 @@
         	Availabilities Search Results<br/>
         	<p:commandLink value="Modify or start search again" action="changeSearch" styleClass="alt" />
         </f:facet>
-		<p:column sortBy="#{a.availabilityId.dateOfAvailability}">
+		<p:column sortBy="#{a.availabilityId.dateOfAvailability}" id="dateColumn">
 			<f:facet name="header">Date Of Availability</f:facet>
 			<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
 				<f:convertDateTime type="date" dateStyle="default"/>
 			</h:outputText>
 		</p:column>
-		<p:column sortBy="#{a.startTime}">
+		<p:column sortBy="#{a.startTime}" id="startTimeColumn">
 			<f:facet name="header">Start Time</f:facet>
 			<h:outputText value="#{a.startTime.time}">
 				<f:convertDateTime type="time" dateStyle="default"/>
 			</h:outputText>
 		</p:column>
-		<p:column>
+		<p:column id="nameColumn">
 			<f:facet name="header">ASC Name</f:facet>
 			#{a.availabilityId.userId.userInfoId.firstName}
 		</p:column>
+		<p:column id="zipCodeColumn">
+			<f:facet name="header">Location (City, Zip)</f:facet>
+			#{a.availabilityId.userId.userInfoId.locationId.city}, #{a.availabilityId.userId.userInfoId.locationId.zipCode} 
+		</p:column>
 		<p:column>
 			<f:facet name="header">Action</f:facet>
-			<p:commandButton id="viewHotelLink" value="View" action="select" icon="ui-icon-search">
-				<f:setPropertyActionListener value="#{h}" target="#{hotels.selected}" />
+			<p:commandButton id="viewAvailability" value="Select" action="selectAvailability" icon="ui-icon-search">
+				<f:setPropertyActionListener target="#{searchCriteriaDTO.selectedAvailability}" value="#{a}" />
 			</p:commandButton>
 		</p:column>
 	</p:dataTable>

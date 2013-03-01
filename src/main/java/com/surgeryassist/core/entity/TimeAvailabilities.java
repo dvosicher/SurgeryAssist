@@ -85,7 +85,11 @@ public class TimeAvailabilities implements Serializable {
     }
 
 	public static List<TimeAvailabilities> findAllTimeAvailabilitieses() {
-        return entityManager().createQuery("SELECT o FROM TimeAvailabilities o", TimeAvailabilities.class).getResultList();
+        return entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+        		"INNER JOIN FETCH o.availabilityId aid " +
+        		"INNER JOIN FETCH aid.userId uid " +
+        		"INNER JOIN FETCH uid.userInfoId uiid " +
+        		"INNER JOIN FETCH uiid.locationId lid ", TimeAvailabilities.class).getResultList();
     }
 
 	public static TimeAvailabilities findTimeAvailabilities(Integer timeAvailabilityID) {
