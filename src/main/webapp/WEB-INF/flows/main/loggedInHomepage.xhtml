@@ -1,0 +1,69 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/standard.xhtml">
+
+	<ui:define name="notes">
+		<p>This is the home page</p>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<div style="float: left;">
+			<p:panel id="header" closable="true" header="Welcome">
+				<h1>Welcome to the SurgeryAssist Home Page!</h1>
+			</p:panel>
+		</div>
+		<div style="float: left;">
+			<h:form>
+				<p:commandButton id="searchButton" action="search"
+					value="Search Here">
+				</p:commandButton>
+			</h:form>
+		</div>
+		<div style="float: left;">
+			<p:panel id="bookings" header="Your Hotel Bookings"
+				rendered="#{currentUser!=null}" toggleable="true" toggleSpeed="100"
+				style="margin-top: 10px">
+				<h:outputText value="No Bookings Found"
+					rendered="#{bookings.rowCount==0}" />
+				<h:form rendered="#{bookings.rowCount > 0}">
+					<p:outputPanel id="bookingsContent">
+						<p:dataTable value="#{bookings}" var="booking">
+							<p:column>
+								<f:facet name="header">Hotel</f:facet>
+							#{booking.hotel.name}<br />
+							#{booking.hotel.address}<br />
+							#{booking.hotel.city}, #{booking.hotel.state}
+						</p:column>
+							<p:column>
+								<f:facet name="header">Check in</f:facet>
+								<h:outputText value="#{booking.checkinDate}">
+									<f:convertDateTime dateStyle="short" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Check out</f:facet>
+								<h:outputText value="#{booking.checkoutDate}">
+									<f:convertDateTime dateStyle="short" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Confirmation #</f:facet>
+							#{booking.id}
+						</p:column>
+							<p:column>
+								<f:facet name="header">Action</f:facet>
+								<p:commandButton id="cancel" value="Cancel"
+									action="cancelBooking" update=":bookings" />
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
+			</p:panel>
+		</div>
+	</ui:define>
+</ui:composition>
