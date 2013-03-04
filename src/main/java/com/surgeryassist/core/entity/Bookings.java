@@ -74,6 +74,10 @@ public class Bookings {
     @DateTimeFormat(style = "MM")
     private Calendar modifiedDate;
     
+    @ManyToOne
+    @JoinColumn(name = "time_availability_id", referencedColumnName = "time_availability_id", nullable = true)
+    private TimeAvailabilities timeAvailabilityId;
+    
     @PersistenceContext
     transient EntityManager entityManager;
     
@@ -297,4 +301,18 @@ public class Bookings {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	/**
+	 * @return the timeAvailabilityId
+	 */
+	public TimeAvailabilities getTimeAvailabilityId() {
+		return timeAvailabilityId;
+	}
+
+	/**
+	 * @param timeAvailabilityId the timeAvailabilityId to set
+	 */
+	public void setTimeAvailabilityId(TimeAvailabilities timeAvailabilityId) {
+		this.timeAvailabilityId = timeAvailabilityId;
+	}
 }

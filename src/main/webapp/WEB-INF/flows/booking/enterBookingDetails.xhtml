@@ -17,21 +17,21 @@
 		<p:fieldset legend="Hotel Reservation Form">
 			<p:messages />
 			<div class="large">
-				${booking.hotel.name},
-				${booking.hotel.address}
-				${booking.hotel.city}, ${booking.hotel.state}, ${booking.hotel.zip}
-				${booking.hotel.country}
+				#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+				#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.city}
+				${searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
 			</div>
 			<hr/>
 			<div>
 				<div class="span-4 label">
 					<h:outputLabel for="price">Nightly Rate:</h:outputLabel>
 				</div>
+			<h:inputText value="#{p}" />
 				<div class="span-14 last">
 					<p>
-						<h:outputText id="price" value="#{booking.hotel.price}">
+						<!-- <h:outputText id="price" value="#{booking.hotel.price}">
 							<f:convertNumber type="currency" currencySymbol="$"/>
-						</h:outputText>
+						</h:outputText> -->
 					</p>
 				</div>					
 			</div>

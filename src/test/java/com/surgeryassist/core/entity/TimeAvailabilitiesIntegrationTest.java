@@ -80,7 +80,8 @@ public class TimeAvailabilitiesIntegrationTest {
     @Test
     public void testFindTimeAvailabilitiesBySearchCriteria() {
     	Assert.assertNotNull("Data on demand for 'TimeAvailabilities' failed to initialize correctly", dod.getRandomTimeAvailabilities());
-    	String city = "city";
+    	//get the city based on the random availability
+    	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
     	Integer zipCode = null;
     	Calendar startDate = Calendar.getInstance();
     	Calendar endDate = Calendar.getInstance();
@@ -89,6 +90,8 @@ public class TimeAvailabilitiesIntegrationTest {
     			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, startDate.getTime(), endDate.getTime());
     	
     	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
+    	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 
+    			timeAvailabilities.size() >= 0);
     }
     
     
