@@ -5,11 +5,14 @@
       	http://www.springframework.org/schema/webflow
       	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<input name="selectedAvailability" type="com.surgeryassist.core.entity.TimeAvailabilities"/>
+	<var name="newPatient" class="com.surgeryassist.core.entity.Patient" />
+	<var name="newInsuranceType" class="com.surgeryassist.core.entity.InsuranceType" />
+	
+	<input name="selectedAvailability" type="com.surgeryassist.core.entity.TimeAvailabilities" />
 	
 	<view-state id="enterBookingDetails">
 		<on-entry>
-			<evaluate expression=""></evaluate>
+			<evaluate expression="bookingService.getCurrentUser()" result="flowScope.loggedInUser" />
 		</on-entry>
 		<transition on="proceed" to="reviewBooking" />
 		<transition on="cancel" to="bookingCancelled" bind="false" />
