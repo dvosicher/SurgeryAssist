@@ -7,7 +7,7 @@
 	
 	<!-- This is the flow for the home page. -->
 	
-	<view-state id="loggedInHomepage">
+	<view-state id="ascHome">
 		<transition on="search" to="searchFlow" />
 	</view-state>
 	

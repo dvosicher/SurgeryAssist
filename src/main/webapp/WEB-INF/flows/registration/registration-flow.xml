@@ -10,7 +10,7 @@
 	<var name="newContactInfo" class="com.surgeryassist.core.entity.ContactInfo"/>
 	<var name="newLocation" class="com.surgeryassist.core.entity.Location"/>
 
-	<view-state id="register">
+	<view-state id="register_reid">
 		<!-- Need to get dropdowns for state codes, plus others -->
 		<on-entry>
 			<evaluate expression="userLoginAndRegistrationService.getDropdownMenuValues()" 
