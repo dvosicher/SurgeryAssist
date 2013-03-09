@@ -29,6 +29,12 @@
   		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
   		<param-value>1</param-value>
   	</context-param>
+  	
+  	<!-- Defaults the theme for Primefaces -->
+  	<context-param>  
+	    <param-name>primefaces.THEME</param-name>  
+	    <param-value>bootstrap</param-value>  
+	</context-param>  
 
 	<!--
 		Uncomment this to disable partial state saving when using Apache MyFaces 2 !!

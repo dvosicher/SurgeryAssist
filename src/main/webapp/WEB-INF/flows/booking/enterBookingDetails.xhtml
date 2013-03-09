@@ -29,26 +29,26 @@
 			<hr/>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel value="Insurance Code" />
+					<h:outputLabel value="Insurance Code" for="insuranceCode"/>
 				</div>
 				<div class="span-5">
-					<p:inputText value="#{newInsuranceType.insuranceCode}" />
+					<p:inputText id="insuranceCode" value="#{newInsuranceType.insuranceCode}" />
 				</div>
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel value="Insurance Name" />
+					<h:outputLabel value="Insurance Name" for="insuranceName" />
 				</div>
 				<div class="span-5">
-					<p:inputText value="#{newInsuranceType.insuranceName}"  />
+					<p:inputText id="insuranceName" value="#{newInsuranceType.insuranceName}"  />
 				</div>
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel value="Insurance Description" />
+					<h:outputLabel for="insuranceDescription" value="Insurance Description" />
 				</div>
 				<div class="span-5">
-					<p:inputTextarea rows="2" cols="2"
+					<p:inputTextarea rows="2" cols="5" id="insuranceDescription" style="width: 77%; height: 20px;" autoResize="false"
 						value="#{newInsuranceType.insuranceDescription}" />
 				</div>
 			</div>
