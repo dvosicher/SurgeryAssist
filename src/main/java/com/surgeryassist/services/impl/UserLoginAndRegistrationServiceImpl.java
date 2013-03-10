@@ -34,7 +34,6 @@ import com.surgeryassist.util.SurgeryAssistUtil;
  * Implementation of custom auth handler
  * 
  * @author Ankit Tyagi
- *
  */
 @Service("userLoginAndRegistrationService")
 public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistrationService {
@@ -175,10 +174,4 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		return mapOfSelectItems;
 	}
 
-	@Override
-	public UserTypeCode isUserSurgeonOrASC() {
-		ApplicationUser loggedInUser = SurgeryAssistUtil.getLoggedInApplicationUser();
-		return loggedInUser.getUserTypeCode();
-	}
-	
 }
