@@ -10,22 +10,37 @@
 	
 	<input name="selectedAvailability" type="com.surgeryassist.core.entity.TimeAvailabilities" />
 	
+	<!-- Page 1: enter basic information -->
 	<view-state id="enterBookingDetails">
 		<on-entry>
-			<evaluate expression="bookingService.getCurrentUser()" result="flowScope.loggedInUser" />
+			<!-- Grab dropdown menu info -->
+			<evaluate expression="bookingService.getDropdownMenuValues()" 
+				result="flowScope.selectItemMap" />
 		</on-entry>
 		<transition on="proceed" to="reviewBooking" />
 		<transition on="cancel" to="bookingCancelled" bind="false" />
 	</view-state>
 	
+	<!-- Page 2: finalize and press submit -->
 	<view-state id="reviewBooking">
-		
+		<transition on="confirm" to="bookingConfirmed" />
 		<transition on="revise" to="enterBookingDetails" />
 		<transition on="cancel" to="bookingCancelled" />
 	</view-state>
 	
-	<end-state id="bookingConfirmed" />
+	<!-- Persists the booking and takes user to homepage -->
+	<end-state id="bookingConfirmed">
+		<on-entry>
+			<!-- Save the booking and persist it here -->
+			<!-- Save the patient info -->
+			<evaluate expression="bookingService.persistPatient(newInsuranceType, newPatient)" />
+			<evaluate expression="bookingService.createBooking(
+				selectedAvailability.availabilityId.userId,
+				newPatient, selectedAvailability)" />
+		</on-entry>
+	</end-state>
 
+	<!-- Cancels the booking and goes to the search page -->
 	<end-state id="bookingCancelled" />
 		
 </flow>

@@ -14,19 +14,56 @@
 </ui:define>
 <ui:define name="content">
 	<h:form id="bookingForm">
-		<p:fieldset legend="Book this Availability">
+		<p:fieldset legend="Book Availability">
 			<p:messages />
 			<div class="large">
 				<div id="name_of_asc">
 					#{selectedAvailability.availabilityId.userId.userInfoId.firstName} #{selectedAvailability.availabilityId.userId.userInfoId.lastName}
 				</div>
 				<div id="address_of_asc">
+					<address>
 					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
-					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city}
-					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+					<br/>
+					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+					</address>
 				</div>
 			</div>
 			<hr/>
+			<div class="header">
+				<h3>Patient Information</h3>
+			</div>
+			<div class="field">
+				<div class="span-4">
+					<h:outputLabel value="Patient First Name" for="patientFirstName"/>
+				</div>
+				<div class="span-5">
+					<p:inputText id="patientFirstName" value="#{newPatient.firstName}" />
+				</div>
+			</div>
+			<div class="field">
+				<div class="span-4">
+					<h:outputLabel value="Patient Last Name" for="patientLastName"/>
+				</div>
+				<div class="span-5">
+					<p:inputText id="patientLastName" value="#{newPatient.lastName}" />
+				</div>
+			</div>
+			<div class="field">
+				<div class="span-4">
+					<h:outputLabel value="Choose SurgeryType" for="surgeryTypeCode" />
+				</div>
+				<div class="span-5">
+					<p:selectOneMenu id="surgeryTypeCode" value="#{newPatient.surgeryTypeCode}">
+						<f:selectItems value="#{flowScope.selectItemMap['surgeryTypes']}" var="surgeryType"
+							itemLabel="#{surgeryType.surgeryFullName}" itemValue="#{surgeryType.surgeryId}"/>
+						<f:converter converterId="surgeryTypeConverter" />
+					</p:selectOneMenu>
+				</div>
+			</div>
+			<hr />
+			<div class="header">
+				<h3>Patient Insurance Information</h3>
+			</div>
 			<div class="field">
 				<div class="span-4">
 					<h:outputLabel value="Insurance Code" for="insuranceCode"/>
@@ -54,10 +91,10 @@
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel value="Insurance Policy Number" />
+					<h:outputLabel value="Insurance Policy Number" for="insurancePolicyNumber" />
 				</div>
 				<div class="span-5">
-					<p:inputText value="#{newInsuranceType.insurancePolicyNumber}"  />
+					<p:inputText id="insurancePolicyNumber" value="#{newInsuranceType.insurancePolicyNumber}"  />
 				</div>
 			</div>
 			<div>

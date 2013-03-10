@@ -38,6 +38,7 @@
 	<subflow-state id="createBooking" subflow="booking">
 		<input name="selectedAvailability" value="selectedAvailability" />
 		<transition on="bookingCancelled" to="enterSearchCriteria" />
+		<transition on="bookingConfirmed" to="finish" />
 	</subflow-state>
 			
 	<end-state id="finish" />

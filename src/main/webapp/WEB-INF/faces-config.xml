@@ -9,4 +9,9 @@
 	    	<converter-class>com.surgeryassist.util.faces.converters.StateCodeConverter</converter-class>
 	    </converter>
 	    
+	    <converter>
+	    	<converter-id>surgeryTypeConverter</converter-id>
+	    	<converter-class>com.surgeryassist.util.faces.converters.SurgeryTypeConverter</converter-class>
+	    </converter>
+	    
 </faces-config>

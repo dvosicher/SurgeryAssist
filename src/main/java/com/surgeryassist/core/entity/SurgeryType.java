@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -17,8 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "MetaData", name = "surgery_type")
 @Configurable
-public class SurgeryType {
+public class SurgeryType implements Serializable {
 	
+	private static final long serialVersionUID = -2431279427455792053L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "surgery_id")
@@ -143,11 +144,6 @@ public class SurgeryType {
         this.entityManager.flush();
         return merged;
     }
-	
-	@Override
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	/**
 	 * @return the patients
@@ -259,5 +255,15 @@ public class SurgeryType {
 	 */
 	public void setModifiedDate(Calendar modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof SurgeryType) {
+			if(((SurgeryType) obj).surgeryId.equals(this.surgeryId)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

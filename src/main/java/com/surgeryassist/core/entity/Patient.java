@@ -31,9 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 public class Patient implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7058796247531462151L;
 
 	@Id
@@ -63,20 +60,20 @@ public class Patient implements Serializable {
     private String lastName;
     
     @Column(name = "created_by")
-    private Integer createdBy;
+    public Integer createdBy;
     
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar createdDate;
+    public Calendar createdDate;
     
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+	public Integer modifiedBy;
     
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 	
 	@PersistenceContext
     transient EntityManager entityManager;

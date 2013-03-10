@@ -53,6 +53,7 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 
 		UserDetails springSecurityUser = null;
 		ApplicationUser databaseUser = ApplicationUser.findApplicationUserByEmailAddress(username);
+		
 		//TODO: use this when we have an admin interface to 'verify' surgeons
 		//ApplicationUser databaseUser = ApplicationUser.findValidApplicationUserByEmail(username);
 		
