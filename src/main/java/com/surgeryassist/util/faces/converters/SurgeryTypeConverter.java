@@ -5,10 +5,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.surgeryassist.core.entity.StateCode;
+import com.surgeryassist.core.entity.SurgeryType;
 
-@FacesConverter(value = "stateCodeConverter")
-public class StateCodeConverter implements Converter {
+@FacesConverter(value = "surgeryTypeConverter")
+public class SurgeryTypeConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
@@ -17,19 +17,25 @@ public class StateCodeConverter implements Converter {
 			return null;
 		}
 		
-		StateCode stateCode = StateCode.findStateCode(value);
+		Integer surgeryTypeId = null;
+		try {
+			surgeryTypeId = Integer.parseInt(value);
+		}
+		catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
 		
-		return stateCode;
+		SurgeryType surgeryType = SurgeryType.findSurgeryType(surgeryTypeId);
 		
+		return surgeryType;
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		
 		if(value != null) {
-			if(value instanceof StateCode) {
-				String stringValue = ((StateCode) value).getStateCodeID();
+			if(value instanceof SurgeryType) {
+				String stringValue = ((SurgeryType) value).getSurgeryId().toString();
 				return stringValue;
 			}
 		}

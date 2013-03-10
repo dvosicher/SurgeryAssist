@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "patient")
 @Configurable
-public class Patient {
+public class Patient implements Serializable {
+
+	private static final long serialVersionUID = -7058796247531462151L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,20 +60,20 @@ public class Patient {
     private String lastName;
     
     @Column(name = "created_by")
-    private Integer createdBy;
+    public Integer createdBy;
     
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar createdDate;
+    public Calendar createdDate;
     
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+	public Integer modifiedBy;
     
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 	
 	@PersistenceContext
     transient EntityManager entityManager;

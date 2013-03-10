@@ -59,20 +59,24 @@ public class Bookings {
     private String cancellationReason;
     
     @Column(name = "created_by")
-    private Integer createdBy;
+    public Integer createdBy;
     
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar createdDate;
+    public Calendar createdDate;
     
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
     
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "time_availability_id", referencedColumnName = "time_availability_id", nullable = true)
+    private TimeAvailabilities timeAvailabilityId;
     
     @PersistenceContext
     transient EntityManager entityManager;
@@ -297,4 +301,18 @@ public class Bookings {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	/**
+	 * @return the timeAvailabilityId
+	 */
+	public TimeAvailabilities getTimeAvailabilityId() {
+		return timeAvailabilityId;
+	}
+
+	/**
+	 * @param timeAvailabilityId the timeAvailabilityId to set
+	 */
+	public void setTimeAvailabilityId(TimeAvailabilities timeAvailabilityId) {
+		this.timeAvailabilityId = timeAvailabilityId;
+	}
 }

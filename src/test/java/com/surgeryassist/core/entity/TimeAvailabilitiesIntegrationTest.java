@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -74,6 +75,25 @@ public class TimeAvailabilitiesIntegrationTest {
         Assert.assertNotNull("Find entries method for 'TimeAvailabilities' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'TimeAvailabilities' returned an incorrect number of entries", count, result.size());
     }
+    
+    
+    @Test
+    public void testFindTimeAvailabilitiesBySearchCriteria() {
+    	Assert.assertNotNull("Data on demand for 'TimeAvailabilities' failed to initialize correctly", dod.getRandomTimeAvailabilities());
+    	//get the city based on the random availability
+    	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
+    	Integer zipCode = null;
+    	Calendar startDate = Calendar.getInstance();
+    	Calendar endDate = Calendar.getInstance();
+    	
+    	List<TimeAvailabilities> timeAvailabilities = 
+    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, startDate.getTime(), endDate.getTime());
+    	
+    	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
+    	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 
+    			timeAvailabilities.size() >= 0);
+    }
+    
     
     @Test
     public void testFlush() {

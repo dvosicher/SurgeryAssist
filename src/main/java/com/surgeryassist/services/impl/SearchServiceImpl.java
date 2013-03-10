@@ -1,7 +1,6 @@
 package com.surgeryassist.services.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.SearchType;
+import com.surgeryassist.core.dto.SearchCriteriaDTO;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 import com.surgeryassist.services.interfaces.SearchService;
 
@@ -49,20 +49,21 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<TimeAvailabilities> searchByCriteria(String city,
-			String zipCode, Date startDate, Date endDate) {
+	public List<TimeAvailabilities> searchByCriteria(SearchCriteriaDTO searchCriteria) {
+		
 		List<TimeAvailabilities> returnList = new ArrayList<TimeAvailabilities>();
 		Integer zipCodeInt = null;
+		String city = null;
 		
-		if(StringUtils.isEmpty(city)) {
-			city = null;
+		if(!StringUtils.isEmpty(searchCriteria.getCityName())) {
+			city = searchCriteria.getCityName();
 		}
-		if(!StringUtils.isEmpty(zipCode)) {
-			zipCodeInt = Integer.parseInt(zipCode);
+		if(!StringUtils.isEmpty(searchCriteria.getZipCode())) {
+			zipCodeInt = Integer.parseInt(searchCriteria.getZipCode());
 		}
 		
 		returnList = TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(
-				city, zipCodeInt, startDate, endDate);
+				city, zipCodeInt, searchCriteria.getStartDate(), searchCriteria.getEndDate());
 		
 		return returnList;
 	}
