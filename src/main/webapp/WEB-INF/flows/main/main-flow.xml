@@ -6,10 +6,18 @@
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
 	<!-- This is the flow for the home page. -->
+	<action-state id="decideSurgeonOrASC">
+		<evaluate expression="userLoginAndRegistrationService.isUserSurgeonOrASC()" />
+		<transition on="SURGEON" to="surgeonHome" />
+		<transition on="ASC" to="ascHome" />
+	</action-state>
 	
-	<view-state id="login">
-		<transition on="search" to="searchFlow" />
-		<transition on="registration" to="registrationFlow" />
+	<view-state id="ascHome">
+	
+	</view-state>
+	
+	<view-state id="surgeonHome">
+	
 	</view-state>
 	
 	<subflow-state id="searchFlow" subflow="search">

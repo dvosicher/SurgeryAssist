@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.surgeryassist.core.UserTypeCode;
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.ContactInfo;
 import com.surgeryassist.core.entity.Location;
@@ -66,5 +67,13 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * @author Ankit Tyagi
 	 */
 	public Map<String, List<SelectItem>> getDropdownMenuValues();
+	
+	/**
+	 * Returns an Enum of {@link UserTypeCode} that
+	 * tells whether the user is a Surgeon,
+	 * ASC, or a delegate account.
+	 * @return {@link UserTypeCode} of logged in user, otherwise null.
+	 */
+	public UserTypeCode isUserSurgeonOrASC();
 	
 }

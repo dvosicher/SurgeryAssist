@@ -19,11 +19,11 @@
 		<transition on="registerUser" to="registrationSuccess">
 			<evaluate expression="userLoginAndRegistrationService.registerUser(newApplicationUser, newUserInfo, newContactInfo, newLocation)" />
 		</transition>
-		<transition on="cancelUser" to="cancel"></transition>
+		<transition on="cancelUser" to="cancel" />
 	</view-state>
 
 	<end-state id="registrationSuccess" view="registrationSuccess.xhtml" />
 	
-	<end-state id="cancel" />
+	<end-state id="cancel" view="/WEB-INF/login.xhtml" />
 	
 </flow>

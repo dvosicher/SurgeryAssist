@@ -14,42 +14,44 @@
 </div>
 <div class="row">
 	<div class="span8">
-		<h:form class="form-horizontal" id="registrationForm">
+		<h:form styleClass="form-horizontal" id="registrationForm">
+			<p:messages />
 			<div class="control-group">
 				<label for="userEmail" class="control-label">Email</label>
 				<div class="controls">
-					<h:inputText type="email" id="userEmail" value="#{newApplicationUser.userEmail}" />
+					<p:inputText type="email" id="userEmail" value="#{newApplicationUser.userEmail}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="userPass" class="control-label">Password</label>
 				<div class="controls">
-					<h:inputSecret id="userPass" value="#{newApplicationUser.userPass}" />
+					<p:password id="userPass" value="#{newApplicationUser.userPass}" match="confirmPass" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="confirmPass" class="control-label">Confirm Password</label>
 				<div class="controls">
-					<h:inputSecret id="confirmPass" />
+					<p:password id="confirmPass" value="#{newApplicationUser.userPass}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="firstName" class="control-label">First Name</label>
 				<div class="controls">
-					<h:inputText id="firstName" value="#{newUserInfo.firstName}" />
+					<p:inputText id="firstName" value="#{newUserInfo.firstName}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="lastName" class="control-label">Last Name</label>
 				<div class="controls">
-					<h:inputText id="lastName" value="#{newUserInfo.lastName}" />
+					<p:inputText id="lastName" value="#{newUserInfo.lastName}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="inputUserType" class="control-label">User
 					Type</label>
 				<div class="controls">
-					<h:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}">
+					<h:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}" required="true">
+						<f:selectItem itemLabel="Choose One..." itemValue="none" noSelectionOption="true"/>
 						<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
 							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
 					</h:selectOneMenu>
@@ -58,43 +60,44 @@
 			<div class="control-group">
 				<label for="photo" class="control-label">Photo</label>
 				<div class="controls">
-					<h:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
+					<p:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="video" class="control-label">Video</label>
 				<div class="controls">
-					<h:inputText id="video" value="#{newUserInfo.videoFilePath}" />
+					<p:inputText id="video" value="#{newUserInfo.videoFilePath}" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="phone" class="control-label">Phone Number</label>
 				<div class="controls">
-					<h:inputText type="number" id="phone" value="#{newContactInfo.phoneNumber}" />
+					<p:inputText id="phone" value="#{newContactInfo.phoneNumber}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="fax" class="control-label">Fax Number</label>
 				<div class="controls">
-					<h:inputText type="number" id="fax" value="#{newContactInfo.faxNumber}" />
+					<p:inputText id="fax" value="#{newContactInfo.faxNumber}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="address" class="control-label">Address</label>
 				<div class="controls">
-					<h:inputText id="address" value="#{newLocation.address}" />
+					<p:inputText id="address" value="#{newLocation.address}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="city" class="control-label">City</label>
 				<div class="controls">
-					<h:inputText id="city" value="#{newLocation.city}" />
+					<p:inputText id="city" value="#{newLocation.city}" required="true" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label for="inputState" class="control-label">State</label>
 				<div class="controls">
-					<h:selectOneMenu id="state" value="#{newLocation.stateCode}">
+					<h:selectOneMenu id="state" value="#{newLocation.stateCode}" required="true" >
+						<f:selectItem itemLabel="Choose One..." itemValue="none" noSelectionOption="true"/>
 						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
 							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
 						<f:converter converterId="stateCodeConverter" />
@@ -104,13 +107,15 @@
 			<div class="control-group">
 				<label for="zip" class="control-label">ZIP</label>
 				<div class="controls">
-					<h:inputText type="number" id="zip" value="#{newLocation.zipCode}" />
+					<p:inputText id="zip" value="#{newLocation.zipCode}" required="true"/>
 				</div>
 			</div>
 			<div class="form-actions">
 				<div class="btn-toolbar">
-					<h:commandButton id="registerButton" type="button" class="btn btn-large btn-primary" action="registerUser" value="REGISTER" />
-					<h:commandButton id="cancelButton" type="button" class="btn btn-large btn-primary" action="cancelUser" value="CANCEL" />
+					<p:commandButton id="registerButton" type="button" 
+						styleClass="btn btn-primary" action="registerUser" value="REGISTER" />
+					<p:commandButton id="cancelButton" type="button" 
+						styleClass="btn btn-primary" action="cancelUser" value="CANCEL" />
 				</div>
 			</div>
 		</h:form>

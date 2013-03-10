@@ -174,5 +174,11 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		
 		return mapOfSelectItems;
 	}
+
+	@Override
+	public UserTypeCode isUserSurgeonOrASC() {
+		ApplicationUser loggedInUser = SurgeryAssistUtil.getLoggedInApplicationUser();
+		return loggedInUser.getUserTypeCode();
+	}
 	
 }
