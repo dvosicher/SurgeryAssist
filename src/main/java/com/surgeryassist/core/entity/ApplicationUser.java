@@ -167,6 +167,24 @@ public class ApplicationUser implements Serializable {
 		}
 		return returnObj; 
 	}
+	
+	public static ApplicationUser findValidApplicationUserByEmail(String emailAddress) {
+		ApplicationUser returnObj = null;
+		if(emailAddress != null) {
+			try {
+				returnObj = (ApplicationUser) entityManager()
+						.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress " +
+								"AND o.verificationStatus = 'VERIFIED'")
+						.setParameter("emailAddress", emailAddress)
+						.getSingleResult();
+			}
+			catch(NonUniqueResultException e) {
+				e.printStackTrace();
+				
+			}
+		}
+		return returnObj; 
+	}
 
 	@Transactional
 	public void persist() {

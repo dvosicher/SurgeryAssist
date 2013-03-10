@@ -12,7 +12,7 @@
 	</view-state>
 	
 	<subflow-state id="searchFlow" subflow="search">
-
+		<transition on="finish" to="loggedInHomepage" />
 	</subflow-state>
 	
 </flow>

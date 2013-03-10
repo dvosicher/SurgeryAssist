@@ -15,67 +15,70 @@
 		<h1>Register here</h1>
 		<p>
 			<h:form id="registrationForm">
-				Email Address:
-				<br />
-					<h:inputText id="userEmail" value="#{newApplicationUser.userEmail}" />
-				<br />
-				Password:
-				<br />
-					<h:inputSecret id="userPass" value="#{newApplicationUser.userPass}" />
-				<br />
-				First Name:
-				<br />
-					<h:inputText id="firstName" value="#{newUserInfo.firstName}" />
-				<br />
-				Last Name:
-				<br />
-					<h:inputText id="lastName" value="#{newUserInfo.lastName}" />
-				<br />
-				User Type:
-				<br />
-					<h:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}">
-						<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
-							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
-					</h:selectOneMenu>
-				<br />
-				Photo (put dummy file path for now):
-				<br />
-					<h:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
-				<br />
-				Video (put dummy file path for now):
-				<br />
-					<h:inputText id="video" value="#{newUserInfo.videoFilePath}" />
-				<br />
-				Phone Number:
-				<br />
-					<h:inputText id="phone" value="#{newContactInfo.phoneNumber}" />
-				<br />
-				Fax Number:
-				<br />
-					<h:inputText id="fax" value="#{newContactInfo.faxNumber}" />
-				<br />
-				Address:
-				<br />
-					<h:inputText id="address" value="#{newLocation.address}" />
-					
-				<br />
-				City:
-				<br />
-					<h:inputText id="city" value="#{newLocation.city}" />
-				<br />
-				State:
-				<br />
-					<h:selectOneMenu id="state" value="#{newLocation.stateCode}">
-						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
-							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
-						<f:converter converterId="stateCodeConverter" />
-					</h:selectOneMenu>
-				<br />
-				Zip:
-				<br />
-					<h:inputText id="zip" value="#{newLocation.zipCode}" />
-				<br />
-				<h:commandButton id="registerButton" action="registerUser" value="Register Now"/>
+				<p:fieldset legend="Register">
+					<p:messages />
+					<h:outputLabel value="Email Address:" for="userEmail" /> 
+					<br />
+						<p:inputText id="userEmail" value="#{newApplicationUser.userEmail}" required="true"/>
+					<br />
+					<h:outputLabel value="Password:" for="userPass" /> 
+					<br />
+						<p:password id="userPass" value="#{newApplicationUser.userPass}" type="password" required="true" />
+					<br />
+					<h:outputLabel value="First Name:" for="firstName"/>
+					<br />
+						<p:inputText id="firstName" value="#{newUserInfo.firstName}" required="true"/>
+					<br />
+					<h:outputLabel value="Last Name:" for="lastName" />
+					<br />
+						<p:inputText id="lastName" value="#{newUserInfo.lastName}" required="true" />
+					<br />
+					User Type:
+					<br />
+						<p:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}" required="true" >
+							<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
+								itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
+						</p:selectOneMenu>
+					<br />
+					Photo (put dummy file path for now):
+					<br />
+						<p:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
+					<br />
+					Video (put dummy file path for now):
+					<br />
+						<p:inputText id="video" value="#{newUserInfo.videoFilePath}" />
+					<br />
+					Phone Number:
+					<br />
+						<p:inputText id="phone" value="#{newContactInfo.phoneNumber}" />
+					<br />
+					Fax Number:
+					<br />
+						<p:inputText id="fax" value="#{newContactInfo.faxNumber}" />
+					<br />
+					Address:
+					<br />
+						<p:inputText id="address" value="#{newLocation.address}" />
+						
+					<br />
+					City:
+					<br />
+						<p:inputText id="city" value="#{newLocation.city}" />
+					<br />
+					State:
+					<br />
+						<p:selectOneMenu id="state" value="#{newLocation.stateCode}">
+							<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
+								itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
+							<f:converter converterId="stateCodeConverter" />
+						</p:selectOneMenu>
+					<br />
+					Zip:
+					<br />
+						<p:inputText id="zip" value="#{newLocation.zipCode}" />
+					<br />
+					<p:commandButton id="registerButton" action="registerUser" value="Register Now" update="@form"/>
+				</p:fieldset>
 			</h:form>
 		</p>
 	</div>

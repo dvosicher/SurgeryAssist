@@ -14,126 +14,92 @@
 </ui:define>
 <ui:define name="content">
 	<h:form id="bookingForm">
-		<p:fieldset legend="Hotel Reservation Form">
+		<p:fieldset legend="Book Availability">
 			<p:messages />
 			<div class="large">
-				${booking.hotel.name},
-				${booking.hotel.address}
-				${booking.hotel.city}, ${booking.hotel.state}, ${booking.hotel.zip}
-				${booking.hotel.country}
+				<div id="name_of_asc">
+					#{selectedAvailability.availabilityId.userId.userInfoId.firstName} #{selectedAvailability.availabilityId.userId.userInfoId.lastName}
+				</div>
+				<div id="address_of_asc">
+					<address>
+					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+					<br/>
+					#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+					</address>
+				</div>
 			</div>
 			<hr/>
-			<div>
-				<div class="span-4 label">
-					<h:outputLabel for="price">Nightly Rate:</h:outputLabel>
-				</div>
-				<div class="span-14 last">
-					<p>
-						<h:outputText id="price" value="#{booking.hotel.price}">
-							<f:convertNumber type="currency" currencySymbol="$"/>
-						</h:outputText>
-					</p>
-				</div>					
+			<div class="header">
+				<h3>Patient Information</h3>
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel for="checkinDate">Check In:</h:outputLabel>
+					<h:outputLabel value="Patient First Name" for="patientFirstName"/>
 				</div>
 				<div class="span-5">
-					<p>
-						<p:calendar id="checkinDate" label="Check in date" 
-							value="#{booking.checkinDate}" pattern="MM-dd-yyyy" timeZone="EST" required="true" />
-	               	</p>
-				</div>
-				<div class="span-4">
-					<h:outputLabel for="checkoutDate">Check Out:</h:outputLabel>
-				</div>
-				<div class="span-5 last">
-					<p>
-						<p:calendar id="checkoutDate" label="Check out date" 
-							value="#{booking.checkoutDate}" pattern="MM-dd-yyyy" timeZone="EST" required="true" />
-					</p>
+					<p:inputText id="patientFirstName" value="#{newPatient.firstName}" />
 				</div>
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel for="beds">Room Preference:</h:outputLabel>
+					<h:outputLabel value="Patient Last Name" for="patientLastName"/>
 				</div>
 				<div class="span-5">
-					<p>
-						<h:selectOneMenu id="beds" value="#{booking.beds}">
-							<f:selectItems value="#{referenceData.bedOptions}"/>
-						</h:selectOneMenu>
-					</p>	
-				</div>
-				<div class="span-4">
-					<h:outputLabel for="smoking">Smoking:</h:outputLabel>
-				</div>
-				<div id="radio" class="span-5 last">
-					<h:selectOneRadio id="smoking" value="#{booking.smoking}" layout="pageDirection">
-						<f:selectItems value="#{referenceData.smokingOptions}"/>
-					</h:selectOneRadio>
+					<p:inputText id="patientLastName" value="#{newPatient.lastName}" />
 				</div>
 			</div>
-			<!-- 
-			The "amenities" section commented out due to the following issue:
-			
-			https://issues.apache.org/jira/browse/MYFACES-2739
-			https://javaserverfaces-spec-public.dev.java.net/issues/show_bug.cgi?id=817
-			https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=1694
-			
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel for="amenities">Amenities:</h:outputLabel>
-				</div>
-				<div class="span-11 last">
-					<h:selectManyCheckbox id="amenities" value="#{booking.amenities}" layout="pageDirection">
-						<f:selectItem itemValue="OCEAN_VIEW" itemLabel="Ocean View" />
-						<f:selectItem itemValue="LATE_CHECKOUT" itemLabel="Late Checkout" />
-						<f:selectItem itemValue="MINIBAR" itemLabel="Minibar" />
-					</h:selectManyCheckbox>
-				</div>
-			</div>
-
-			-->
-			<div class="field">
-				<div class="span-4">
-					<h:outputLabel for="creditCard">Credit Card Number:</h:outputLabel>
+					<h:outputLabel value="Choose SurgeryType" for="surgeryTypeCode" />
 				</div>
 				<div class="span-5">
-					<p>
-						<h:inputText id="creditCard" label="Credit card number" value="#{booking.creditCard}" />
-						<p:tooltip for="creditCard" value="16-digit credit card number." style="cream" position="bottomLeft" />
-					</p>
+					<p:selectOneMenu id="surgeryTypeCode" value="#{newPatient.surgeryTypeCode}">
+						<f:selectItems value="#{flowScope.selectItemMap['surgeryTypes']}" var="surgeryType"
+							itemLabel="#{surgeryType.surgeryFullName}" itemValue="#{surgeryType.surgeryId}"/>
+						<f:converter converterId="surgeryTypeConverter" />
+					</p:selectOneMenu>
 				</div>
+			</div>
+			<hr />
+			<div class="header">
+				<h3>Patient Insurance Information</h3>
+			</div>
+			<div class="field">
 				<div class="span-4">
-					<h:outputLabel for="creditCardName">Credit Card Name:</h:outputLabel>
+					<h:outputLabel value="Insurance Code" for="insuranceCode"/>
 				</div>
-				<div class="span-5 last">
-					<p>
-						<h:inputText id="creditCardName" label="Credit card name" value="#{booking.creditCardName}"/>
-						<p:tooltip for="creditCardName" value="The name as it appears on the credit card" style="cream" />
-					</p>
+				<div class="span-5">
+					<p:inputText id="insuranceCode" value="#{newInsuranceType.insuranceCode}" />
 				</div>
 			</div>
 			<div class="field">
 				<div class="span-4">
-					<h:outputLabel for="creditCardExpiryMonth">Expiration Date:</h:outputLabel>
+					<h:outputLabel value="Insurance Name" for="insuranceName" />
 				</div>
-				<div class="span-14 last">
-					<p>
-						<h:selectOneMenu id="creditCardExpiryMonth" value="#{booking.creditCardExpiryMonth}">
-							<f:selectItems value="#{referenceData.creditCardExpMonths}" />
-						</h:selectOneMenu>&nbsp;
-						<h:selectOneMenu id="creditCardExpiryYear" value="#{booking.creditCardExpiryYear}">
-							<f:selectItems value="#{referenceData.creditCardExpYears}"/>
-						</h:selectOneMenu>
-					</p>
+				<div class="span-5">
+					<p:inputText id="insuranceName" value="#{newInsuranceType.insuranceName}"  />
+				</div>
+			</div>
+			<div class="field">
+				<div class="span-4">
+					<h:outputLabel for="insuranceDescription" value="Insurance Description" />
+				</div>
+				<div class="span-5">
+					<p:inputTextarea rows="2" cols="5" id="insuranceDescription" style="width: 77%; height: 20px;" autoResize="false"
+						value="#{newInsuranceType.insuranceDescription}" />
+				</div>
+			</div>
+			<div class="field">
+				<div class="span-4">
+					<h:outputLabel value="Insurance Policy Number" for="insurancePolicyNumber" />
+				</div>
+				<div class="span-5">
+					<p:inputText id="insurancePolicyNumber" value="#{newInsuranceType.insurancePolicyNumber}"  />
 				</div>
 			</div>
 			<div>
 				<p:commandButton id="proceed" action="proceed" value="Proceed" update="@form" />
-				<p:commandButton id="cancel" value="Cancel" action="cancel" immediate="true" />
+				<p:commandButton id="cancel_preconfirm" value="Cancel" action="cancel" />
 			</div>		
 		</p:fieldset>
 	</h:form>

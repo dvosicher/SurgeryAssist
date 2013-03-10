@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,8 +23,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
@@ -40,6 +41,9 @@ public class TimeAvailabilities implements Serializable {
 
 	private static final long serialVersionUID = -8110342378591294302L;
 
+	@OneToMany(mappedBy = "timeAvailabilityId", fetch = FetchType.LAZY)
+	private Set<Bookings> bookings; 
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "availability_id")
 	private DayAvailability availabilityId;
@@ -69,7 +73,9 @@ public class TimeAvailabilities implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Calendar modifiedDate;
-
+    
+    @Column(name = "is_booked")
+    private Boolean isBooked;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -89,7 +95,8 @@ public class TimeAvailabilities implements Serializable {
         		"INNER JOIN FETCH o.availabilityId aid " +
         		"INNER JOIN FETCH aid.userId uid " +
         		"INNER JOIN FETCH uid.userInfoId uiid " +
-        		"INNER JOIN FETCH uiid.locationId lid ", TimeAvailabilities.class).getResultList();
+        		"INNER JOIN FETCH uiid.locationId lid " +
+        		"WHERE o.isBooked = 0", TimeAvailabilities.class).getResultList();
     }
 
 	public static TimeAvailabilities findTimeAvailabilities(Integer timeAvailabilityID) {
@@ -128,6 +135,9 @@ public class TimeAvailabilities implements Serializable {
 		
 		Calendar calStartDate = SurgeryAssistUtil.DateToCalendar(startDate);
 		Calendar calEndDate = SurgeryAssistUtil.DateToCalendar(endDate);
+		
+		//make sure they're not booked
+		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
 		
 		//add the city
 		if(city != null && !StringUtils.isEmpty(city)) {
@@ -186,12 +196,6 @@ public class TimeAvailabilities implements Serializable {
         this.entityManager.flush();
         return merged;
     }
-
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-
 
 	public Calendar getStartTime() {
         return this.startTime;
@@ -278,5 +282,33 @@ public class TimeAvailabilities implements Serializable {
 	 */
 	public void setAvailabilityId(DayAvailability availabilityId) {
 		this.availabilityId = availabilityId;
+	}
+
+	/**
+	 * @return the bookings
+	 */
+	public Set<Bookings> getBookings() {
+		return bookings;
+	}
+
+	/**
+	 * @param bookings the bookings to set
+	 */
+	public void setBookings(Set<Bookings> bookings) {
+		this.bookings = bookings;
+	}
+
+	/**
+	 * @return the isBooked
+	 */
+	public Boolean getIsBooked() {
+		return isBooked;
+	}
+
+	/**
+	 * @param isBooked the isBooked to set
+	 */
+	public void setIsBooked(Boolean isBooked) {
+		this.isBooked = isBooked;
 	}
 }
