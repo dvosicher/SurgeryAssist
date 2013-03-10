@@ -26,8 +26,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +67,7 @@ public class ApplicationUser implements Serializable {
 	@OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
 	private Set<Authorities> authorities;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id", nullable = false)
 	private UserInfo userInfoId;
 
@@ -131,10 +129,6 @@ public class ApplicationUser implements Serializable {
 		this.version = version;
 	}
 
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
 	@PersistenceContext
 	transient EntityManager entityManager;
 
@@ -163,6 +157,24 @@ public class ApplicationUser implements Serializable {
 			try {
 				returnObj = (ApplicationUser) entityManager()
 						.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress")
+						.setParameter("emailAddress", emailAddress)
+						.getSingleResult();
+			}
+			catch(NonUniqueResultException e) {
+				e.printStackTrace();
+				
+			}
+		}
+		return returnObj; 
+	}
+	
+	public static ApplicationUser findValidApplicationUserByEmail(String emailAddress) {
+		ApplicationUser returnObj = null;
+		if(emailAddress != null) {
+			try {
+				returnObj = (ApplicationUser) entityManager()
+						.createQuery("SELECT o FROM ApplicationUser o WHERE o.userEmail = :emailAddress " +
+								"AND o.verificationStatus = 'VERIFIED'")
 						.setParameter("emailAddress", emailAddress)
 						.getSingleResult();
 			}

@@ -17,25 +17,19 @@
 	</p>
 </ui:define>
 <ui:define name="content">
-	<h1>${hotel.name}</h1>
+	<h1>#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.firstName} 
+	#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.lastName}
+	</h1>
 	<address>
-		${hotel.address}
+		#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
 		<br />
-		${hotel.city}
+		#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.city}
 		<br />
-		${hotel.state} ${hotel.zip}
-		<br />
-		${hotel.country}
+		${searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
 	</address>
-	<h:form id="hotel">
-	    <div>
-	        Nightly Rate:&#160;
-            <h:outputText value="#{hotel.price}">
-                <f:convertNumber type="currency" currencySymbol="$"/>
-            </h:outputText>
-	    </div>
+	<h:form id="bookAvailability">
 		<div>
-			<p:commandButton id="book" action="book" value="Book Hotel" ajax="false" />
+			<p:commandButton id="book" action="book" value="Book Availability" ajax="false" />
 			<p:commandButton id="cancel" action="cancel" value="Back to Search"/>
 		</div>
 	</h:form>

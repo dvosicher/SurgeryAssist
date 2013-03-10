@@ -67,14 +67,4 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 */
 	public Map<String, List<SelectItem>> getDropdownMenuValues();
 	
-	/**
-	 * Sets historical information (created by, created date, 
-	 * modified by, modified date) for an entity object via 
-	 * reflection. Note that these fields need to be public
-	 * @param obj The Entity object to set history info
-	 * @return The entity object to return
-	 * @author Ankit Tyagi
-	 */
-	public Object setHistoricalInfo(Object obj);
-	
 }
