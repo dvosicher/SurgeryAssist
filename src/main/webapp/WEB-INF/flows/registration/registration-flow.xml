@@ -10,7 +10,7 @@
 	<var name="newContactInfo" class="com.surgeryassist.core.entity.ContactInfo"/>
 	<var name="newLocation" class="com.surgeryassist.core.entity.Location"/>
 
-	<view-state id="register_reid">
+	<view-state id="register">
 		<!-- Need to get dropdowns for state codes, plus others -->
 		<on-entry>
 			<evaluate expression="userLoginAndRegistrationService.getDropdownMenuValues()" 
@@ -19,8 +19,11 @@
 		<transition on="registerUser" to="registrationSuccess">
 			<evaluate expression="userLoginAndRegistrationService.registerUser(newApplicationUser, newUserInfo, newContactInfo, newLocation)" />
 		</transition>
+		<transition on="cancelUser" to="cancel"></transition>
 	</view-state>
 
 	<end-state id="registrationSuccess" view="registrationSuccess.xhtml" />
+	
+	<end-state id="cancel" />
 	
 </flow>

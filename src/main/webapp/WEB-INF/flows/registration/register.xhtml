@@ -4,81 +4,117 @@
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
-				template="/WEB-INF/layouts/standard.xhtml">
+				template="/WEB-INF/layouts/pre-login.xhtml">
 
-<ui:define name="notes">
-	
-</ui:define>
-				
 <ui:define name="content">
-	<div id="register_div">
-		<h1>Register here</h1>
-		<p>
-			<h:form id="registrationForm">
-				Email Address:
-				<br />
-					<h:inputText id="userEmail" value="#{newApplicationUser.userEmail}" />
-				<br />
-				Password:
-				<br />
+<div class="row">
+	<div class="span8">
+		<h3>Register New User</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span8">
+		<h:form class="form-horizontal" id="registrationForm">
+			<div class="control-group">
+				<label for="userEmail" class="control-label">Email</label>
+				<div class="controls">
+					<h:inputText type="email" id="userEmail" value="#{newApplicationUser.userEmail}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="userPass" class="control-label">Password</label>
+				<div class="controls">
 					<h:inputSecret id="userPass" value="#{newApplicationUser.userPass}" />
-				<br />
-				First Name:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="confirmPass" class="control-label">Confirm Password</label>
+				<div class="controls">
+					<h:inputSecret id="confirmPass" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="firstName" class="control-label">First Name</label>
+				<div class="controls">
 					<h:inputText id="firstName" value="#{newUserInfo.firstName}" />
-				<br />
-				Last Name:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="lastName" class="control-label">Last Name</label>
+				<div class="controls">
 					<h:inputText id="lastName" value="#{newUserInfo.lastName}" />
-				<br />
-				User Type:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="inputUserType" class="control-label">User
+					Type</label>
+				<div class="controls">
 					<h:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}">
 						<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
 							itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
 					</h:selectOneMenu>
-				<br />
-				Photo (put dummy file path for now):
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="photo" class="control-label">Photo</label>
+				<div class="controls">
 					<h:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
-				<br />
-				Video (put dummy file path for now):
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="video" class="control-label">Video</label>
+				<div class="controls">
 					<h:inputText id="video" value="#{newUserInfo.videoFilePath}" />
-				<br />
-				Phone Number:
-				<br />
-					<h:inputText id="phone" value="#{newContactInfo.phoneNumber}" />
-				<br />
-				Fax Number:
-				<br />
-					<h:inputText id="fax" value="#{newContactInfo.faxNumber}" />
-				<br />
-				Address:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="phone" class="control-label">Phone Number</label>
+				<div class="controls">
+					<h:inputText type="number" id="phone" value="#{newContactInfo.phoneNumber}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="fax" class="control-label">Fax Number</label>
+				<div class="controls">
+					<h:inputText type="number" id="fax" value="#{newContactInfo.faxNumber}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="address" class="control-label">Address</label>
+				<div class="controls">
 					<h:inputText id="address" value="#{newLocation.address}" />
-					
-				<br />
-				City:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="city" class="control-label">City</label>
+				<div class="controls">
 					<h:inputText id="city" value="#{newLocation.city}" />
-				<br />
-				State:
-				<br />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="inputState" class="control-label">State</label>
+				<div class="controls">
 					<h:selectOneMenu id="state" value="#{newLocation.stateCode}">
 						<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
 							itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
 						<f:converter converterId="stateCodeConverter" />
 					</h:selectOneMenu>
-				<br />
-				Zip:
-				<br />
-					<h:inputText id="zip" value="#{newLocation.zipCode}" />
-				<br />
-				<h:commandButton id="registerButton" action="registerUser" value="Register Now"/>
-			</h:form>
-		</p>
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="zip" class="control-label">ZIP</label>
+				<div class="controls">
+					<h:inputText type="number" id="zip" value="#{newLocation.zipCode}" />
+				</div>
+			</div>
+			<div class="form-actions">
+				<div class="btn-toolbar">
+					<h:commandButton id="registerButton" type="button" class="btn btn-large btn-primary" action="registerUser" value="REGISTER" />
+					<h:commandButton id="cancelButton" type="button" class="btn btn-large btn-primary" action="cancelUser" value="CANCEL" />
+				</div>
+			</div>
+		</h:form>
 	</div>
+</div>
 </ui:define>
-				
 </ui:composition>

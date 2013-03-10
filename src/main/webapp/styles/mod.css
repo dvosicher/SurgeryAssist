@@ -36,3 +36,6 @@
   background-color: #fff;
   border: none;
 }
+select[size="1"] {
+  height: 36px;
+}
