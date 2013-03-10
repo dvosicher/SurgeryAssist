@@ -22,7 +22,7 @@
 		<transition on="cancelUser" to="cancel" />
 	</view-state>
 
-	<end-state id="registrationSuccess" view="registrationSuccess.xhtml" />
+	<end-state id="registrationSuccess" view="/WEB-INF/login.xhtml" />
 	
 	<end-state id="cancel" view="/WEB-INF/login.xhtml" />
 	
