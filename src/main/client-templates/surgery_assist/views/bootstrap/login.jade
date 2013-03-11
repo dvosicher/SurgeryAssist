@@ -1,0 +1,26 @@
+extends bootstrap
+
+block content
+  .container
+    .row
+      .span8.offset2
+        .page-header
+          img(src='/images/SurgeryAssistPNG24.png')
+        .row
+          .span8
+            h3 Welcome to SurgeryAssist
+        .row
+          .span4
+            form
+              fieldset
+                label Login/email
+                input(type='text', placeholder='Login/email')
+                label Password
+                input(type='password', placeholder='Password')
+                a(href='')
+                  small.help-block Forgot password?
+                label.checkbox
+                  input(type='checkbox') Remember me on this computer
+              .btn-toolbar
+                button.btn.btn-large.btn-primary(type='submit') LOGIN
+                button.btn.btn-large.btn-primary(type='button') REGISTER

@@ -4,34 +4,34 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:p="http://primefaces.org/ui"
-				template="/WEB-INF/layouts/standard.xhtml">
-<ui:define name="notes">
-	<p>
-		Clicking "Book" will launch the booking sub-flow (see the subflow state in <strong>main-flow.xml</strong>).
-	</p>
-	<p>
-		The booking flow is protected with Spring Security (see the secured attribute in <strong>booking-flow.xml</strong>).
-	</p>
-	<p>
-		Clicking "Back to Search" will take you to the stateful search results. 
-	</p>
-</ui:define>
-<ui:define name="content">
-	<h1>#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.firstName} 
-	#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.lastName}
-	</h1>
-	<address>
-		#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
-		<br />
-		#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.city}
-		<br />
-		${searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
-	</address>
-	<h:form id="bookAvailability">
-		<div>
-			<p:commandButton id="book" action="book" value="Book Availability" ajax="false" />
-			<p:commandButton id="cancel" action="cancel" value="Back to Search"/>
+				template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8 offset2">
+				<h3>Review Availability</h3>
+			</div>
 		</div>
-	</h:form>
-</ui:define>
+		<div class="row">
+			<div class="span8 offset2">
+				<h4>#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.firstName} 
+				#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.lastName}
+				</h4>
+				<address>
+					#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+					<br />
+					#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.city}
+					<br />
+					${searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+				</address>
+				<h:form id="bookAvailability">
+					<div class="btn-toolbar">
+						<p:commandButton id="book" styleClass="btn btn-primary" action="book"
+							value="BOOK AVAILABILITY" ajax="false" />
+						<p:commandButton id="cancel" styleClass="btn btn-primary" action="cancel" value="BACK TO SEARCH"/>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>

@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100%;
+  background-color: #ffb273;
+}
+#wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -50px;
+}
+#footer {
+/*position absolute
+  bottom 0
+  left 0
+  right 0*/
+  height: 50px;
+  background-color: #a60000;
+}
+#footernav {
+  margin: 0 auto;
+  position: relative;
+}
+#footernav ul {
+  float: left;
+}
+#footernav li {
+  float: left;
+}
+#footernav li :last-of-type {
+  clear: right;
+}
+#footernav li a {
+  padding: 10px;
+}
+#footernav li span {
+  font-size: 20px;
+}

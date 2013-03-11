@@ -1,87 +1,138 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:p="http://primefaces.org/ui"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-				template="/WEB-INF/layouts/standard.xhtml">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/pre-login.xhtml">
 
-<ui:define name="notes">
-	
-</ui:define>
-				
-<ui:define name="content">
-	<div id="register_div">
-		<h1>Register here</h1>
-		<p>
-			<h:form id="registrationForm">
-				<p:fieldset legend="Register">
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8">
+				<h3>Register New User</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8">
+				<h:form  styleClass="form-horizontal" id="registrationForm">
 					<p:messages />
-					<h:outputLabel value="Email Address:" for="userEmail" /> 
-					<br />
-						<p:inputText id="userEmail" value="#{newApplicationUser.userEmail}" required="true"/>
-					<br />
-					<h:outputLabel value="Password:" for="userPass" /> 
-					<br />
-						<p:password id="userPass" value="#{newApplicationUser.userPass}" type="password" required="true" />
-					<br />
-					<h:outputLabel value="First Name:" for="firstName"/>
-					<br />
-						<p:inputText id="firstName" value="#{newUserInfo.firstName}" required="true"/>
-					<br />
-					<h:outputLabel value="Last Name:" for="lastName" />
-					<br />
-						<p:inputText id="lastName" value="#{newUserInfo.lastName}" required="true" />
-					<br />
-					User Type:
-					<br />
-						<p:selectOneMenu id="userTypeCode" value="#{newApplicationUser.userTypeCode}" required="true" >
-							<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}" var="userTypeCodes" 
-								itemLabel="#{userTypeCodes}" itemValue="#{userTypeCodes}" />
-						</p:selectOneMenu>
-					<br />
-					Photo (put dummy file path for now):
-					<br />
-						<p:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
-					<br />
-					Video (put dummy file path for now):
-					<br />
-						<p:inputText id="video" value="#{newUserInfo.videoFilePath}" />
-					<br />
-					Phone Number:
-					<br />
-						<p:inputText id="phone" value="#{newContactInfo.phoneNumber}" />
-					<br />
-					Fax Number:
-					<br />
-						<p:inputText id="fax" value="#{newContactInfo.faxNumber}" />
-					<br />
-					Address:
-					<br />
-						<p:inputText id="address" value="#{newLocation.address}" />
-						
-					<br />
-					City:
-					<br />
-						<p:inputText id="city" value="#{newLocation.city}" />
-					<br />
-					State:
-					<br />
-						<p:selectOneMenu id="state" value="#{newLocation.stateCode}">
-							<f:selectItems value="#{flowScope.dropdownMap['stateCode']}" var="stateCode" 
-								itemLabel="#{stateCode.stateName}" itemValue="#{stateCode.stateCodeID}" />
-							<f:converter converterId="stateCodeConverter" />
-						</p:selectOneMenu>
-					<br />
-					Zip:
-					<br />
-						<p:inputText id="zip" value="#{newLocation.zipCode}" />
-					<br />
-					<p:commandButton id="registerButton" action="registerUser" value="Register Now" update="@form"/>
-				</p:fieldset>
-			</h:form>
-		</p>
-	</div>
-</ui:define>
-				
+					<div class="control-group">
+						<h:outputLabel for="userEmail" styleClass="control-label" value="Email" />
+						<div class="controls">
+							<p:inputText type="email" id="userEmail"
+								value="#{newApplicationUser.userEmail}" required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="userPass" styleClass="control-label" value="Password" />
+						<div class="controls">
+							<p:password id="userPass" value="#{newApplicationUser.userPass}"
+								match="confirmPass" required="true" feedback="true"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="confirmPass" class="control-label" value="Confirm
+							Password" />
+						<div class="controls">
+							<p:password id="confirmPass" label="Confirm Password"
+								value="#{newApplicationUser.userPass}" required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="firstName" class="control-label">First Name</label>
+						<div class="controls">
+							<p:inputText id="firstName" value="#{newUserInfo.firstName}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="lastName" class="control-label">Last Name</label>
+						<div class="controls">
+							<p:inputText id="lastName" value="#{newUserInfo.lastName}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="inputUserType" class="control-label">User Type</label>
+						<div class="controls">
+							<h:selectOneMenu id="userTypeCode"
+								value="#{newApplicationUser.userTypeCode}" required="true">
+								<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}"
+									var="userTypeCodes" itemLabel="#{userTypeCodes}"
+									itemValue="#{userTypeCodes}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="photo" class="control-label">Photo</label>
+						<div class="controls">
+							<p:inputText id="photo" value="#{newUserInfo.photoFilePath}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="video" class="control-label">Video</label>
+						<div class="controls">
+							<p:inputText id="video" value="#{newUserInfo.videoFilePath}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="phone" class="control-label">Phone Number</label>
+						<div class="controls">
+							<p:inputText id="phone" value="#{newContactInfo.phoneNumber}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="fax" class="control-label">Fax Number</label>
+						<div class="controls">
+							<p:inputText id="fax" value="#{newContactInfo.faxNumber}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="address" class="control-label">Address</label>
+						<div class="controls">
+							<p:inputText id="address" value="#{newLocation.address}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="city" class="control-label">City</label>
+						<div class="controls">
+							<p:inputText id="city" value="#{newLocation.city}"
+								required="true" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="inputState" class="control-label">State</label>
+						<div class="controls">
+							<h:selectOneMenu id="state" value="#{newLocation.stateCode}"
+								required="true">
+								<f:selectItems value="#{flowScope.dropdownMap['stateCode']}"
+									var="stateCode" itemLabel="#{stateCode.stateName}"
+									itemValue="#{stateCode.stateCodeID}" />
+								<f:converter converterId="stateCodeConverter" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="zip" class="control-label">ZIP</label>
+						<div class="controls">
+							<p:inputText id="zip" value="#{newLocation.zipCode}"
+								required="true" />
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="btn-toolbar">
+							<p:commandButton id="registerButton" styleClass="btn btn-primary" 
+								action="registerUser" value="REGISTER" update="@form" ajax="false"/>
+							<p:commandButton id="cancelButton" 
+								styleClass="btn btn-primary" action="cancelUser" 
+								value="CANCEL" immediate="true" ajax="false"/>
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>

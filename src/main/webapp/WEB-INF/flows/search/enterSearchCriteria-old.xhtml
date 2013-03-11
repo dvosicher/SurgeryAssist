@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:p="http://primefaces.org/ui"
+				template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="notes">
+	<p>
+		This page uses the PrimeFaces panel component to display a search form. 
+		Mouse over the "Search String" field to see its tooltip.
+		If you are logged a second panel will show your current bookings.
+		Both panels can be toggled on and off.
+	</p>
+</ui:define>
+
+<ui:define name="content">
+	
+	<p:panel header="Search Availabilities" toggleable="true" toggleSpeed="100" collapsed="false">
+		<h:form id="searchAllForm">
+			<h:panelGrid columns="4">
+				<h:outputLabel for="cityName">City Name: </h:outputLabel>
+				<h:inputText id="cityName" value="#{searchCriteriaDTO.cityName}" />
+				<h:outputLabel for="zipCode">Zip Code: </h:outputLabel>
+				<h:inputText id="zipCode" value="#{searchCriteriaDTO.zipCode}" />
+				<h:outputLabel for="startDate">Start Date: </h:outputLabel>
+				<p:calendar id="startDate" value="#{searchCriteriaDTO.startDate}" />
+				<h:outputLabel for="endDate">End Date: </h:outputLabel>
+				<p:calendar id="endDate" value="#{searchCriteriaDTO.endDate}" />
+			
+				<p:commandButton id="searchAllButton" value="See All Availabilities" action="searchAll"/>
+				<h:outputLabel /><h:outputLabel />
+				<p:commandButton id="searchByCriteria" value="Search By Criteria" action="searchByCriteria" />
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+</ui:define>
+</ui:composition>

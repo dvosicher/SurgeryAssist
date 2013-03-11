@@ -1,0 +1,71 @@
+extends bootstrap
+
+block content
+  .container
+    .row
+      .span3.top-buf
+        img(src='/images/SurgeryAssistPNG24.png')
+      .span2.offset7.top-buf
+        button.btn.pull-right Logout
+    .row
+      .span5.offset7.top-buf
+        ul.nav.nav-pills.pull-right
+          li.active
+            a(href="#home", data-toggle="tab") Home
+          li
+            a(href="#requests", data-toggle="tab") Requests
+          li
+            a(href="#account", data-toggle="tab") Account
+    .row
+      .tab-content
+        .tab-pane.active.flip#home
+          p Home Page for ASC
+        .tab-pane.flip#requests
+          .span6
+            h3 Pending Requests
+            table.table
+              thead
+                tr
+                  th Surgeon
+                  th Time
+                  th Room
+              tbody
+                tr
+                  td Harold Jones
+                  td 8:00 AM 3/18/13
+                  td A503
+                tr
+                  td John Mark
+                  td 4:30 PM 5/5/13
+                  td C611
+                tr
+                  td Amy Allen
+                  td 5:15 PM 5/8/13
+                  td C412
+            button.btn.btn-large.btn-block Create New Booking
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+          .span6
+            h3 Confirmed Requests
+            table.table
+              thead
+                tr
+                  th Surgeon
+                  th Time
+                  th Room
+              tbody
+                tr
+                  td Artemis Fowl
+                  td 4:30 PM 5/5/13
+                  td C611
+                tr
+                  td Jesse Mentz
+                  td 5:15 PM 5/8/13
+                  td C412
+                tr
+                  td Mack Powers
+                  td 8:00 AM 3/18/13
+                  td A503
+            button.btn.btn-large.btn-block Cancel Booking
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+        .tab-pane#account
+          p Howdy, I'm in Section 4.
