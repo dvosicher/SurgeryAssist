@@ -36,25 +36,25 @@
 						<div class="control-group">
 							<h:outputLabel value="Patient First Name" for="patientFirstName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" />
+								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" required="true" />
 							</div>
 						</div>
 						<div class="control-group">
 							<h:outputLabel value="Patient Last Name" for="patientLastName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="patientLastName" value="#{newPatient.lastName}" />
+								<p:inputText id="patientLastName" value="#{newPatient.lastName}" required="true" />
 							</div>
 						</div>
 						<div class="control-group">
 							<h:outputLabel value="Choose Surgery Type" for="surgeryTypeCode" styleClass="control-label"/>
 							<div class="controls">
-								<p:selectOneMenu id="surgeryTypeCode"
+								<h:selectOneMenu id="surgeryTypeCode" required="true"
 									value="#{newPatient.surgeryTypeCode}">
 									<f:selectItems value="#{flowScope.selectItemMap['surgeryTypes']}"
 										var="surgeryType" itemLabel="#{surgeryType.surgeryFullName}"
 										itemValue="#{surgeryType.surgeryId}" />
 									<f:converter converterId="surgeryTypeConverter" />
-								</p:selectOneMenu>
+								</h:selectOneMenu>
 							</div>
 						</div>
 						<hr />
@@ -62,14 +62,14 @@
 						<div class="control-group">
 							<h:outputLabel value="Insurance Code" for="insuranceCode" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insuranceCode"
+								<p:inputText id="insuranceCode" required="true" 
 									value="#{newInsuranceType.insuranceCode}" />
 							</div>
 						</div>
 						<div class="control-group">
 							<h:outputLabel value="Insurance Name" for="insuranceName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insuranceName"
+								<p:inputText id="insuranceName" required="true" 
 									value="#{newInsuranceType.insuranceName}" />
 							</div>
 						</div>
@@ -77,8 +77,7 @@
 							<h:outputLabel for="insuranceDescription" value="Insurance Description"
 								styleClass="control-label" />
 							<div class="controls">
-								<p:inputTextarea rows="2" cols="5" id="insuranceDescription"
-									style="width: 77%; height: 20px;" autoResize="false"
+								<p:inputTextarea rows="2" cols="5" id="insuranceDescription" autoResize="false"
 									value="#{newInsuranceType.insuranceDescription}" />
 							</div>
 						</div>
@@ -86,7 +85,7 @@
 							<h:outputLabel value="Insurance Policy Number"
 									for="insurancePolicyNumber" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insurancePolicyNumber"
+								<p:inputText id="insurancePolicyNumber" required="true" 
 									value="#{newInsuranceType.insurancePolicyNumber}" />
 							</div>
 						</div>
@@ -95,7 +94,7 @@
 							<p:commandButton styleClass="btn btn-primary" id="proceed" action="proceed" value="PROCEED"
 								update="@form" ajax="false"/>
 							<p:commandButton styleClass="btn btn-primary" id="cancel_preconfirm" value="CANCEL"
-								action="cancel" />
+								action="cancel" immediate="true" />
 							</div>
 						</div>
 					</p:fieldset>

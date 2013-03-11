@@ -77,11 +77,11 @@
 						</div>
 						<div class="btn-toolbar">
 							<p:commandButton styleClass="btn btn-primary" id="confirm" value="CONFIRM"
-								action="confirm" ajax="false" />
+								action="confirm" ajax="false" update="@form" />
 							<p:commandButton styleClass="btn btn-primary" id="revise" value="REVISE"
-								action="revise" ajax="false" />
+								action="revise" ajax="false" immediate="true" />
 							<p:commandButton styleClass="btn btn-primary" id="cancel" value="CANCEL" 
-								action="cancel" ajax="false" />
+								action="cancel" ajax="false" immediate="true" />
 						</div>
 					</p:fieldset>
 				</h:form>
