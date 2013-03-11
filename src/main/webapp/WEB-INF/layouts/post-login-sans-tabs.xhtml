@@ -27,18 +27,7 @@
 			    </c:if>
 			</div>
 		</div>
-		<div class="row">
-			<div class="span5 offset7 top-buf">
-				<ul class="nav nav-pills pull-right">
-					<ui:insert name="tabs" />
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="tab-content">
-				<ui:insert name="content" />
-			</div>
-		</div>
+		<ui:insert name="content" />		
 	</div>
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="${request.contextPath}/scripts/bootstrap.min.js"></script>

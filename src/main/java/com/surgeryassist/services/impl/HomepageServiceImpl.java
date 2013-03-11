@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.UserTypeCode;
 import com.surgeryassist.core.entity.ApplicationUser;
@@ -25,6 +26,7 @@ public class HomepageServiceImpl implements HomepageService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Bookings> getPendingBookings() {
 		ApplicationUser loggedInUser = 
 				SurgeryAssistUtil.getLoggedInApplicationUser();
@@ -39,6 +41,7 @@ public class HomepageServiceImpl implements HomepageService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Bookings> getConfirmedBookings() {
 		ApplicationUser loggedInUser = 
 				SurgeryAssistUtil.getLoggedInApplicationUser();

@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/layouts/pre-login.xhtml">
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
 
 	<ui:define name="content">
 		<div class="row">
@@ -29,21 +29,25 @@
 								<f:convertDateTime type="date" dateStyle="default" />
 							</h:outputText>
 						</p:column>
-						<p:column sortBy="#{a.startTime}" id="startTimeColumn" headerText="Start Time">
+						<p:column sortBy="#{a.startTime}" id="startTimeColumn"
+							headerText="Start Time">
 							<h:outputText value="#{a.startTime.time}">
 								<f:convertDateTime type="time" dateStyle="default" />
 							</h:outputText>
 						</p:column>
 						<p:column id="nameColumn" headerText="ASC Name">
-							<h:outputText value="#{a.availabilityId.userId.userInfoId.firstName}" />
+							<h:outputText
+								value="#{a.availabilityId.userId.userInfoId.firstName}" />
 						</p:column>
 						<p:column id="zipCodeColumn" headerText="Location (City, Zip)">
-							<h:outputText value="#{a.availabilityId.userId.userInfoId.locationId.city},
+							<h:outputText
+								value="#{a.availabilityId.userId.userInfoId.locationId.city},
 								#{a.availabilityId.userId.userInfoId.locationId.zipCode}" />
 						</p:column>
 						<p:column headerText="Action">
-							<p:commandButton id="viewAvailability" value="Select" styleClass="btn"
-								action="selectAvailability" icon="ui-icon-search">
+							<p:commandButton id="viewAvailability" value="Select"
+								styleClass="btn" action="selectAvailability"
+								icon="ui-icon-search">
 								<f:setPropertyActionListener
 									target="#{searchCriteriaDTO.selectedAvailability}" value="#{a}" />
 							</p:commandButton>

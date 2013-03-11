@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class Bookings implements Serializable {
     @JoinColumn(name = "booking_creator_id", referencedColumnName = "user_id", nullable = false)
     private ApplicationUser bookingCreatorId;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_location_id", referencedColumnName = "user_id", nullable = false)
     private ApplicationUser bookingLocationId;
     

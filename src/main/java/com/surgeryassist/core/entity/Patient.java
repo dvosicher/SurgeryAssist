@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,11 +46,11 @@ public class Patient implements Serializable {
 	@OneToMany(mappedBy = "patientId")
     private Set<Bookings> bookingss;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insurance_code", referencedColumnName = "insurance_id", nullable = false)
     private InsuranceType insuranceCode;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "surgery_type_code", referencedColumnName = "surgery_id", nullable = false)
     private SurgeryType surgeryTypeCode;
     

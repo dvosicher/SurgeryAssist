@@ -89,6 +89,7 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 	}
 
 	@Override
+	@Transactional
 	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location) {
 		
 		//create an insertable applicationUser
