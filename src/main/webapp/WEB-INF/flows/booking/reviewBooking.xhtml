@@ -1,90 +1,91 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:p="http://primefaces.org/ui"
-				template="/WEB-INF/layouts/standard.xhtml">
-<ui:define name="notes">
-	<p>
-		Note that the command button actions raise events (e.g. "revise") instead of specifying method expressions.
-		The events result in transitions on the server side (see reviewBooking state in <strong>booking-flow.xml</strong>).
-	</p>
-</ui:define>
-<ui:define name="content">
-	<div class="span-12 last">
-		<h:form>
-			<p:fieldset legend="Confirm Booking Details">
-				<div class="large">
-					<div class="labels">
-						<h:outputLabel value="Name and Address of ASC:" />
-					</div>
-					<div id="name_of_asc">
-						#{selectedAvailability.availabilityId.userId.userInfoId.firstName} #{selectedAvailability.availabilityId.userId.userInfoId.lastName}
-					</div>
-					<div id="address_of_asc">
-						<address>
-						#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
-						<br/>
-						#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID}, #{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
-						</address>
-					</div>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8 offset2">
+				<h3>Review Booking</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+				<h:form styleClass="form-horizontal">
+					<p:fieldset legend="Confirm Booking Details">
+						<div class="control-group">
+							<h:outputLabel value="Name and Address of ASC" for="nameAndAddress" styleClass="control-label "/>
+							<div class="controls">
+								<div id="nameAndAddress">
+									<p>
+										#{selectedAvailability.availabilityId.userId.userInfoId.firstName}
+										#{selectedAvailability.availabilityId.userId.userInfoId.lastName}
+									</p>
+									<address>
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city},
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID},
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+									</address>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Patient" for="patientInfo" styleClass="control-label" />
+							<div class="controls">
+								<p id="patientInfo">
+									<h:outputText
+										value="#{newPatient.firstName} #{newPatient.lastName}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Insurance Info" for="insuranceInfo" styleClass="control-label" />
+							<div class="controls">
+								<p id="insuranceInfo">
+									<h:outputText
+										value="#{newInsuranceType.insuranceCode}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Surgery Type" for="surgeryType" styleClass="control-label" />
+							<div class="controls">
+								<p id="surgeryType">
+									<h:outputText
+										value="#{newPatient.surgeryTypeCode.surgeryFullName}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Date and Time" for="bookingDateAndTime" styleClass="control-label" />
+							<div class="controls">
+								<p id="bookingDateAndTime">
+									<h:outputText id="bookingDate"
+										value="#{selectedAvailability.availabilityId.dateOfAvailability.time}">
+										<f:convertDateTime dateStyle="default" type="date" />
+									</h:outputText>
+									<h:outputText id="bookingTime"
+										value="#{selectedAvailability.startTime.time}">
+										<f:convertDateTime dateStyle="default" type="time" />
+									</h:outputText>
+								</p>
+							</div>
+						</div>
+						<div class="btn-toolbar">
+							<p:commandButton styleClass="btn btn-primary" id="confirm" value="CONFIRM"
+								action="confirm" ajax="false" />
+							<p:commandButton styleClass="btn btn-primary" id="revise" value="REVISE"
+								action="revise" ajax="false" />
+							<p:commandButton styleClass="btn btn-primary" id="cancel" value="CANCEL" 
+								action="cancel" ajax="false" />
+						</div>
+					</p:fieldset>
+				</h:form>
 				</div>
-				<div>
-					<div class="span-3">
-						<h:outputLabel value="Patient:" for="patientInfo" />
-					</div>
-					<div class="span-8 last">
-						<p>
-							<h:outputText id="patientInfo" 
-								value="#{newPatient.firstName} #{newPatient.lastName}" />
-						</p>
-					</div>
-				</div>
-				<div>
-					<div class="span-3">
-						<h:outputLabel value="Insurance Info:" for="insuranceInfo" />
-					</div>
-					<div class="span-8 last">
-						<p>
-							<h:outputText id="insuranceInfo" 
-								value="#{newInsuranceType.insuranceCode}" />
-						</p>
-					</div>
-				</div>
-		        <div>
-		            <div class="span-3">
-		            	<h:outputLabel value="Surgery Type:" for="surgeryType"/>
-		            </div>
-		            <div class="span-8 last">
-		                <p>
-			                <h:outputText id="surgeryType" value="#{newPatient.surgeryTypeCode.surgeryFullName}" />
-		                </p>
-		            </div>
-		        </div>
-		        <div>
-		            <div class="span-3">
-		            	<h:outputLabel value="Date and Time:" />
-		            </div>
-		            <div class="span-8 last">
-						<p>
-			                <h:outputText id="bookingDate" value="#{selectedAvailability.availabilityId.dateOfAvailability.time}">
-			                    <f:convertDateTime dateStyle="default" type="date" />
-			                </h:outputText>
-			                <h:outputText value=" " />
-			                <h:outputText id="bookingTime" value="#{selectedAvailability.startTime.time}">
-			                	<f:convertDateTime dateStyle="default" type="time"/>
-			                </h:outputText>
-						</p>
-		            </div>
-		        </div>
-				<div>
-					<p:commandButton id="confirm" value="Confirm" action="confirm"/>&#160;
-		    		<p:commandButton id="revise" value="Revise" action="revise"/>&#160;
-		    		<p:commandButton id="cancel" value="Cancel" action="cancel" />
-				</div>
-			</p:fieldset>
-		</h:form>
-	</div>
-</ui:define>
-</ui:composition>
+			</div>
+		</ui:define>
+	</ui:composition>

@@ -8,12 +8,12 @@
 
 	<ui:define name="content">
 		<div class="row">
-			<div class="span8">
+			<div class="span8 offset2">
 				<h3>Enter Search Criteria</h3>
 			</div>
 		</div>
 		<div class="row">
-			<div class="span8">
+			<div class="span8 offset2">
 				<h:form styleClass="form-horizontal" id="searchAllForm">
 					<div class="control-group">
 						<h:outputLabel for="cityName" styleClass="control-label" value="City Name" />
@@ -45,8 +45,8 @@
 					</div>
 					<div class="form-actions">
 						<div class="btn-toolbar">
-							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="Search By Criteria" action="searchByCriteria" ajax="false" />
-							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="See All Availabilities" action="searchAll" ajax="false" immediate="true" />
+							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" />
+							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
 						</div>
 					</div>
 				</h:form>

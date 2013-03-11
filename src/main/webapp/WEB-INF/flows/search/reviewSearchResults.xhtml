@@ -7,24 +7,25 @@
 	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
 
 	<ui:define name="content">
-		<div class="row">
-			<div class="span8">
-				<h3>Review Search Results</h3>
+		<h:form>
+			<div class="row">
+				<div class="span5 offset2">
+					<h3>Review Search Results</h3>
+				</div>
+				<div class="span3">
+					<p:commandButton value="MODIFY SEARCH"
+						action="changeSearch" styleClass="btn btn-primary pull-right" />
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="span8">
-				<h:form>
+			<div class="row">
+				<div class="span8 offset2">
 					<p:dataTable id="availabilities" var="a"
-						value="#{timeAvailabilitiesList}" paginator="true" dynamic="true"
+						value="#{timeAvailabilitiesList}" dynamic="true"
 						rows="10">
 						<f:facet name="header">
-        	Availabilities Search Results<br />
-							<p:commandButton value="Modify or start search again"
-								action="changeSearch" styleClass="btn" />
 						</f:facet>
 						<p:column sortBy="#{a.availabilityId.dateOfAvailability}"
-							id="dateColumn" headerText="Date Of Availability">
+							id="dateColumn" headerText="Date Available">
 							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
 								<f:convertDateTime type="date" dateStyle="default" />
 							</h:outputText>
@@ -45,16 +46,15 @@
 								#{a.availabilityId.userId.userInfoId.locationId.zipCode}" />
 						</p:column>
 						<p:column headerText="Action">
-							<p:commandButton id="viewAvailability" value="Select"
-								styleClass="btn" action="selectAvailability"
-								icon="ui-icon-search">
+							<p:commandButton id="viewAvailability" value="SELECT"
+								styleClass="btn" action="selectAvailability">
 								<f:setPropertyActionListener
 									target="#{searchCriteriaDTO.selectedAvailability}" value="#{a}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
-				</h:form>
+				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

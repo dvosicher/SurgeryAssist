@@ -8,15 +8,15 @@
 
 	<ui:define name="content">
 		<div class="row">
-			<div class="span8">
+			<div class="span8 offset2">
 				<h3>Review Availability</h3>
 			</div>
 		</div>
 		<div class="row">
-			<div class="span8">
-				<h1>#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.firstName} 
+			<div class="span8 offset2">
+				<h4>#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.firstName} 
 				#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.lastName}
-				</h1>
+				</h4>
 				<address>
 					#{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
 					<br />
@@ -25,9 +25,10 @@
 					${searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID} #{searchCriteriaDTO.selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
 				</address>
 				<h:form id="bookAvailability">
-					<div>
-						<p:commandButton id="book" action="book" value="Book Availability" ajax="false" />
-						<p:commandButton id="cancel" action="cancel" value="Back to Search"/>
+					<div class="btn-toolbar">
+						<p:commandButton id="book" styleClass="btn btn-primary" action="book"
+							value="BOOK AVAILABILITY" ajax="false" />
+						<p:commandButton id="cancel" styleClass="btn btn-primary" action="cancel" value="BACK TO SEARCH"/>
 					</div>
 				</h:form>
 			</div>
