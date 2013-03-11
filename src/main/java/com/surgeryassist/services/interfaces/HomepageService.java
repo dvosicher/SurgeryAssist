@@ -28,4 +28,12 @@ public interface HomepageService {
 	 * @return {@link List} of {@link Bookings}, or empty list
 	 */
 	public List<Bookings> getPendingBookings(); 
+	
+	/**
+	 * Returns a list of {@link Bookings}
+	 * that are in confirmed status for the
+	 * currently logged in user
+	 * @return {@link List} of {@link Bookings}, or empty list
+	 */
+	public List<Bookings> getConfirmedBookings();
 }

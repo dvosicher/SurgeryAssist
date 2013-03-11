@@ -26,7 +26,6 @@ public class HomepageServiceImpl implements HomepageService {
 
 	@Override
 	public List<Bookings> getPendingBookings() {
-		
 		ApplicationUser loggedInUser = 
 				SurgeryAssistUtil.getLoggedInApplicationUser();
 		List<Bookings> pendingBookings = 
@@ -39,7 +38,19 @@ public class HomepageServiceImpl implements HomepageService {
 		return pendingBookings;
 	}
 	
-	
+	@Override
+	public List<Bookings> getConfirmedBookings() {
+		ApplicationUser loggedInUser = 
+				SurgeryAssistUtil.getLoggedInApplicationUser();
+		List<Bookings> confirmedBookings = 
+				Bookings.findConfirmedBookingsByUser(loggedInUser);
+		
+		if(confirmedBookings == null) {
+			return new ArrayList<Bookings>();
+		}
+		
+		return confirmedBookings;
+	}
 	
 
 }

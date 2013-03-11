@@ -18,63 +18,86 @@
 		<div id="home" class="tab-pane active flip">
 			<div class="span3">
 				<h3>Pending</h3>
-				<div class="table_div">
-					<p:dataTable id="pendingBookingsDataTable" var="booking" value="#{pendingBookings}"
-						paginator="true" rows="3"  styleClass="table"
-	                 	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-	                 	rowsPerPageTemplate="3,6,9">
-						
-						<f:facet name="header">
-							<h:outputText value="Pending Bookings" />
-						</f:facet>
-						
-						<p:column id="eventColumn">
-							<f:facet name="header">
-								<h:outputText value="Event" />
-							</f:facet>
-							<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
-						</p:column>
-						
-						<p:column id="timeColumn">
-							<f:facet name="header">
-								<h:outputText value="Time" />
-							</f:facet>
-							<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
-								<f:convertDateTime type="date" timeStyle="default"/>
-							</h:outputText>
-							<h:outputText value=" " />
-							<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
-								<f:convertDateTime type="time" timeStyle="default" />
-							</h:outputText>
-						</p:column>
-					
-					</p:dataTable>
-				</div>
+				<c:choose>
+					<c:when test="#{empty pendingBookings}">
+						<div>
+							<h4>No Pending Bookings</h4>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Event</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{pendingBookings}" var="booking">
+									<tr>
+										<td>
+											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+										</td>
+										<td>
+											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default"/>
+											</h:outputText>
+											<h:outputText value=" " />
+											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="default" />
+											</h:outputText>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
 				<h:form id="searchNavForm_tab1">
-					<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" />
+					<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
+						styleClass="btn btn-large btn-block" />
 				</h:form>
 			</div>
 			<div class="span3">
 				<h3>Confirmed</h3>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Event</th>
-							<th>Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Doin' a Surgery</td>
-							<td>8:00 AM 3/18/13</td>
-						</tr>
-						<tr>
-							<td>Incision</td>
-							<td>4:30 PM 5/5/13</td>
-						</tr>
-					</tbody>
-				</table>
-				<button class="btn btn-large btn-block">Cancel Booking</button>
+				<c:choose>
+					<c:when test="#{empty confirmedBookings}">
+						<div>
+							<h4>No Confirmed Bookings</h4>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Event</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{confirmedBookings}" var="booking">
+									<tr>
+										<td>
+											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+										</td>
+										<td>
+											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default"/>
+											</h:outputText>
+											<h:outputText value=" " />
+											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="default" />
+											</h:outputText>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
+				<h:form id="cancelButtonForm">
+					<p:commandButton id="cancelButton" value="Cancel Booking" styleClass="btn btn-large btn-block"/>
+				</h:form>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
 					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
@@ -102,7 +125,9 @@
 						</tr>
 					</tbody>
 				</table>
-				<button class="btn btn-large btn-block">Edit Listed ASCs</button>
+				<h:form id="editListedASCForm">
+					<p:commandButton id="editListedASCButton" value="Edit Listed ASCs" styleClass="btn btn-large btn-block"/>
+				</h:form>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
 					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
@@ -130,7 +155,9 @@
 						</tr>
 					</tbody>
 				</table>
-				<button class="btn btn-large btn-block">Add New Favorite</button>
+				<h:form id="addNewFavoriteForm">
+					<p:commandButton id="addNewFavoriteButton" value="Add New Favorite" styleClass="btn btn-large btn-block"/>
+				</h:form>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
 					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
