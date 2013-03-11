@@ -3,6 +3,7 @@ package com.surgeryassist.core.entity;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,7 @@ public class AvailabilityIntegrationTest {
 	}
 
 	@Test
+	@Ignore //ignoring test because we shouldn't remove availabilities
 	public void testRemove() {
 		DayAvailability obj = dod.getRandomAvailability();
 		Assert.assertNotNull("Data on demand for 'Availability' failed to initialize correctly", obj);
