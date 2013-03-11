@@ -1,5 +1,7 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,8 +19,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "bookings")
 @Configurable
-public class Bookings {
+public class Bookings implements Serializable {
 	
+	private static final long serialVersionUID = -5873948734947715261L;
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "booking_id")
@@ -78,6 +80,9 @@ public class Bookings {
     @JoinColumn(name = "time_availability_id", referencedColumnName = "time_availability_id", nullable = true)
     private TimeAvailabilities timeAvailabilityId;
     
+    @Column(name = "is_confirmed")
+    private Boolean isConfirmed;
+    
     @PersistenceContext
     transient EntityManager entityManager;
     
@@ -104,12 +109,53 @@ public class Bookings {
         return entityManager().createQuery("SELECT o FROM Bookings o", Bookings.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
+    public static List<Bookings> findAllBookingsByUser(ApplicationUser currentUser) {
+    	List<Bookings> returnList = new ArrayList<Bookings>();
+    	
+    	returnList = entityManager()
+    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser ", Bookings.class)
+    			.setParameter("currentUser", currentUser)
+    			.getResultList();
+    	
+    	return returnList;
+    }
+    
+    public static List<Bookings> findPendingBookingsByUser(ApplicationUser currentUser) {
+    	List<Bookings> returnList = new ArrayList<Bookings>();
+    	
+    	returnList = entityManager()
+    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
+    					"AND o.isConfirmed = false", Bookings.class)
+    			.setParameter("currentUser", currentUser)
+    			.getResultList();
+    	
+    	return returnList;
+    }
+    
+    public static List<Bookings> findConfirmedBookingsByUser(ApplicationUser currentUser) {
+    	List<Bookings> returnList = new ArrayList<Bookings>();
+    	
+    	returnList = entityManager()
+    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
+    					"AND o.isConfirmed = true", Bookings.class)
+    			.setParameter("currentUser", currentUser)
+    			.getResultList();
+    	
+    	return returnList;
+    }
+    
+    /**
+     * @see EntityManager#persist(Object)
+     */
     @Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
+    /**
+     * @see EntityManager#remove(Object)
+     */
     @Transactional
     public void remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -121,18 +167,27 @@ public class Bookings {
         }
     }
     
+    /**
+     * @see EntityManager#flush()
+     */
     @Transactional
     public void flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
+    /**
+     * @see EntityManager#clear()
+     */
     @Transactional
     public void clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
+    /**
+     * @see EntityManager#merge(Object)
+     */
     @Transactional
     public Bookings merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -157,162 +212,99 @@ public class Bookings {
         this.version = version;
     }
 	
-    /**
-	 * @return the bookingCreatorId
-	 */
 	public ApplicationUser getBookingCreatorId() {
 		return bookingCreatorId;
 	}
 
-	/**
-	 * @param bookingCreatorId the bookingCreatorId to set
-	 */
 	public void setBookingCreatorId(ApplicationUser bookingCreatorId) {
 		this.bookingCreatorId = bookingCreatorId;
 	}
 
-	/**
-	 * @return the bookingLocationId
-	 */
 	public ApplicationUser getBookingLocationId() {
 		return bookingLocationId;
 	}
 
-	/**
-	 * @param bookingLocationId the bookingLocationId to set
-	 */
 	public void setBookingLocationId(ApplicationUser bookingLocationId) {
 		this.bookingLocationId = bookingLocationId;
 	}
 
-	/**
-	 * @return the patientId
-	 */
 	public Patient getPatientId() {
 		return patientId;
 	}
 
-	/**
-	 * @param patientId the patientId to set
-	 */
 	public void setPatientId(Patient patientId) {
 		this.patientId = patientId;
 	}
 
-	/**
-	 * @return the bookingRoom
-	 */
 	public Integer getBookingRoom() {
 		return bookingRoom;
 	}
 
-	/**
-	 * @param bookingRoom the bookingRoom to set
-	 */
 	public void setBookingRoom(Integer bookingRoom) {
 		this.bookingRoom = bookingRoom;
 	}
 
-	/**
-	 * @return the isCanceled
-	 */
 	public Boolean getIsCanceled() {
 		return isCanceled;
 	}
 
-	/**
-	 * @param isCanceled the isCanceled to set
-	 */
 	public void setIsCanceled(Boolean isCanceled) {
 		this.isCanceled = isCanceled;
 	}
 
-	/**
-	 * @return the cancellationReason
-	 */
 	public String getCancellationReason() {
 		return cancellationReason;
 	}
 
-	/**
-	 * @param cancellationReason the cancellationReason to set
-	 */
 	public void setCancellationReason(String cancellationReason) {
 		this.cancellationReason = cancellationReason;
 	}
 
-	/**
-	 * @return the createdBy
-	 */
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	/**
-	 * @param createdBy the createdBy to set
-	 */
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
 	public Calendar getCreatedDate() {
 		return createdDate;
 	}
 
-	/**
-	 * @param createdDate the createdDate to set
-	 */
 	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	/**
-	 * @return the modifiedBy
-	 */
 	public Integer getModifiedBy() {
 		return modifiedBy;
 	}
 
-	/**
-	 * @param modifiedBy the modifiedBy to set
-	 */
 	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
-	/**
-	 * @return the modifiedDate
-	 */
 	public Calendar getModifiedDate() {
 		return modifiedDate;
 	}
 
-	/**
-	 * @param modifiedDate the modifiedDate to set
-	 */
 	public void setModifiedDate(Calendar modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 
-	@Override
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	/**
-	 * @return the timeAvailabilityId
-	 */
 	public TimeAvailabilities getTimeAvailabilityId() {
 		return timeAvailabilityId;
 	}
 
-	/**
-	 * @param timeAvailabilityId the timeAvailabilityId to set
-	 */
 	public void setTimeAvailabilityId(TimeAvailabilities timeAvailabilityId) {
 		this.timeAvailabilityId = timeAvailabilityId;
+	}
+
+	public Boolean getIsConfirmed() {
+		return isConfirmed;
+	}
+
+	public void setIsConfirmed(Boolean isConfirmed) {
+		this.isConfirmed = isConfirmed;
 	}
 }

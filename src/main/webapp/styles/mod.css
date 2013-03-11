@@ -39,3 +39,12 @@
 select[size="1"] {
   height: 36px;
 }
+
+.table_div {
+	float:left;
+	width: 250px;
+}
+
+.ui-datatable {
+	width: 100px;
+}

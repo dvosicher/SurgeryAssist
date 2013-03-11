@@ -7,21 +7,27 @@
 	
 	<!-- This is the flow for the home page. -->
 	<action-state id="decideSurgeonOrASC">
-		<evaluate expression="userLoginAndRegistrationService.isUserSurgeonOrASC()" />
+		<evaluate expression="homepageService.isUserSurgeonOrASC()" />
 		<transition on="SURGEON" to="surgeonHome" />
 		<transition on="ASC" to="ascHome" />
 	</action-state>
 	
 	<view-state id="ascHome">
-	
+		<transition on="goToSearch" to="searchFlow" />
 	</view-state>
 	
 	<view-state id="surgeonHome">
-	
+		<on-entry>
+			<evaluate expression="homepageService.getPendingBookings()" 
+				result="flowScope.pendingBookings"/>
+			<evaluate expression="homepageService.getConfirmedBookings()" 
+				result="flowScope.confirmedBookings"/>
+		</on-entry>
+		<transition on="goToSearch" to="searchFlow" />
 	</view-state>
 	
 	<subflow-state id="searchFlow" subflow="search">
-		<transition on="finish" to="loggedInHomepage" />
+		<transition on="finish" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
 	<subflow-state id="registrationFlow" subflow="registration">

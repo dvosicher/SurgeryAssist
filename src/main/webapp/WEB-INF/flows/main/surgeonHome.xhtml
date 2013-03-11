@@ -1,162 +1,187 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:c="http://java.sun.com/jsp/jstl/core"
-				template="/WEB-INF/layouts/post-login.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login.xhtml">
 
-<ui:define name="tabs">
-<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-<li><a href="#schedule" data-toggle="tab">Schedule</a></li>
-<li><a href="#bookings" data-toggle="tab">Bookings</a></li>
-<li><a href="#account" data-toggle="tab">Account</a></li>
-</ui:define>
+	<ui:define name="tabs">
+		<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+		<li><a href="#schedule" data-toggle="tab">Schedule</a></li>
+		<li><a href="#bookings" data-toggle="tab">Bookings</a></li>
+		<li><a href="#account" data-toggle="tab">Account</a></li>
+	</ui:define>
 
-<ui:define name="content">
-<div id="home" class="tab-pane active flip">
-	<div class="span3">
-		<h3>Pending</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Doin' a Surgery</td>
-					<td>8:00 AM 3/18/13</td>
-				</tr>
-				<tr>
-					<td>Incision</td>
-					<td>4:30 PM 5/5/13</td>
-				</tr>
-			</tbody>
-		</table>
-		<button class="btn btn-large btn-block">Create New
-			Booking</button>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Nulla sit amet lectus arcu, vel sodales odio. Quisque sed
-			molestie mi. Suspendisse porta interdum dolor, tempor ornare sem
-			dignissim tempor. In quis sapien eget ligula congue fermentum.
-			Nulla et bibendum ligula. Sed at risus sed libero vestibulum
-			porta. Sed id eros quis urna pretium rutrum. Sed sapien augue,
-			condimentum congue pretium eu, adipiscing non tortor. Nunc eget
-			metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id
-			sem tempor vehicula.</p>
-	</div>
-	<div class="span3">
-		<h3>Confirmed</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Doin' a Surgery</td>
-					<td>8:00 AM 3/18/13</td>
-				</tr>
-				<tr>
-					<td>Incision</td>
-					<td>4:30 PM 5/5/13</td>
-				</tr>
-			</tbody>
-		</table>
-		<button class="btn btn-large btn-block">Cancel Booking</button>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Nulla sit amet lectus arcu, vel sodales odio. Quisque sed
-			molestie mi. Suspendisse porta interdum dolor, tempor ornare sem
-			dignissim tempor. In quis sapien eget ligula congue fermentum.
-			Nulla et bibendum ligula. Sed at risus sed libero vestibulum
-			porta. Sed id eros quis urna pretium rutrum. Sed sapien augue,
-			condimentum congue pretium eu, adipiscing non tortor. Nunc eget
-			metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id
-			sem tempor vehicula.</p>
-	</div>
-	<div class="span3">
-		<h3>Recent</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Surgery Center</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Surgeries R Us</td>
-				</tr>
-				<tr>
-					<td>Al's Surgery Barn</td>
-				</tr>
-			</tbody>
-		</table>
-		<button class="btn btn-large btn-block">Edit Listed ASCs</button>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Nulla sit amet lectus arcu, vel sodales odio. Quisque sed
-			molestie mi. Suspendisse porta interdum dolor, tempor ornare sem
-			dignissim tempor. In quis sapien eget ligula congue fermentum.
-			Nulla et bibendum ligula. Sed at risus sed libero vestibulum
-			porta. Sed id eros quis urna pretium rutrum. Sed sapien augue,
-			condimentum congue pretium eu, adipiscing non tortor. Nunc eget
-			metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id
-			sem tempor vehicula.</p>
-	</div>
-	<div class="span3">
-		<h3>Favorites</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Surgery Center</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Hack and Crack</td>
-				</tr>
-				<tr>
-					<td>Blood</td>
-				</tr>
-			</tbody>
-		</table>
-		<button class="btn btn-large btn-block">Add New Favorite</button>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Nulla sit amet lectus arcu, vel sodales odio. Quisque sed
-			molestie mi. Suspendisse porta interdum dolor, tempor ornare sem
-			dignissim tempor. In quis sapien eget ligula congue fermentum.
-			Nulla et bibendum ligula. Sed at risus sed libero vestibulum
-			porta. Sed id eros quis urna pretium rutrum. Sed sapien augue,
-			condimentum congue pretium eu, adipiscing non tortor. Nunc eget
-			metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id
-			sem tempor vehicula.</p>
-	</div>
-</div>
-<div id="schedule" class="tab-pane">
-	<p>Howdy, I'm in Section 2.</p>
-</div>
-<div id="bookings" class="tab-pane flip">
-	<div class="span12">
-		<h3>Search Results - Available Bookings</h3>
-		<form class="form-inline">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Time</th>
-						<th>Center Name</th>
-						<th>Cost to Book</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr></tr>
-				</tbody>
-			</table>
-		</form>
-	</div>
-</div>
-<div id="account" class="tab-pane">
-	<p>Howdy, I'm in Section 4.</p>
-</div>
-</ui:define>
+	<ui:define name="content">
+		<div id="home" class="tab-pane active flip">
+			<div class="span3">
+				<h3>Pending</h3>
+				<c:choose>
+					<c:when test="#{empty pendingBookings}">
+						<div>
+							<h4>No Pending Bookings</h4>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Event</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{pendingBookings}" var="booking">
+									<tr>
+										<td>
+											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+										</td>
+										<td>
+											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default"/>
+											</h:outputText>
+											<h:outputText value=" " />
+											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="default" />
+											</h:outputText>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
+				<h:form id="searchNavForm_tab1">
+					<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
+						styleClass="btn btn-large btn-block" />
+				</h:form>
+			</div>
+			<div class="span3">
+				<h3>Confirmed</h3>
+				<c:choose>
+					<c:when test="#{empty confirmedBookings}">
+						<div>
+							<h4>No Confirmed Bookings</h4>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Event</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{confirmedBookings}" var="booking">
+									<tr>
+										<td>
+											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+										</td>
+										<td>
+											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default"/>
+											</h:outputText>
+											<h:outputText value=" " />
+											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="default" />
+											</h:outputText>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
+				<h:form id="cancelButtonForm">
+					<p:commandButton id="cancelButton" value="Cancel Booking" styleClass="btn btn-large btn-block"/>
+				</h:form>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
+					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
+					tempor. In quis sapien eget ligula congue fermentum. Nulla et
+					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
+					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
+					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
+					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
+					vehicula.</p>
+			</div>
+			<div class="span3">
+				<h3>Recent</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Surgery Center</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Surgeries R Us</td>
+						</tr>
+						<tr>
+							<td>Al's Surgery Barn</td>
+						</tr>
+					</tbody>
+				</table>
+				<h:form id="editListedASCForm">
+					<p:commandButton id="editListedASCButton" value="Edit Listed ASCs" styleClass="btn btn-large btn-block"/>
+				</h:form>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
+					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
+					tempor. In quis sapien eget ligula congue fermentum. Nulla et
+					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
+					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
+					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
+					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
+					vehicula.</p>
+			</div>
+			<div class="span3">
+				<h3>Favorites</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Surgery Center</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Hack and Crack</td>
+						</tr>
+						<tr>
+							<td>Blood</td>
+						</tr>
+					</tbody>
+				</table>
+				<h:form id="addNewFavoriteForm">
+					<p:commandButton id="addNewFavoriteButton" value="Add New Favorite" styleClass="btn btn-large btn-block"/>
+				</h:form>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
+					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
+					tempor. In quis sapien eget ligula congue fermentum. Nulla et
+					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
+					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
+					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
+					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
+					vehicula.</p>
+			</div>
+		</div>
+		<div id="schedule" class="tab-pane">
+			<p>Howdy, I'm in Section 2.</p>
+		</div>
+		<div id="bookings" class="tab-pane flip">
+			<div class="span12">
+				<h3>Search Results - Available Bookings</h3>
+				<h:form id="searchNavForm_tab3">
+					<p:commandButton id="searchNavCommandButton_tab3" action="goToSearch" value="Search for Availabilities" />
+				</h:form>
+			</div>
+		</div>
+		<div id="account" class="tab-pane">
+			<p>Howdy, I'm in Section 4.</p>
+		</div>
+	</ui:define>
 </ui:composition>
