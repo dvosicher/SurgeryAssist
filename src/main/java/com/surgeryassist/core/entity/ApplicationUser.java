@@ -86,20 +86,20 @@ public class ApplicationUser implements Serializable {
 	private VerificationStatus verificationStatus;
 
 	@Column(name = "created_by", updatable = false)
-	public Integer createdBy;
+	private Integer createdBy;
 
 	@Column(name = "created_date", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "MM")
-	public Calendar createdDate;
+	private Calendar createdDate;
 
 	@Column(name = "modified_by")
-	public Integer modifiedBy;
+	private Integer modifiedBy;
 
 	@Column(name = "modified_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "MM")
-	public Calendar modifiedDate;
+	private Calendar modifiedDate;
 
 	@Column(name = "is_enabled", nullable = false)
 	private Boolean isEnabled;
