@@ -63,6 +63,47 @@ public class BookingsIntegrationTest {
     }
     
     @Test
+    public void testFindAllBookingsByUser() {
+    	ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
+    	Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
+    	
+    	List<Bookings> returnList = Bookings.findAllBookingsByUser(user);
+    	
+    	Assert.assertNotNull("Bookings.findAllBookingsByUser returned null", returnList);
+    	Assert.assertTrue("The data is not what was expected. We should have data, but we don't", returnList.size() > 0);
+    }
+    
+    @Test
+    public void testFindPendingBookingsByUser() {
+    	ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
+    	Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
+    	
+    	List<Bookings> returnList = Bookings.findPendingBookingsByUser(user);
+    	
+    	Assert.assertNotNull("Bookings.findPendingBookingsByUser returned null", returnList);
+    	Assert.assertTrue("The data is not what was expected. We should have data, but we don't", returnList.size() > 0);
+    	
+    	for(Bookings booking : returnList) {
+    		Assert.assertTrue("The data is has non-pending values", booking.getIsConfirmed() == false);
+    	}
+    }
+    
+    @Test
+    public void testFindConfirmedBookingsByUser() {
+    	ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
+    	Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
+    	
+    	List<Bookings> returnList = Bookings.findConfirmedBookingsByUser(user);
+    	
+    	Assert.assertNotNull("Bookings.findConfirmedBookingsByUser returned null", returnList);
+    	Assert.assertTrue("The data is not what was expected. We should have data, but we don't", returnList.size() > 0);
+    	
+    	for(Bookings booking : returnList) {
+    		Assert.assertTrue("The data is has non-pending values", booking.getIsConfirmed() == true);
+    	}
+    }
+    
+    @Test
     public void testFlush() {
         Bookings obj = dod.getRandomBookings();
         Assert.assertNotNull("Data on demand for 'Bookings' failed to initialize correctly", obj);

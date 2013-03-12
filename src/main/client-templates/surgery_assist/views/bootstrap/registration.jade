@@ -1,0 +1,74 @@
+extends bootstrap
+
+block content
+  .container
+    .row
+      .span8.offset2
+        .page-header
+          img(src='/images/SurgeryAssistPNG24.png')
+        .row
+          .span8
+            h3 Register New User
+        .row
+          .span8
+            form.form-horizontal
+              .control-group
+                  label.control-label(for='inputEmail') Email
+                  .controls
+                    input#inputEmail(type='email')
+                .control-group
+                  label.control-label(for='inputPassword') Password
+                  .controls
+                    input#inputPassword(type='password')
+                .control-group
+                  label.control-label(for='inputConfirmPassword') Confirm Password
+                  .controls
+                    input#inputConfirmPassword(type='password')
+                .control-group
+                  label.control-label(for='inputFirstName') First Name
+                  .controls
+                    input#inputFirstName(type='text')
+                .control-group
+                  label.control-label(for='inputLastName') Last Name
+                  .controls
+                    input#inputLastName(type='text')
+                .control-group
+                  label.control-label(for='inputUserType') User Type
+                  .controls
+                    select#inputUserType(type='text')
+                      option Select User Type...
+                      option Surgeon
+                      option ASC
+                      option Delegate
+                .control-group
+                  label.control-label(for='inputPhoneNumber') Phone Number
+                  .controls
+                    input#inputPhoneNumber(type='number')
+                .control-group
+                  label.control-label(for='inputFaxNumber') Fax Number
+                  .controls
+                    input#inputFaxNumber(type='number')
+                .control-group
+                  label.control-label(for='inputAddress') Address
+                  .controls
+                    input#inputAddress(type='text')
+                .control-group
+                  label.control-label(for='inputCity') City
+                  .controls
+                    input#inputCity(type='text')
+                .control-group
+                  label.control-label(for='inputState') State
+                  .controls
+                    select#inputState(type='text')
+                      option Select State...
+                      option Texas
+                      option Texas
+                      option Texas
+                .control-group
+                  label.control-label(for='inputZIP') ZIP
+                  .controls
+                    input#inputZIP(type='number')
+                .form-actions
+                  .btn-toolbar
+                    button.btn.btn-large.btn-primary(type='submit') REGISTER
+                    button.btn.btn-large.btn-primary(type='button') CANCEL

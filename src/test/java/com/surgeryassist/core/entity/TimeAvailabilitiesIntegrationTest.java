@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,7 @@ public class TimeAvailabilitiesIntegrationTest {
     }
     
     @Test
+    @Ignore //ignoring this test because we shouldn't delete TimeAvailibilities. Ever.
     public void testRemove() {
         TimeAvailabilities obj = dod.getRandomTimeAvailabilities();
         Assert.assertNotNull("Data on demand for 'TimeAvailabilities' failed to initialize correctly", obj);

@@ -1,0 +1,59 @@
+login/landing page
+  big logo
+  login for existing users
+    username
+    password
+    login button
+    forgot password link
+  account creation for new users
+    username
+    password
+    reenter password
+    create account button
+
+account creation page
+  form with fields corresponding to db
+  submit button
+  cancel button
+
+surgeon welcome page
+  schedule
+  pending requests
+  confirmed requests/upcoming bookings
+  list of recently used surgery centers
+  list of favorite/starred surgery centers
+  new booking button
+  manage accounts button
+  log out button
+
+ASC welcome page
+  schedule
+    available time in one color
+    requested time in one color
+    confirmed bookings in one color
+  unconfirmed bookings
+  confirm button next to each booking
+  confirmed bookings
+  input availability button
+  manage accounts button
+
+account management page
+  list of accounts
+    name of account
+    permission dropdown list
+    delete account button
+  apply changes button
+  cancel button
+  delete primary button
+
+new booking page
+  location input
+  time/date input
+  duration input
+  insurance type input
+  surgery type
+  search button
+  list of results
+    name of ASC
+    location of ASC
+    link to view ASC availability

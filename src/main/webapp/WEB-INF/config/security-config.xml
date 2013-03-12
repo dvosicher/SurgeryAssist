@@ -8,14 +8,18 @@
 
 	<!-- Configure Spring Security -->
 	<security:http auto-config="true" use-expressions="true">
+		
 		<security:form-login login-page="/spring/login" login-processing-url="/spring/loginProcess" 
 			default-target-url="/spring/main" authentication-failure-url="/spring/login?login_error=1" />
-		<security:logout logout-url="/spring/logout" logout-success-url="/spring/logoutSuccess" />
+		
+		<security:logout logout-url="/spring/logout" logout-success-url="/spring/login" />
+		
 		<!-- Configure these elements to secure URIs in your application -->
         <security:intercept-url pattern="/spring/resources/**" access="permitAll" />
         <security:intercept-url pattern="/spring/login/**" access="permitAll" />
         <security:intercept-url pattern="/spring/register/**" access="permitAll" />
         <security:intercept-url pattern="/spring/main/**" access="isAuthenticated()" />
+        
 	</security:http>
     
     <!-- salting mechanism -->

@@ -1,0 +1,20 @@
+#header {
+  height: 50px;
+  background-color: #a60000;
+}
+#topbrand {
+  float: left;
+}
+#topbrand span {
+  font-size: 30px;
+  margin: 10px;
+}
+#topmenu {
+  float: right;
+  position: relative;
+  right: 0;
+}
+#topmenu button {
+  height: 30px;
+  margin: 10px;
+}

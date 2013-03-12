@@ -1,0 +1,98 @@
+extends bootstrap
+
+block content
+  .container
+    .row
+      .span3.top-buf
+        img(src='/images/SurgeryAssistPNG24.png')
+      .span2.offset7.top-buf
+        button.btn.pull-right LOGOUT
+    .row
+      .span5.offset7.top-buf
+        ul.nav.nav-pills.pull-right
+          li.active
+            a(href="#home", data-toggle="tab") Home
+          li
+            a(href="#schedule", data-toggle="tab") Schedule
+          li
+            a(href="#bookings", data-toggle="tab") Bookings
+          li
+            a(href="#account", data-toggle="tab") Account
+    .row
+      .tab-content
+        .tab-pane.active.flip#home
+          .span3
+            h3 Pending
+            table.table
+              thead
+                tr
+                  th Event
+                  th Time
+              tbody
+                tr
+                  td Doin' a Surgery
+                  td 8:00 AM 3/18/13
+                tr
+                  td Incision
+                  td 4:30 PM 5/5/13
+            button.btn.btn-large.btn-block Create New Booking
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+          .span3
+            h3 Confirmed
+            table.table
+              thead
+                tr
+                  th Event
+                  th Time
+              tbody
+                tr
+                  td Doin' a Surgery
+                  td 8:00 AM 3/18/13
+                tr
+                  td Incision
+                  td 4:30 PM 5/5/13
+            button.btn.btn-large.btn-block Cancel Booking
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+          .span3
+            h3 Recent
+            table.table
+              thead
+                tr
+                  th Surgery Center
+              tbody
+                tr
+                  td Surgeries R Us
+                tr
+                  td Al's Surgery Barn
+            button.btn.btn-large.btn-block Edit Listed ASCs
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+          .span3
+            h3 Favorites
+            table.table
+              thead
+                tr
+                  th Surgery Center
+              tbody
+                tr
+                  td Hack and Crack
+                tr
+                  td Blood
+            button.btn.btn-large.btn-block Add New Favorite
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim tempor. In quis sapien eget ligula congue fermentum. Nulla et bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id eros quis urna pretium rutrum. Sed sapien augue, condimentum congue pretium eu, adipiscing non tortor. Nunc eget metus vel ante malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor vehicula.
+        .tab-pane#schedule
+          p Howdy, I'm in Section 2.
+        .tab-pane.flip#bookings
+          .span12
+            h3 Search Results - Available Bookings
+            form.form-inline
+              table.table
+                thead
+                  tr
+                    th Time
+                    th Center Name
+                    th Cost to Book
+                tbody
+                  tr
+
+        .tab-pane#account
+          p Howdy, I'm in Section 4.

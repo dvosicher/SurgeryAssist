@@ -34,7 +34,6 @@ import com.surgeryassist.util.SurgeryAssistUtil;
  * Implementation of custom auth handler
  * 
  * @author Ankit Tyagi
- *
  */
 @Service("userLoginAndRegistrationService")
 public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistrationService {
@@ -93,6 +92,7 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 	}
 
 	@Override
+	@Transactional
 	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location) {
 		
 		//create an insertable applicationUser
@@ -177,5 +177,5 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 		
 		return mapOfSelectItems;
 	}
-	
+
 }
