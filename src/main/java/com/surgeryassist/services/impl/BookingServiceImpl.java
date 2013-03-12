@@ -49,7 +49,7 @@ public class BookingServiceImpl implements BookingService {
 			e.printStackTrace();
 		}
 
-		newBooking = (Bookings) SurgeryAssistUtil.setHistoricalInfo(newBooking);
+		newBooking = (Bookings) SurgeryAssistUtil.setAllHistoricalInfo(newBooking);
 
 		try {
 			newBooking.persist();
@@ -76,14 +76,14 @@ public class BookingServiceImpl implements BookingService {
 		
 		//store the insurance info if it doesn't exist already, otherwise merge it
 		if(existingInsuranceType == null) {
-			insuranceType = (InsuranceType) SurgeryAssistUtil.setHistoricalInfo(insuranceType);
+			insuranceType = (InsuranceType) SurgeryAssistUtil.setAllHistoricalInfo(insuranceType);
 			insuranceType.persist();
 		}
 		else {
 			insuranceType.merge();
 		}
 
-		patient = (Patient) SurgeryAssistUtil.setHistoricalInfo(patient);
+		patient = (Patient) SurgeryAssistUtil.setAllHistoricalInfo(patient);
 
 		try {
 			patient.setInsuranceCode(insuranceType);

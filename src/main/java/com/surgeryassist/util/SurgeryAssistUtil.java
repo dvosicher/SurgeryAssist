@@ -47,12 +47,12 @@ public class SurgeryAssistUtil {
 	/**
 	 * Sets historical information (created by, created date, 
 	 * modified by, modified date) for an entity object via 
-	 * reflection. Note that these fields need to be public
+	 * reflection. 
 	 * @param obj The Entity object to set history info
 	 * @return The entity object to return
 	 * @author Ankit Tyagi
 	 */
-	public static Object setHistoricalInfo(Object obj) {
+	public static Object setAllHistoricalInfo(Object obj) {
 		try {
 			//if the object is an entity in the entity package, then set it
 			if(obj.getClass().isAnnotationPresent(Entity.class) && 
@@ -66,6 +66,56 @@ public class SurgeryAssistUtil {
 				obj.getClass().getDeclaredField("createdDate").set(obj, Calendar.getInstance());
 				obj.getClass().getDeclaredField("createdDate").setAccessible(false);
 				
+				obj.getClass().getDeclaredField("modifiedBy").setAccessible(true);
+				obj.getClass().getDeclaredField("modifiedBy").set(obj, new Integer(1));
+				obj.getClass().getDeclaredField("modifiedBy").setAccessible(false);
+				
+				obj.getClass().getDeclaredField("modifiedDate").setAccessible(true);
+				obj.getClass().getDeclaredField("modifiedDate").set(obj, Calendar.getInstance());
+				obj.getClass().getDeclaredField("modifiedDate").setAccessible(false);
+			}
+		} 
+		//catch errors
+		catch(IllegalAccessException e) {
+			//tried to access something illegally
+			System.err.println("One of the historical fields in the entity is probably private. Check that first.");
+			e.printStackTrace();
+		}
+		catch(IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		catch(ExceptionInInitializerError e) {
+			e.printStackTrace();
+		}
+		catch(NullPointerException e) {
+			//null pointer. oops
+			e.printStackTrace();
+		}
+		catch(NoSuchFieldException e) {
+			//field doesn't exist
+			System.err.println("Does the entity have the historical fields?");
+			e.printStackTrace();
+		}
+		catch (SecurityException e) {
+			e.printStackTrace();
+		}
+		//return the object regardless
+		return obj;
+	}
+	
+	/**
+	 * Sets historical information (modified by, modified date) 
+	 * for an entity object via reflection.
+	 * @param obj The Entity object to set history info
+	 * @return The entity object to return
+	 * @author Ankit Tyagi
+	 */
+	public static Object setLastModifiedInfo(Object obj) {
+		try {
+			//if the object is an entity in the entity package, then set it
+			if(obj.getClass().isAnnotationPresent(Entity.class) && 
+					obj.getClass().getPackage().getName().contains("com.surgeryassist.core.entity")) {
+
 				obj.getClass().getDeclaredField("modifiedBy").setAccessible(true);
 				obj.getClass().getDeclaredField("modifiedBy").set(obj, new Integer(1));
 				obj.getClass().getDeclaredField("modifiedBy").setAccessible(false);

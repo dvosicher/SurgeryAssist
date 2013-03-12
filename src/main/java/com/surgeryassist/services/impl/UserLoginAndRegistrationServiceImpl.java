@@ -61,6 +61,9 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 			throw new UsernameNotFoundException("User not found");
 		}
 		
+		databaseUser = (ApplicationUser) SurgeryAssistUtil.setLastModifiedInfo(databaseUser);
+		databaseUser.merge();
+		
 		springSecurityUser = convertApplicationUserToSpringUser(databaseUser);
 		
 		return springSecurityUser;
@@ -119,10 +122,10 @@ public class UserLoginAndRegistrationServiceImpl implements UserLoginAndRegistra
 			ApplicationUser newApplicationUser, UserInfo userInfo,
 			ContactInfo contactInfo, Location location) {
 		
-		contactInfo = (ContactInfo) SurgeryAssistUtil.setHistoricalInfo(contactInfo);
-		location = (Location) SurgeryAssistUtil.setHistoricalInfo(location);
-		userInfo = (UserInfo) SurgeryAssistUtil.setHistoricalInfo(userInfo);
-		newApplicationUser = (ApplicationUser) SurgeryAssistUtil.setHistoricalInfo(newApplicationUser);
+		contactInfo = (ContactInfo) SurgeryAssistUtil.setAllHistoricalInfo(contactInfo);
+		location = (Location) SurgeryAssistUtil.setAllHistoricalInfo(location);
+		userInfo = (UserInfo) SurgeryAssistUtil.setAllHistoricalInfo(userInfo);
+		newApplicationUser = (ApplicationUser) SurgeryAssistUtil.setAllHistoricalInfo(newApplicationUser);
 		
 		//persist location and contact info to save values
 		contactInfo.persist();
