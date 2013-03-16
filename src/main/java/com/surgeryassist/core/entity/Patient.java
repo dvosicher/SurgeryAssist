@@ -54,6 +54,9 @@ public class Patient implements Serializable {
     @JoinColumn(name = "surgery_type_code", referencedColumnName = "surgery_id", nullable = false)
     private SurgeryType surgeryTypeCode;
     
+    @Column(name = "surgery_detail_info")
+    private String surgeryDetailInfo;
+    
     @Column(name = "first_name", length = 100)
     private String firstName;
     
@@ -76,6 +79,9 @@ public class Patient implements Serializable {
     @DateTimeFormat(style = "MM")
     public Calendar modifiedDate;
 	
+    @Column(name = "booking_notes")
+    private String bookingNotes;
+    
 	@PersistenceContext
     transient EntityManager entityManager;
     
@@ -273,5 +279,33 @@ public class Patient implements Serializable {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	/**
+	 * @return the surgeryDetailInfo
+	 */
+	public String getSurgeryDetailInfo() {
+		return surgeryDetailInfo;
+	}
+
+	/**
+	 * @param surgeryDetailInfo the surgeryDetailInfo to set
+	 */
+	public void setSurgeryDetailInfo(String surgeryDetailInfo) {
+		this.surgeryDetailInfo = surgeryDetailInfo;
+	}
+
+	/**
+	 * @return the bookingNotes
+	 */
+	public String getBookingNotes() {
+		return bookingNotes;
+	}
+
+	/**
+	 * @param bookingNotes the bookingNotes to set
+	 */
+	public void setBookingNotes(String bookingNotes) {
+		this.bookingNotes = bookingNotes;
 	}
 }

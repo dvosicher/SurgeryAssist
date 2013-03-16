@@ -6,16 +6,19 @@
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
 	<!-- This is the flow for the home page. -->
+	<!-- Decide which page to go to based on whether the user is an ASC or a surgeon -->
 	<action-state id="decideSurgeonOrASC">
 		<evaluate expression="homepageService.isUserSurgeonOrASC()" />
 		<transition on="SURGEON" to="surgeonHome" />
 		<transition on="ASC" to="ascHome" />
 	</action-state>
 	
+	<!-- ASC's home page  -->
 	<view-state id="ascHome">
-		<transition on="goToSearch" to="searchFlow" />
+	
 	</view-state>
 	
+	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
 		<on-entry>
 			<evaluate expression="homepageService.getPendingBookings()" 
@@ -26,10 +29,12 @@
 		<transition on="goToSearch" to="searchFlow" />
 	</view-state>
 	
+	<!-- subflow for search -->
 	<subflow-state id="searchFlow" subflow="search">
 		<transition on="finish" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
+	<!-- subflow for registration -->
 	<subflow-state id="registrationFlow" subflow="registration">
 		<transition on="cancel" to="login" />
 	</subflow-state>

@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Choose Surgery Type" for="surgeryTypeCode" styleClass="control-label"/>
+							<h:outputLabel value="Choose Surgery Case Type" for="surgeryTypeCode" styleClass="control-label"/>
 							<div class="controls">
 								<h:selectOneMenu id="surgeryTypeCode" required="true"
 									value="#{newPatient.surgeryTypeCode}">
@@ -55,6 +55,12 @@
 										itemValue="#{surgeryType.surgeryId}" />
 									<f:converter converterId="surgeryTypeConverter" />
 								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Type In Case Specialty" for="surgeryDetailInfo" styleClass="control-label"/>
+							<div class="controls">
+								<p:inputText id="surgeryDetailInfo" required="true" value="#{newPatient.surgeryDetailInfo}"/>
 							</div>
 						</div>
 						<hr />
@@ -77,7 +83,7 @@
 							<h:outputLabel for="insuranceDescription" value="Insurance Description"
 								styleClass="control-label" />
 							<div class="controls">
-								<p:inputTextarea rows="2" cols="5" id="insuranceDescription" autoResize="false"
+								<p:inputTextarea id="insuranceDescription" 
 									value="#{newInsuranceType.insuranceDescription}" />
 							</div>
 						</div>
@@ -87,6 +93,15 @@
 							<div class="controls">
 								<p:inputText id="insurancePolicyNumber" required="true" 
 									value="#{newInsuranceType.insurancePolicyNumber}" />
+							</div>
+						</div>
+						<hr />
+						<legend>Extra Notes</legend>
+						<div class="control-group">
+							<h:outputLabel value="Extra Notes"
+									for="extraNotes" styleClass="control-label" />
+							<div class="controls">
+								<p:inputTextarea id="extraNotes" value="#{newPatient.bookingNotes}" />
 							</div>
 						</div>
 						<div class="control-group">

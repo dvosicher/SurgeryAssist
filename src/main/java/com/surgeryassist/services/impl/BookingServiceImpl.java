@@ -33,6 +33,7 @@ public class BookingServiceImpl implements BookingService {
 	public void createBooking(ApplicationUser bookingLocation, Patient patient, 
 			TimeAvailabilities selectedTimeAvailability) {
 
+		//create a booking object
 		Bookings newBooking = new Bookings();
 		newBooking.setBookingCreatorId(
 				SurgeryAssistUtil.getLoggedInApplicationUser());
@@ -40,7 +41,8 @@ public class BookingServiceImpl implements BookingService {
 		newBooking.setPatientId(patient);
 		newBooking.setTimeAvailabilityId(selectedTimeAvailability);
 		newBooking.setIsCanceled(false);
-
+		
+		//merge the availability to be completely caught up
 		try {
 			selectedTimeAvailability.setIsBooked(true);
 			selectedTimeAvailability.merge();
@@ -51,6 +53,7 @@ public class BookingServiceImpl implements BookingService {
 
 		newBooking = (Bookings) SurgeryAssistUtil.setAllHistoricalInfo(newBooking);
 
+		//persist the booking object and flush it
 		try {
 			newBooking.persist();
 			newBooking.flush();
@@ -87,6 +90,7 @@ public class BookingServiceImpl implements BookingService {
 
 		try {
 			patient.setInsuranceCode(insuranceType);
+			
 			if(existingPatient == null) {
 				patient.persist();
 			}
@@ -105,7 +109,8 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public Map<String, List<SelectItem>> getDropdownMenuValues() {
-		Map<String, List<SelectItem>> mapOfSelectItems = new HashMap<String, List<SelectItem>>();
+		Map<String, List<SelectItem>> mapOfSelectItems = 
+				new HashMap<String, List<SelectItem>>();
 		List<SelectItem> surgeryTypeList = new ArrayList<SelectItem>();
 
 		List<SurgeryType> surgeryTypeEntityList = SurgeryType.findAllSurgeryTypes();

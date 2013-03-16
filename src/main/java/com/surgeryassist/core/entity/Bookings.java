@@ -83,7 +83,7 @@ public class Bookings implements Serializable {
     
     @Column(name = "is_confirmed")
     private Boolean isConfirmed;
-    
+        
     @PersistenceContext
     transient EntityManager entityManager;
     
@@ -308,4 +308,5 @@ public class Bookings implements Serializable {
 	public void setIsConfirmed(Boolean isConfirmed) {
 		this.isConfirmed = isConfirmed;
 	}
+
 }
