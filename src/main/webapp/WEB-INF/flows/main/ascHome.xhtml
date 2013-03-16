@@ -16,6 +16,10 @@
 <ui:define name="content">
 <div id="home" class="tab-pane active flip">
 	<p>Home Page for ASC</p>
+	<h:form id="goToInputAvailability">
+		<p:commandButton action="inputAvailability" value="Add New Availability" />
+	</h:form>
+	
 	<h:form>
 	<p:growl id="messages" showDetail="true" />
 	<p:schedule value="#{scheduleController.eventModel}" widgetVar="myschedule">

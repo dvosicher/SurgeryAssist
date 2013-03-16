@@ -48,7 +48,7 @@ public class Location implements Serializable {
     private String city;
     
     @Column(name = "zip_code")
-    public Integer zipCode;
+    private Integer zipCode;
     
     @Column(name = "created_by", updatable = false)
     public Integer createdBy;
@@ -64,7 +64,7 @@ public class Location implements Serializable {
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	public String getAddress() {
         return this.address;
