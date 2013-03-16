@@ -17,14 +17,14 @@
 				<h:form  styleClass="form-horizontal" id="registrationForm">
 					<p:messages />
 					<div class="control-group">
-						<h:outputLabel for="userEmail" styleClass="control-label" value="Email" />
+						<h:outputLabel for="userEmail" styleClass="control-label" value="Email*:" />
 						<div class="controls">
 							<p:inputText type="email" id="userEmail"
 								value="#{newApplicationUser.userEmail}" required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<h:outputLabel for="userPass" styleClass="control-label" value="Password" />
+						<h:outputLabel for="userPass" styleClass="control-label" value="Password*:" />
 						<div class="controls">
 							<p:password id="userPass" value="#{newApplicationUser.userPass}"
 								match="confirmPass" required="true" feedback="true"/>
@@ -32,28 +32,28 @@
 					</div>
 					<div class="control-group">
 						<h:outputLabel for="confirmPass" class="control-label" value="Confirm
-							Password" />
+							Password*:" />
 						<div class="controls">
 							<p:password id="confirmPass" label="Confirm Password"
 								value="#{newApplicationUser.userPass}" required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="firstName" class="control-label">First Name</label>
+						<label for="firstName" class="control-label">First Name*:</label>
 						<div class="controls">
 							<p:inputText id="firstName" value="#{newUserInfo.firstName}"
 								required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="lastName" class="control-label">Last Name</label>
+						<label for="lastName" class="control-label">Last Name*:</label>
 						<div class="controls">
 							<p:inputText id="lastName" value="#{newUserInfo.lastName}"
 								required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="inputUserType" class="control-label">User Type</label>
+						<label for="inputUserType" class="control-label">User Type*:</label>
 						<div class="controls">
 							<h:selectOneMenu id="userTypeCode"
 								value="#{newApplicationUser.userTypeCode}" required="true">
@@ -61,6 +61,12 @@
 									var="userTypeCodes" itemLabel="#{userTypeCodes}"
 									itemValue="#{userTypeCodes}" />
 							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="photo" class="control-label">Website URL</label>
+						<div class="controls">
+							<p:inputText id="websiteURL" value="#{newUserInfo.websiteUrl}" type="url" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -76,35 +82,34 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="phone" class="control-label">Phone Number</label>
+						<label for="phone" class="control-label">Phone Number*:</label>
 						<div class="controls">
-							<p:inputText id="phone" value="#{newContactInfo.phoneNumber}"
+							<p:inputMask id="phone" value="#{newContactInfo.phoneNumber}" mask="(999)-999-9999"
 								required="true" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label for="fax" class="control-label">Fax Number</label>
 						<div class="controls">
-							<p:inputText id="fax" value="#{newContactInfo.faxNumber}"
-								required="true" />
+							<p:inputMask id="fax" value="#{newContactInfo.faxNumber}" mask="(999)-999-9999"/>
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="address" class="control-label">Address</label>
+						<label for="address" class="control-label">Address*:</label>
 						<div class="controls">
 							<p:inputText id="address" value="#{newLocation.address}"
 								required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="city" class="control-label">City</label>
+						<label for="city" class="control-label">City*:</label>
 						<div class="controls">
 							<p:inputText id="city" value="#{newLocation.city}"
 								required="true" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="inputState" class="control-label">State</label>
+						<label for="inputState" class="control-label">State*:</label>
 						<div class="controls">
 							<h:selectOneMenu id="state" value="#{newLocation.stateCode}"
 								required="true">
@@ -116,9 +121,9 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="zip" class="control-label">ZIP</label>
+						<label for="zip" class="control-label">ZIP*:</label>
 						<div class="controls">
-							<p:inputText id="zip" value="#{newLocation.zipCode}"
+							<p:inputText id="zip" value="#{newLocation.zipCode}" 
 								required="true" />
 						</div>
 					</div>

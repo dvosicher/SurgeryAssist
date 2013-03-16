@@ -59,20 +59,20 @@ public class TimeAvailabilities implements Serializable {
     private Calendar endTime;
     
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
     
     @Column(name = "is_booked")
     private Boolean isBooked;

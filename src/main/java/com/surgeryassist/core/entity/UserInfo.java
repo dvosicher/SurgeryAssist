@@ -69,20 +69,23 @@ public class UserInfo implements Serializable {
     private String videoFilePath;
 
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
+    
+    @Column(name = "website_url")
+    private String websiteUrl;
 
 	public String getFirstName() {
         return this.firstName;
@@ -276,4 +279,18 @@ public class UserInfo implements Serializable {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	/**
+	 * @return the webisteUrl
+	 */
+	public String getWebsiteUrl() {
+		return websiteUrl;
+	}
+
+	/**
+	 * @param webisteUrl the webisteUrl to set
+	 */
+	public void setWebsiteUrl(String webisteUrl) {
+		this.websiteUrl = webisteUrl;
+	}
 }

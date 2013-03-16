@@ -44,20 +44,20 @@ public class HomepageWidget {
 	private String widgetName;
 
 	@Column(name = "created_by")
-	private Integer createdBy;
+	public Integer createdBy;
 
 	@Column(name = "created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "MM")
-	private Calendar createdDate;
+	public Calendar createdDate;
 
 	@Column(name = "modified_by")
-	private Integer modifiedBy;
+	public Integer modifiedBy;
 
 	@Column(name = "modified_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(style = "MM")
-	private Calendar modifiedDate;
+	public Calendar modifiedDate;
 
 	public Integer getWidgetId() {
 		return this.widgetId;
