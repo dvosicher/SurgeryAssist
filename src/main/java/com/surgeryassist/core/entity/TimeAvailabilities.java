@@ -123,7 +123,7 @@ public class TimeAvailabilities implements Serializable {
     }
 	
 	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
-			Integer zipCode, Date startDate, Date endDate) {
+			Integer zipCode, Date startDate, Date endDate, Long timeDuration) {
 		
 		//create the session and criteria for the query
 		Session session = entityManager().unwrap(Session.class);
@@ -155,6 +155,9 @@ public class TimeAvailabilities implements Serializable {
 		if(startDate != null && endDate != null) {
 			criteria.add(Restrictions
 				.between("aid.dateOfAvailability", calStartDate, calEndDate));
+		}
+		if(timeDuration != null) {
+			//criteria.add(Restrictions.sqlRestriction(sql, value, type));
 		}
 		
 		@SuppressWarnings("unchecked")

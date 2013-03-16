@@ -62,8 +62,10 @@ public class SearchServiceImpl implements SearchService {
 			zipCodeInt = Integer.parseInt(searchCriteria.getZipCode());
 		}
 		
+		
 		returnList = TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(
-				city, zipCodeInt, searchCriteria.getStartDate(), searchCriteria.getEndDate());
+				city, zipCodeInt, searchCriteria.getStartDate(), searchCriteria.getEndDate(), 
+				searchCriteria.getTimeDuration());
 		
 		return returnList;
 	}
