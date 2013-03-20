@@ -1,6 +1,7 @@
 package com.surgeryassist.core.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -133,8 +134,8 @@ public class TimeAvailabilities implements Serializable {
 		criteria.setFetchMode("uid.userInfoId", FetchMode.DEFAULT).createAlias("uid.userInfoId", "uiid");
 		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
 		
-		Calendar calStartDate = SurgeryAssistUtil.DateToCalendar(startDate);
-		Calendar calEndDate = SurgeryAssistUtil.DateToCalendar(endDate);
+		Calendar calStartDate = SurgeryAssistUtil.convertDateToCalendar(startDate);
+		Calendar calEndDate = SurgeryAssistUtil.convertDateToCalendar(endDate);
 		
 		//make sure they're not booked
 		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
@@ -158,6 +159,17 @@ public class TimeAvailabilities implements Serializable {
 		@SuppressWarnings("unchecked")
 		List<TimeAvailabilities> result = criteria.list();
 		return result;
+	}
+
+	public static List<TimeAvailabilities> findOpenTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
+		if(ascUser != null) {
+			return entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+					"INNER JOIN FETCH o.availabilityId aid " +
+					"WHERE aid.userId = :userId " +
+					"AND o.isBooked = 0", TimeAvailabilities.class)
+					.setParameter("userId", ascUser).getResultList();
+		}
+		return new ArrayList<TimeAvailabilities>();
 	}
 	
 	@Transactional

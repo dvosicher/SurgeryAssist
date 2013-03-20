@@ -5,11 +5,14 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.ScheduleEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.surgeryassist.core.entity.ApplicationUser;
+import com.surgeryassist.core.entity.TimeAvailabilities;
 
 public class SurgeryAssistUtil {
 
@@ -19,10 +22,22 @@ public class SurgeryAssistUtil {
 	 * @param date The {@link Date} to convert
 	 * @return {@link Calendar} object of the appropriate type
 	 */
-	public static Calendar DateToCalendar(Date date){ 
+	public static Calendar convertDateToCalendar(Date date){ 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
+	}
+	
+	public static ScheduleEvent convertTimeAvailabilityToScheduleEvent(TimeAvailabilities timeAvailability) {
+		if(timeAvailability != null) {
+			DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
+			scheduleEvent.setStartDate(timeAvailability.getStartTime().getTime());
+			scheduleEvent.setEndDate(timeAvailability.getEndTime().getTime());
+			scheduleEvent.setTitle(" ");
+			return scheduleEvent;
+		}
+		return new DefaultScheduleEvent();
+		
 	}
 	
 	/**

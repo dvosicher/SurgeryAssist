@@ -49,13 +49,13 @@ public class ApplicationUser implements Serializable {
 	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
 	private Set<Entitlement> entitlements;
 
-	@OneToMany(mappedBy = "userId")
+	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
 	private Set<HomepageSettings> homepageSettingss;
 
-	@OneToMany(mappedBy = "userFavorite")
+	@OneToMany(mappedBy = "userFavorite", fetch = FetchType.LAZY)
 	private Set<UserFavorites> userFavoriteses;
 
-	@OneToMany(mappedBy = "userId")
+	@OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
 	private Set<UserFavorites> userFavoriteses1;
 
 	@OneToMany(mappedBy = "parentId")
