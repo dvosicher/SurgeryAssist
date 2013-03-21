@@ -5,9 +5,11 @@
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
+	<!-- Variables used for the flow -->
 	<var name="flowScope.scheduleDTO" class="com.surgeryassist.core.dto.ScheduleDTO" />
 	<var name="flowScope.newTimeAvailabilitiesList" class="java.util.ArrayList" />
 
+	<!-- Page that has calendars to input new availabilities -->
 	<view-state id="inputAvailabilities">
 		<on-entry>
 			<evaluate
@@ -16,20 +18,18 @@
 		</on-entry>
 		<transition on="submitChanges" to="confirmNewAvailabilities" />
 	</view-state>
-
+	
+	<!-- Confirmation page for new flows -->
 	<view-state id="confirmNewAvailabilities">
-		<transition on="cancel" to="inputAvailabilities" />
-		<transition on="submit" to="completeNewAvailabilities">
-			<evaluate
-				expression="inputAvailabilityService.convertScheduleEventsToTimeAvailabilities(flowScope.scheduleDTO)"
+		<transition on="goBack" to="inputAvailabilities" />
+		<transition on="cancel" to="finish" />
+		<transition on="submit" to="finish">
+			<!-- Add the availabilities via multiple calls -->
+			<evaluate expression="inputAvailabilityService.convertScheduleEventsToTimeAvailabilities(flowScope.scheduleDTO)"
 				result="flowScope.newTimeAvailabilitiesList" />
 		</transition>
 	</view-state>
 
-	<end-state id="completeNewAvailabilities">
-		<on-entry>
-			<evaluate expression="inputAvailabilityService.persistNewTimeAvailabilities" />
-		</on-entry>
-	</end-state>
-
+	<end-state id="finish" />
+		
 </flow>

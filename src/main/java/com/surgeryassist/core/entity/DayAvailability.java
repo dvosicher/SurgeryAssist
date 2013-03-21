@@ -122,6 +122,15 @@ public class DayAvailability implements Serializable {
         return entityManager().createQuery("SELECT o FROM DayAvailability o", DayAvailability.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
+	public static List<DayAvailability> findDayAvailabilitiesByApplicationUser(ApplicationUser applicationUser) {
+		if(applicationUser == null) {
+			return null;
+		}
+		return entityManager().createQuery("SELECT o FROM DayAvailability o WHERE o.userId = :userId", DayAvailability.class)
+				.setParameter("userId", applicationUser)
+				.getResultList();
+	}
+	
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();

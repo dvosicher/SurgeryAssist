@@ -61,7 +61,6 @@ public class ScheduleDTO implements Serializable {
 		this.addEvent();
 	}
 
-	
 	/**
 	 * Ajax function call when the existing event is moved
 	 * @param e The {@link ScheduleEntryMoveEvent} that contains the data for the

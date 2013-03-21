@@ -25,12 +25,11 @@
 						update="eventDetails" oncomplete="eventDialog.show()" />
 					<p:ajax event="eventSelect" listener="#{scheduleDTO.onEventSelect}" />
 					<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
+					<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
 				</p:schedule>
 
 				<p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" resizable="false">
 					<h:panelGrid id="eventDetails" columns="2">
-						<h:outputLabel for="title" value="Title:" />
-						<h:inputText id="title" value="#{scheduleDTO.event.title}" required="true"/>
 						<h:outputLabel for="from" value="From:" />
 						<p:inputText id="from" value="#{scheduleDTO.event.startDate}">
 			            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />

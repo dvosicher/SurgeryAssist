@@ -42,6 +42,7 @@
 	<!-- subflow for inputting availabilities -->
 	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
 		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
 </flow>
