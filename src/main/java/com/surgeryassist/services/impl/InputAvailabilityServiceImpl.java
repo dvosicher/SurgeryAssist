@@ -73,31 +73,19 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 			//only go through this logic if there are existing values to add, otherwise just add new availabilities
 			if(timeAvailabilitiesInDatabase.size() != 0) {
 				//logic to check if this schedule already exists as a TimeAvailability
-				//if the scheduleEvent start time AND endtime are the same as the timeAvail
-				//start time and end time, then we don't need to add it, but we need to update it
 				for(ScheduleEvent scheduleEvent : scheduleEvents) {
 					for(TimeAvailabilities timeAvailability : timeAvailabilitiesInDatabase) {
-
+						//only add it if it is editable, meaning it's a new availability
 						if(scheduleEvent.isEditable()) {
 							//the two times are not equal, so we have to create a new TimeAvailability
-							if(!(DateTimeComparator.getTimeOnlyInstance()
-									.compare(new DateTime(scheduleEvent.getStartDate()), 
-											new DateTime(timeAvailability.getStartTime())) == 0)
-											|| !(DateTimeComparator.getTimeOnlyInstance()
-													.compare(new DateTime(scheduleEvent.getEndDate()), 
-															new DateTime(timeAvailability.getEndTime())) == 0)) {
+							if(areTimesNotEqual(scheduleEvent, timeAvailability)) {
 
 								TimeAvailabilities newTimeAvailability = 
 										this.createNewTimeAvailability(dayAvailabilitiesMap, scheduleEvent);
 
 								newTimeAvailability.persist();
-							}
-							else {
-								timeAvailability.setStartTime(
-										SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getStartDate()));
-								timeAvailability.setEndTime(
-										SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getEndDate()));
-								timeAvailability.merge();
+								//we've added the timeAvailability, no need to add more
+								break;
 							}
 						}
 					}
@@ -115,6 +103,15 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 			//force the persistence context to flush
 			TimeAvailabilities.entityManager().flush();
 		}
+	}
+
+	private boolean areTimesNotEqual(ScheduleEvent scheduleEvent, TimeAvailabilities timeAvailability) {
+		return !(DateTimeComparator.getTimeOnlyInstance()
+				.compare(new DateTime(scheduleEvent.getStartDate()), 
+						new DateTime(timeAvailability.getStartTime())) == 0)
+						|| !(DateTimeComparator.getTimeOnlyInstance()
+								.compare(new DateTime(scheduleEvent.getEndDate()), 
+										new DateTime(timeAvailability.getEndTime())) == 0);
 	}
 
 	@Override
@@ -155,14 +152,14 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 								if(compareResults == 0) {
 									//check if the map already has the DayAvailability. if it does not, then add it
 									if(!returnMap.containsKey(dayAvailabilityWithoutTime)) {
-										returnMap.put(dayAvailabilityWithoutTime, dayAvailability);
+										returnMap.put(scheduleDateWithoutTime, dayAvailability);
 									}
 								}
 								//the scheduleDay and dayAvailability don't exist in the map, need to add them
 								else {
 									DayAvailability newDayAvailability = 
 											this.createNewDayAvailability(currentUser, startingDateTime);
-									returnMap.put(dayAvailabilityWithoutTime, newDayAvailability);
+									returnMap.put(scheduleDateWithoutTime, newDayAvailability);
 
 								}
 							}
@@ -227,8 +224,9 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 				SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getStartDate()));
 		timeAvailabilityToAdd.setEndTime(
 				SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getEndDate()));
-		
+
 		DayAvailability availabilityFromMap = dayAvailabilitiesMap.get(mapKey);
+
 		if(availabilityFromMap != null) {
 			timeAvailabilityToAdd.setAvailabilityId(availabilityFromMap);
 		}
