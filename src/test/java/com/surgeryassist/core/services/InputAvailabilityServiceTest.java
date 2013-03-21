@@ -52,8 +52,9 @@ public class InputAvailabilityServiceTest {
 		/*
 		 * Test plan: 
 		 * 1. Get a list containing the existing DayAvailability as a ScheduleEvent
-		 * 2. Create a test user to use that has the day availabilities already there
-		 * 3. 
+		 * 2. Create a test user to that has the day availabilities already there
+		 * 3. Create a list of ScheduleEvent to be used
+		 * 4.  
 		 */
 		
 	}

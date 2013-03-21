@@ -24,7 +24,7 @@
 		<transition on="goBack" to="inputAvailabilities" />
 		<transition on="cancel" to="finish" />
 		<transition on="submit" to="finish">
-			<!-- Add the availabilities via multiple calls -->
+			<!-- Add the availabilities to the persistence context -->
 			<evaluate expression="inputAvailabilityService.convertScheduleEventsToTimeAvailabilities(flowScope.scheduleDTO)"
 				result="flowScope.newTimeAvailabilitiesList" />
 		</transition>

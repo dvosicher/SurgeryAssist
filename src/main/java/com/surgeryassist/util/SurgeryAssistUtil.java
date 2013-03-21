@@ -47,7 +47,8 @@ public class SurgeryAssistUtil {
 			DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
 			scheduleEvent.setStartDate(timeAvailability.getStartTime().getTime());
 			scheduleEvent.setEndDate(timeAvailability.getEndTime().getTime());
-			scheduleEvent.setTitle(" ");
+			scheduleEvent.setTitle("Existing Availability - Cannot Edit");
+			scheduleEvent.setEditable(false);
 			return scheduleEvent;
 		}
 		return new DefaultScheduleEvent();

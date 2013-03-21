@@ -7,7 +7,6 @@ import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
-import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
@@ -49,16 +48,6 @@ public class ScheduleDTO implements Serializable {
 	 */
 	public void onDateSelect(DateSelectEvent e) {
 		event = new DefaultScheduleEvent(" ", e.getDate(), e.getDate());
-	}
-
-	/**
-	 * Ajax function call when an existing event is selected
-	 * @param e The {@link DateSelectEvent} that contains the data for the
-	 * 	event selection
-	 */
-	public void onEventSelect(ScheduleEntrySelectEvent e) {
-		event = (DefaultScheduleEvent) e.getScheduleEvent();
-		this.addEvent();
 	}
 
 	/**

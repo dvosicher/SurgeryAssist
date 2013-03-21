@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -161,13 +162,16 @@ public class TimeAvailabilities implements Serializable {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<TimeAvailabilities> findOpenTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
 		if(ascUser != null) {
-			return entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
 					"INNER JOIN FETCH o.availabilityId aid " +
 					"WHERE aid.userId = :userId " +
 					"AND o.isBooked = 0", TimeAvailabilities.class)
-					.setParameter("userId", ascUser).getResultList();
+					.setParameter("userId", ascUser);
+			List<TimeAvailabilities> result = query.getResultList();
+			return result;
 		}
 		return new ArrayList<TimeAvailabilities>();
 	}

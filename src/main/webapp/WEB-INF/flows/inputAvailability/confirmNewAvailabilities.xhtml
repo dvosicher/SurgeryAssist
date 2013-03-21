@@ -24,18 +24,21 @@
 				</thead>
 				<tbody>
 					<ui:repeat var="scheduleEvent" value="#{scheduleDTO.model.events}">
-						<tr>
-							<td>
-								<h:outputText value="#{scheduleEvent.startDate}">
-									<f:convertDateTime dateStyle="full" type="both"/>
-								</h:outputText>
-							</td>
-							<td>
-								<h:outputText value="#{scheduleEvent.endDate}">
-									<f:convertDateTime dateStyle="full" type="both"/>
-								</h:outputText>
-							</td>
-						</tr>
+
+						<h:panelGroup id="scheduleEventRow" rendered="#{scheduleEvent.editable}" >
+							<tr>
+								<td>
+									<h:outputText value="#{scheduleEvent.startDate}">
+										<f:convertDateTime dateStyle="full" type="both"/>
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{scheduleEvent.endDate}">
+										<f:convertDateTime dateStyle="full" type="both"/>
+									</h:outputText>
+								</td>
+							</tr>
+						</h:panelGroup>
 					</ui:repeat>
 				</tbody>
 			</table>
@@ -44,11 +47,19 @@
 		<div class="row">
 			<div class="span8">
 				<h:form id="actionButtonForms">
-					<p:commandButton id="cancelButton" action="goBack" value="Go Back" />
-					<p:commandButton id="submitButton" action="submit" value="Confirm" />
+					<p:commandButton id="cancelButton" action="cancel" value="Cancel" />
+					<p:commandButton id="goBackButton" action="goBack" value="Go Back" />
+					<p:commandButton id="submitButton" action="submit" value="Confirm" onclick="waitDialog.show();" />
 				</h:form>
 			</div>
 		</div>
+		
+		<p:dialog id="modalDialog" widgetVar="waitDialog" modal="true" resizable="false" closable="false" width="470">
+			<h:outputText value="Please wait while we save your data. This may take a few moments." />  
+			<div class="modal_dialog_ajax_loader_gif">
+				<img src="${request.contextPath}/images/ajax-loader.gif" /> 
+			</div>
+		</p:dialog>	
 		
 	</ui:define>
 </ui:composition>

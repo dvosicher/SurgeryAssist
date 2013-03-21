@@ -11,19 +11,19 @@
 		<div class="row">
 			<div class="span8">
 				<h3>Input Availabilities</h3>
+				<p>
+					Note: You cannot edit any availabilities once you save them. You must cancel them separately.
+				</p>
 			</div>
 		</div>
 	
 		<div class="row">
 			<h:form id="scheduleCreatorForm">
-				<p:growl widgetVar="messages" showDetail="true" sticky="true"/>
-
 				<p:schedule value="#{scheduleDTO.model}" id="scheduleInput" view="agendaWeek"
 					widgetVar="scheduleInput" editable="true" draggable="true"
 					resizable="true" minTime="7:00am" maxTime="8:00pm">
 					<p:ajax event="dateSelect" listener="#{scheduleDTO.onDateSelect}"
-						update="eventDetails" oncomplete="eventDialog.show()" />
-					<p:ajax event="eventSelect" listener="#{scheduleDTO.onEventSelect}" />
+						update="eventDetails" oncomplete="eventDialog.show();" />
 					<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
 					<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
 				</p:schedule>

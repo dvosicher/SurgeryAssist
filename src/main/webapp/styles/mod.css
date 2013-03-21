@@ -48,3 +48,8 @@ select[size="1"] {
 .ui-datatable {
 	width: 100px;
 }
+
+div.modal_dialog_ajax_loader_gif {
+	float: left;
+	margin: 5px 0px 0px 107px;
+}
