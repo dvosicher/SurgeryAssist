@@ -33,7 +33,13 @@
   	<!-- Defaults the theme for Primefaces -->
   	<context-param>  
 	    <param-name>primefaces.THEME</param-name>  
-	    <param-value>none</param-value>  
+	    <param-value>bootstrap</param-value>  
+	</context-param>
+	
+	<!-- Forces JSF to not render comments in HTML -->
+	<context-param>
+	    <param-name>facelets.SKIP_COMMENTS</param-name>
+	    <param-value>true</param-value>
 	</context-param>
 
 	<!--

@@ -41,6 +41,7 @@ public class BookingServiceImpl implements BookingService {
 		newBooking.setPatientId(patient);
 		newBooking.setTimeAvailabilityId(selectedTimeAvailability);
 		newBooking.setIsCanceled(false);
+		newBooking.setIsConfirmed(false);
 		
 		//merge the availability to be completely caught up
 		try {

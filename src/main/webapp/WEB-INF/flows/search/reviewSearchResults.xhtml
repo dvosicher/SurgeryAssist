@@ -23,7 +23,7 @@
 						value="#{timeAvailabilitiesList}" dynamic="true" rows="10">
 						<f:facet name="header">
 						</f:facet>
-						<p:column sortBy="#{a.availabilityId.dateOfAvailability}"
+						<p:column sortBy="#{a.availabilityId.dateOfAvailability}" 
 							id="dateColumn" headerText="Date Available">
 							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
 								<f:convertDateTime type="date" dateStyle="default" />

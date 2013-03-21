@@ -4,15 +4,23 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-				template="/WEB-INF/layouts/standard.xhtml">
+				template="/WEB-INF/layouts/pre-login.xhtml">
 
-	<ui:define name="notes">
-		
-	</ui:define>
 					
 	<ui:define name="content">
-		<div id="successful_registration">
-			<h1>Congratulations!</h1>
+		<div id="successful_registration" class="row">
+			<div class="span8">
+				<h3>Congratulations!</h3>
+				<p>
+					You will be notified shortly about the benefits of SurgeryAssist.
+					
+					In the mean time, you can go back to the homepage below.
+				</p>
+			</div>
+			<div class="btn-toolbar">
+				<a style="margin-left: 30px;margin-top: 10px;" 
+					href="${request.contextPath}/spring/main" class="btn">Go Home</a>
+			</div>
 		</div>
 	</ui:define>
 				

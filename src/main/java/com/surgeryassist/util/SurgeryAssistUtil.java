@@ -5,12 +5,24 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.ScheduleEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.surgeryassist.core.entity.ApplicationUser;
+import com.surgeryassist.core.entity.TimeAvailabilities;
 
+/**
+ * A utility class for the SurgeryAssist application.
+ * Contains many different static methods to be used 
+ * for typical application tasks, such as object type 
+ * conversions and setting audit info for {@link Entity}
+ * type objects.
+ *  
+ * @author Ankit Tyagi
+ */
 public class SurgeryAssistUtil {
 
 	/**
@@ -19,16 +31,54 @@ public class SurgeryAssistUtil {
 	 * @param date The {@link Date} to convert
 	 * @return {@link Calendar} object of the appropriate type
 	 */
-	public static Calendar DateToCalendar(Date date){ 
+	public static Calendar convertDateToCalendar(Date date){ 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
 	
 	/**
+	 * Converts a {@link TimeAvailabilities} object to a {@link ScheduleEvent}
+	 * @param timeAvailability The {@link TimeAvailabilities} to convert
+	 * @return The converted {@link ScheduleEvent} object
+	 */
+	public static ScheduleEvent convertTimeAvailabilityToScheduleEvent(TimeAvailabilities timeAvailability) {
+		if(timeAvailability != null) {
+			DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
+			scheduleEvent.setStartDate(timeAvailability.getStartTime().getTime());
+			scheduleEvent.setEndDate(timeAvailability.getEndTime().getTime());
+			scheduleEvent.setTitle("Existing Availability - Cannot Edit");
+			scheduleEvent.setEditable(false);
+			return scheduleEvent;
+		}
+		return new DefaultScheduleEvent();
+	}
+	
+	/**
+	 * Returns a {@link TimeAvailabilities} based on the provided
+	 * {@link ScheduleEvent}
+	 * @param scheduleEvent The {@link ScheduleEvent} to convert into a {@link TimeAvailabilities}
+	 * @return The {@link TimeAvailabilities} object
+	 */
+	public static TimeAvailabilities convertScheduleEventToTimeAvailability(ScheduleEvent scheduleEvent) {
+		if(scheduleEvent != null) {
+			TimeAvailabilities timeAvailabilities = new TimeAvailabilities();
+			
+			timeAvailabilities.setStartTime(
+					SurgeryAssistUtil.convertDateToCalendar(
+							scheduleEvent.getStartDate()));
+			timeAvailabilities.setEndTime(
+					SurgeryAssistUtil.convertDateToCalendar(
+							scheduleEvent.getEndDate()));
+			
+		}
+		return new TimeAvailabilities();
+	}
+	
+	/**
 	 * Grabs the currently logged in ApplicationUser and returns
 	 * the appropriate entity. Unfortunately, it makes a DB call. 
-	 * TODO: figure out how to do this without a DB call
+	 * @todo Figure out how to do this without a DB call
 	 * @return Currently logged in {@link ApplicationUser} object
 	 */
 	public static ApplicationUser getLoggedInApplicationUser() {
