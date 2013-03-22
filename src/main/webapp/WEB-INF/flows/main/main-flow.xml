@@ -16,6 +16,7 @@
 	<!-- ASC's home page  -->
 	<view-state id="ascHome">
 		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
+		<transition on="cancelAvailability" to="cancelAvailabilityFlow" />
 	</view-state>
 	
 	<!-- Surgeon's home page -->
@@ -41,6 +42,11 @@
 	
 	<!-- subflow for inputting availabilities -->
 	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<subflow-state id="cancelAvailabilityFlow" subflow="cancelAvailability">
 		<transition on="finish" to="decideSurgeonOrASC" />
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>
