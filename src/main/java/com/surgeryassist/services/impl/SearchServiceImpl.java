@@ -54,6 +54,7 @@ public class SearchServiceImpl implements SearchService {
 		List<TimeAvailabilities> returnList = new ArrayList<TimeAvailabilities>();
 		Integer zipCodeInt = null;
 		String city = null;
+		Integer timeDuration = null;
 
 		if(!StringUtils.isEmpty(searchCriteria.getCityName())) {
 			city = searchCriteria.getCityName();
@@ -61,10 +62,12 @@ public class SearchServiceImpl implements SearchService {
 		if(!StringUtils.isEmpty(searchCriteria.getZipCode())) {
 			zipCodeInt = Integer.parseInt(searchCriteria.getZipCode());
 		}
+		if(!searchCriteria.getTimeDuration().equals(0)) {
+			timeDuration = searchCriteria.getTimeDuration();
+		}
 
 		returnList = TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(
-				city, zipCodeInt, searchCriteria.getEndDate(), 
-				searchCriteria.getTimeDuration());
+				city, zipCodeInt, searchCriteria.getEndDate(), timeDuration);
 
 		return returnList;
 	}

@@ -208,16 +208,16 @@ public class SurgeryAssistUtil {
 	/**
 	 * Returns the difference between
 	 * two {@link Calendar} objects as a 
-	 * primative long 
+	 * primative int 
 	 * @param startTime The start time 
 	 * @param endTime The end time
 	 */
-	public static long getTimeDifferenceInHours(Calendar startTime, Calendar endTime) {
+	public static int getTimeDifferenceInHours(Calendar startTime, Calendar endTime) {
 		DateTime jodaStartTime = new DateTime(startTime);
 		DateTime jodaEndTime = new DateTime(endTime);
 		
 		Integer difference = Hours.hoursBetween(jodaStartTime, jodaEndTime).getHours();
 		
-		return difference.longValue();
+		return difference;
 	}
 }

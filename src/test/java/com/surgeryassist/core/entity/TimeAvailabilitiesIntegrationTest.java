@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.entity.TimeAvailabilities;
-import com.surgeryassist.util.SurgeryAssistUtil;
 
 @Configurable
 @Transactional
@@ -85,10 +84,10 @@ public class TimeAvailabilitiesIntegrationTest {
     	//get the city based on the random availability
     	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
     	Integer zipCode = null;
-    	Calendar startDate = Calendar.getInstance();
     	Calendar endDate = Calendar.getInstance();
     	
-    	Long duration = SurgeryAssistUtil.getTimeDifferenceInHours(startDate, endDate);
+    	//2 hour difference
+    	Integer duration = 2;
     	
     	List<TimeAvailabilities> timeAvailabilities = 
     			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, endDate.getTime(), duration);

@@ -22,7 +22,7 @@ public class SearchCriteriaDTO implements Serializable {
 	
 	private Date endDate;
 	
-	private Long timeDuration;
+	private Integer timeDuration;
 	
 	private TimeAvailabilities selectedAvailability;
 	
@@ -104,14 +104,14 @@ public class SearchCriteriaDTO implements Serializable {
 	/**
 	 * @return the timeDuration
 	 */
-	public Long getTimeDuration() {
+	public Integer getTimeDuration() {
 		return timeDuration;
 	}
 
 	/**
 	 * @param timeDuration the timeDuration to set
 	 */
-	public void setTimeDuration(Long timeDuration) {
+	public void setTimeDuration(Integer timeDuration) {
 		this.timeDuration = timeDuration;
 	}
 

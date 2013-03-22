@@ -30,6 +30,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,7 +124,7 @@ public class TimeAvailabilities implements Serializable {
     }
 	
 	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
-			Integer zipCode, Date endDate, Long timeDuration) {
+			Integer zipCode, Date endDate, Integer timeDuration) {
 		
 		//create the session and criteria for the query
 		Session session = entityManager().unwrap(Session.class);
@@ -160,7 +161,9 @@ public class TimeAvailabilities implements Serializable {
 			criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
 		}
 		if(timeDuration != null) {
-			
+			criteria.add(
+					Restrictions.sqlRestriction(
+							"DATEDIFF(HH, {alias}.start_time, {alias}.end_time) > ?", timeDuration, StandardBasicTypes.INTEGER));
 		}
 		
 		@SuppressWarnings("unchecked")
