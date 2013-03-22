@@ -38,7 +38,7 @@
 	
 	<!-- Forces JSF to not render comments in HTML -->
 	<context-param>
-	    <param-name>facelets.SKIP_COMMENTS</param-name>
+	    <param-name>facelets.FACELETS_SKIP_COMMENTS</param-name>
 	    <param-value>true</param-value>
 	</context-param>
 

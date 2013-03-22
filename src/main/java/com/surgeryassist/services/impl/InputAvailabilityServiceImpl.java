@@ -27,6 +27,7 @@ import com.surgeryassist.util.SurgeryAssistUtil;
 public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 
 	@Override
+	@Transactional(readOnly = true)
 	public ScheduleDTO getCurrentScheduleDTO(ScheduleDTO scheduleDto) {
 		//if the scheduleDto already exists and there are events in it, then return it
 		if(scheduleDto != null && scheduleDto.getModel().getEvents().size() != 0) {
@@ -105,7 +106,15 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 		}
 	}
 
+	/**
+	 * Returns a boolean as to whether a {@link ScheduleEvent} and {@link TimeAvailabilities}
+	 * objet are equal or not.
+	 * @param scheduleEvent The {@link ScheduleEvent} to compare
+	 * @param timeAvailability The {@link TimeAvailabilities} to compare
+	 * @return True if the times are not equal, false if they are
+ 	 */
 	private boolean areTimesNotEqual(ScheduleEvent scheduleEvent, TimeAvailabilities timeAvailability) {
+		//if the start times are not equal or the end times are not equal
 		return !(DateTimeComparator.getTimeOnlyInstance()
 				.compare(new DateTime(scheduleEvent.getStartDate()), 
 						new DateTime(timeAvailability.getStartTime())) == 0)

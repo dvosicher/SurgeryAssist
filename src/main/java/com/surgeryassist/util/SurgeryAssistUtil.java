@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.ScheduleEvent;
+import org.joda.time.DateTime;
+import org.joda.time.Hours;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -203,4 +205,19 @@ public class SurgeryAssistUtil {
 		return obj;
 	}
 
+	/**
+	 * Returns the difference between
+	 * two {@link Calendar} objects as a 
+	 * primative int 
+	 * @param startTime The start time 
+	 * @param endTime The end time
+	 */
+	public static int getTimeDifferenceInHours(Calendar startTime, Calendar endTime) {
+		DateTime jodaStartTime = new DateTime(startTime);
+		DateTime jodaEndTime = new DateTime(endTime);
+		
+		Integer difference = Hours.hoursBetween(jodaStartTime, jodaEndTime).getHours();
+		
+		return difference;
+	}
 }

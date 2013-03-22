@@ -81,7 +81,7 @@ public class LocationDataOnDemand {
 	}
 
 	public void setZipCode(Location obj, int index) {
-		Integer zipCode = new Integer(index);
+		String zipCode = Integer.toString(index);
 		obj.setZipCode(zipCode);
 	}
 

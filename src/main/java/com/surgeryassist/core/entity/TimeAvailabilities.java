@@ -30,6 +30,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,7 +124,7 @@ public class TimeAvailabilities implements Serializable {
     }
 	
 	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
-			Integer zipCode, Date startDate, Date endDate) {
+			Integer zipCode, Date endDate, Integer timeDuration) {
 		
 		//create the session and criteria for the query
 		Session session = entityManager().unwrap(Session.class);
@@ -135,10 +136,9 @@ public class TimeAvailabilities implements Serializable {
 		criteria.setFetchMode("uid.userInfoId", FetchMode.DEFAULT).createAlias("uid.userInfoId", "uiid");
 		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
 		
-		Calendar calStartDate = SurgeryAssistUtil.convertDateToCalendar(startDate);
 		Calendar calEndDate = SurgeryAssistUtil.convertDateToCalendar(endDate);
 		
-		//make sure they're not booked
+		//make sure they're not booked and that the date is after today
 		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
 		
 		//add the city
@@ -152,9 +152,18 @@ public class TimeAvailabilities implements Serializable {
 				"lid.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
 		}
 		//check the start/end dates
-		if(startDate != null && endDate != null) {
+		if(endDate != null) {
 			criteria.add(Restrictions
-				.between("aid.dateOfAvailability", calStartDate, calEndDate));
+				.between("aid.dateOfAvailability", Calendar.getInstance(), calEndDate));
+		}
+		//if the end date doesn't exist, force the end date to include >= GETDATE()
+		else {
+			criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		}
+		if(timeDuration != null) {
+			criteria.add(
+					Restrictions.sqlRestriction(
+							"DATEDIFF(HH, {alias}.start_time, {alias}.end_time) > ?", timeDuration, StandardBasicTypes.INTEGER));
 		}
 		
 		@SuppressWarnings("unchecked")

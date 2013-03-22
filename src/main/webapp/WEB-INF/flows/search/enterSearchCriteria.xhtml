@@ -19,7 +19,7 @@
 						<h:outputLabel for="cityName" styleClass="control-label" value="City Name" />
 						<div class="controls">
 							<p:inputText id="cityName"
-								value="#{searchCriteriaDTO.cityName}" required="true" />
+								value="#{searchCriteriaDTO.cityName}" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -30,12 +30,18 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<h:outputLabel for="startDate" styleClass="control-label" value="Start Date" />
+						<h:outputLabel for="timeForSurgery" styleClass="control-label" value="Duration for Surgery:" />
 						<div class="controls">
-							<p:calendar id="startDate"
-								value="#{searchCriteriaDTO.startDate}" />
+							<p:selectOneMenu id="timeForSurgery" value="#{searchCriteriaDTO.timeDuration}">
+								<f:selectItem itemLabel="Not Sure" itemValue="0"/>
+								<f:selectItem itemLabel="1 Hour" itemValue="1"/>
+								<f:selectItem itemLabel="2 Hour" itemValue="2"/>
+								<f:selectItem itemLabel="3 Hour" itemValue="3"/>
+								<f:selectItem itemLabel="4 Hour" itemValue="4"/>
+								<f:selectItem itemLabel="5 Hour" itemValue="5"/>
+							</p:selectOneMenu>
 						</div>
-					</div>
+					</div>				
 					<div class="control-group">
 						<h:outputLabel for="endDate" styleClass="control-label" value="End Date" />
 						<div class="controls">

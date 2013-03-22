@@ -84,11 +84,13 @@ public class TimeAvailabilitiesIntegrationTest {
     	//get the city based on the random availability
     	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
     	Integer zipCode = null;
-    	Calendar startDate = Calendar.getInstance();
     	Calendar endDate = Calendar.getInstance();
     	
+    	//2 hour difference
+    	Integer duration = 2;
+    	
     	List<TimeAvailabilities> timeAvailabilities = 
-    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, startDate.getTime(), endDate.getTime());
+    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, endDate.getTime(), duration);
     	
     	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
     	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 

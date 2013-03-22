@@ -19,10 +19,9 @@
 			</div>
 			<div class="row">
 				<div class="span8 offset2">
-					<p:dataTable id="availabilities" var="a"
-						value="#{timeAvailabilitiesList}" dynamic="true" rows="10">
-						<f:facet name="header">
-						</f:facet>
+					<p:dataTable id="availabilities" var="a" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+						value="#{timeAvailabilitiesList}" dynamic="true" rows="5">
 						<p:column sortBy="#{a.availabilityId.dateOfAvailability}" 
 							id="dateColumn" headerText="Date Available">
 							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
