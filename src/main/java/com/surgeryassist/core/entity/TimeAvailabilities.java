@@ -123,7 +123,7 @@ public class TimeAvailabilities implements Serializable {
     }
 	
 	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
-			Integer zipCode, Date startDate, Date endDate, Long timeDuration) {
+			Integer zipCode, Date endDate, Long timeDuration) {
 		
 		//create the session and criteria for the query
 		Session session = entityManager().unwrap(Session.class);
@@ -135,10 +135,9 @@ public class TimeAvailabilities implements Serializable {
 		criteria.setFetchMode("uid.userInfoId", FetchMode.DEFAULT).createAlias("uid.userInfoId", "uiid");
 		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
 		
-		Calendar calStartDate = SurgeryAssistUtil.convertDateToCalendar(startDate);
 		Calendar calEndDate = SurgeryAssistUtil.convertDateToCalendar(endDate);
 		
-		//make sure they're not booked
+		//make sure they're not booked and that the date is after today
 		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
 		
 		//add the city
@@ -152,12 +151,16 @@ public class TimeAvailabilities implements Serializable {
 				"lid.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
 		}
 		//check the start/end dates
-		if(startDate != null && endDate != null) {
+		if(endDate != null) {
 			criteria.add(Restrictions
-				.between("aid.dateOfAvailability", calStartDate, calEndDate));
+				.between("aid.dateOfAvailability", Calendar.getInstance(), calEndDate));
+		}
+		//if the end date doesn't exist, force the end date to include >= GETDATE()
+		else {
+			criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
 		}
 		if(timeDuration != null) {
-			//criteria.add(Restrictions.sqlRestriction(sql, value, type));
+			
 		}
 		
 		@SuppressWarnings("unchecked")

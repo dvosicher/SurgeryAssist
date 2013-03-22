@@ -8,8 +8,7 @@ import javax.persistence.Entity;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Duration;
+import org.joda.time.Hours;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -217,8 +216,8 @@ public class SurgeryAssistUtil {
 		DateTime jodaStartTime = new DateTime(startTime);
 		DateTime jodaEndTime = new DateTime(endTime);
 		
-		Duration duration = new Duration(jodaStartTime, jodaEndTime);
+		Integer difference = Hours.hoursBetween(jodaStartTime, jodaEndTime).getHours();
 		
-		return duration.getMillis() / DateTimeConstants.MILLIS_PER_HOUR;
+		return difference.longValue();
 	}
 }

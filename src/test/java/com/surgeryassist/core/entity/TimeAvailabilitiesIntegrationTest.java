@@ -91,7 +91,7 @@ public class TimeAvailabilitiesIntegrationTest {
     	Long duration = SurgeryAssistUtil.getTimeDifferenceInHours(startDate, endDate);
     	
     	List<TimeAvailabilities> timeAvailabilities = 
-    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, startDate.getTime(), endDate.getTime(), duration);
+    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, endDate.getTime(), duration);
     	
     	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
     	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 

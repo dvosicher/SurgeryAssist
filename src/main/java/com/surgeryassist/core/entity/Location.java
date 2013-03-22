@@ -48,7 +48,7 @@ public class Location implements Serializable {
     private String city;
     
     @Column(name = "zip_code")
-    private Integer zipCode;
+    private String zipCode;
     
     @Column(name = "created_by", updatable = false)
     public Integer createdBy;
@@ -82,11 +82,11 @@ public class Location implements Serializable {
         this.city = city;
     }
 
-	public Integer getZipCode() {
+	public String getZipCode() {
         return this.zipCode;
     }
 
-	public void setZipCode(Integer zipCode) {
+	public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
