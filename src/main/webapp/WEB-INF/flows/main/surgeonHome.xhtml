@@ -10,169 +10,183 @@
 	<ui:define name="tabs">
 		<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
 		<li><a href="#schedule" data-toggle="tab">Schedule</a></li>
-		<li><a href="#bookings" data-toggle="tab">Bookings</a></li>
+		<li><a href="#search" data-toggle="tab">Search</a></li>
 		<li><a href="#account" data-toggle="tab">Account</a></li>
 	</ui:define>
 
 	<ui:define name="content">
 		<div id="home" class="tab-pane active flip">
-			<div class="span3">
-				<h3>Pending</h3>
-				<c:choose>
-					<c:when test="#{empty pendingBookings}">
-						<div>
-							<h4>No Pending Bookings</h4>
+			<div class="span12">
+				<h2>Welcome, Reid.</h2>
+				<hr />
+				<div class="row">
+					<div class="span8">
+						<h3>Upcoming Reservations</h3>
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a>All</a>
+							</li>
+							<li>
+								<a>Confirmed</a>
+							</li>
+							<li>
+								<a>Pending</a>
+							</li>
+						</ul>
+						<div class="row">
+							<div class="span4">
+								<h:form id="searchNavForm_tab1">
+									<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
+										styleClass="btn btn-block" />
+								</h:form>
+							</div>
+							<div class="span4">
+								<h:form id="cancelButtonForm">
+									<p:commandButton id="cancelButton" value="Cancel Booking" styleClass="btn btn-block"/>
+								</h:form>
+							</div>
 						</div>
-					</c:when>
-					<c:otherwise>
+						<c:choose>
+							<c:when test="#{empty pendingBookings}">
+								<div>
+									<h4>No Pending Bookings</h4>
+								</div>
+							</c:when>
+							<c:when test="#{empty confirmedBookings}">
+								<div>
+									<h4>No Confirmed Bookings</h4>
+								</div>
+							</c:when>
+							<c:when test="#{not empty confirmedBookings or not empty pendingBookings}">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Event</th>
+											<th>Time</th>
+										</tr>
+									</thead>
+									<tbody>
+										<ui:repeat value="#{pendingBookings}" var="booking">
+											<tr>
+												<td>
+													<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+												</td>
+												<td>
+													<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+														<f:convertDateTime type="date" timeStyle="default"/>
+													</h:outputText>
+													<h:outputText value=" " />
+													<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+														<f:convertDateTime type="time" timeStyle="default" />
+													</h:outputText>
+												</td>
+											</tr>
+										</ui:repeat>
+										<ui:repeat value="#{confirmedBookings}" var="booking">
+											<tr>
+												<td>
+													<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+												</td>
+												<td>
+													<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+														<f:convertDateTime type="date" timeStyle="default"/>
+													</h:outputText>
+													<h:outputText value=" " />
+													<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
+														<f:convertDateTime type="time" timeStyle="default" />
+													</h:outputText>
+												</td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</c:when>
+						</c:choose>
+					</div>
+					<div class="span4">
+						<h3>Priority ASCs</h3>
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a>All</a>
+							</li>
+							<li>
+								<a>Recent</a>
+							</li>
+							<li>
+								<a>Favorite</a>
+							</li>
+						</ul>
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Event</th>
-									<th>Time</th>
+									<th>Surgery Center</th>
 								</tr>
 							</thead>
 							<tbody>
-								<ui:repeat value="#{pendingBookings}" var="booking">
-									<tr>
-										<td>
-											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
-										</td>
-										<td>
-											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
-												<f:convertDateTime type="date" timeStyle="default"/>
-											</h:outputText>
-											<h:outputText value=" " />
-											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
-												<f:convertDateTime type="time" timeStyle="default" />
-											</h:outputText>
-										</td>
-									</tr>
-								</ui:repeat>
-							</tbody>
-						</table>
-					</c:otherwise>
-				</c:choose>
-				<h:form id="searchNavForm_tab1">
-					<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
-						styleClass="btn btn-large btn-block" />
-				</h:form>
-			</div>
-			<div class="span3">
-				<h3>Confirmed</h3>
-				<c:choose>
-					<c:when test="#{empty confirmedBookings}">
-						<div>
-							<h4>No Confirmed Bookings</h4>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<table class="table">
-							<thead>
 								<tr>
-									<th>Event</th>
-									<th>Time</th>
+									<td>Surgeries R Us</td>
 								</tr>
-							</thead>
-							<tbody>
-								<ui:repeat value="#{confirmedBookings}" var="booking">
-									<tr>
-										<td>
-											<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
-										</td>
-										<td>
-											<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
-												<f:convertDateTime type="date" timeStyle="default"/>
-											</h:outputText>
-											<h:outputText value=" " />
-											<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
-												<f:convertDateTime type="time" timeStyle="default" />
-											</h:outputText>
-										</td>
-									</tr>
-								</ui:repeat>
+								<tr>
+									<td>Al's Surgery Barn</td>
+								</tr>
+								<tr>
+									<td>Hack and Crack</td>
+								</tr>
+								<tr>
+									<td>Blood</td>
+								</tr>
 							</tbody>
 						</table>
-					</c:otherwise>
-				</c:choose>
-				<h:form id="cancelButtonForm">
-					<p:commandButton id="cancelButton" value="Cancel Booking" styleClass="btn btn-large btn-block"/>
-				</h:form>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
-					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
-					tempor. In quis sapien eget ligula congue fermentum. Nulla et
-					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
-					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
-					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
-					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
-					vehicula.</p>
-			</div>
-			<div class="span3">
-				<h3>Recent</h3>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Surgery Center</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Surgeries R Us</td>
-						</tr>
-						<tr>
-							<td>Al's Surgery Barn</td>
-						</tr>
-					</tbody>
-				</table>
-				<h:form id="editListedASCForm">
-					<p:commandButton id="editListedASCButton" value="Edit Listed ASCs" styleClass="btn btn-large btn-block"/>
-				</h:form>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
-					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
-					tempor. In quis sapien eget ligula congue fermentum. Nulla et
-					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
-					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
-					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
-					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
-					vehicula.</p>
-			</div>
-			<div class="span3">
-				<h3>Favorites</h3>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Surgery Center</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Hack and Crack</td>
-						</tr>
-						<tr>
-							<td>Blood</td>
-						</tr>
-					</tbody>
-				</table>
-				<h:form id="addNewFavoriteForm">
-					<p:commandButton id="addNewFavoriteButton" value="Add New Favorite" styleClass="btn btn-large btn-block"/>
-				</h:form>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Nulla sit amet lectus arcu, vel sodales odio. Quisque sed molestie
-					mi. Suspendisse porta interdum dolor, tempor ornare sem dignissim
-					tempor. In quis sapien eget ligula congue fermentum. Nulla et
-					bibendum ligula. Sed at risus sed libero vestibulum porta. Sed id
-					eros quis urna pretium rutrum. Sed sapien augue, condimentum congue
-					pretium eu, adipiscing non tortor. Nunc eget metus vel ante
-					malesuada tincidunt ac id ante. Nullam ut nunc id sem tempor
-					vehicula.</p>
+						<h:form id="editListedASCForm">
+							<p:commandButton id="editListedASCButton" value="Edit Listed ASCs" styleClass="btn btn-large btn-block"/>
+						</h:form>
+						<h:form id="addNewFavoriteForm">
+							<p:commandButton id="addNewFavoriteButton" value="Add New Favorite" styleClass="btn btn-large btn-block"/>
+						</h:form>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div id="schedule" class="tab-pane">
-			<p>Howdy, I'm in Section 2.</p>
+		<div id="schedule" class="tab-pane flip">
+			<h:form>
+			
+				<p:growl id="messages" showDetail="true" />
+			
+				<p:schedule value="#{scheduleController.eventModel}" widgetVar="myschedule">
+			
+					<p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
+					<p:ajax event="eventSelect" listener="#{scheduleController.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
+					<p:ajax event="eventMove" listener="#{scheduleController.onEventMove}" update="messages" />
+					<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" update="messages" />
+			
+				</p:schedule>
+			
+				<p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+					<h:panelGrid id="eventDetails" columns="2">
+						<h:outputLabel for="title" value="Title:" />
+						<p:inputText id="title" value="#{scheduleController.event.title}" required="true"/>
+			
+						<h:outputLabel for="from" value="From:" />
+						<p:inputMask id="from" value="#{scheduleController.event.startDate}" mask="99/99/9999">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:inputMask>
+			
+						<h:outputLabel for="to" value="To:" />
+						<p:inputMask id="to" value="#{scheduleController.event.endDate}" mask="99/99/9999">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:inputMask>
+			
+						<h:outputLabel for="allDay" value="All Day:" />
+						<h:selectBooleanCheckbox id="allDay" value="#{scheduleController.event.allDay}" />
+			
+						<p:commandButton type="reset" value="Reset" />
+						<p:commandButton value="Save" actionListener="#{scheduleController.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>
+					</h:panelGrid>
+				</p:dialog>
+			
+			</h:form>
 		</div>
-		<div id="bookings" class="tab-pane flip">
+		<div id="search" class="tab-pane flip">
 			<div class="span12">
 				<h3>Search Results - Available Bookings</h3>
 				<h:form id="searchNavForm_tab3">
