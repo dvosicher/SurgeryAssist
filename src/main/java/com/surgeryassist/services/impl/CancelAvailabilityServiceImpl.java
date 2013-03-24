@@ -1,7 +1,7 @@
-/**
- * 
- */
 package com.surgeryassist.services.impl;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -23,14 +23,39 @@ public class CancelAvailabilityServiceImpl implements CancelAvailabilityService 
 			return existingAvailabilityDTO;
 		}
 		else {
-			CancelAvailabilityDTO cancelAvailabilityDTO = new CancelAvailabilityDTO();
+			List<TimeAvailabilities> timeAvailabilitiesList = TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
+					SurgeryAssistUtil.getLoggedInApplicationUser());
+			
+			CancelAvailabilityDTO cancelAvailabilityDTO = new CancelAvailabilityDTO(timeAvailabilitiesList.size());
 			
 			cancelAvailabilityDTO.setTimeAvailabilitiesList(
 					TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
 							SurgeryAssistUtil.getLoggedInApplicationUser()));
-			
+
 			return cancelAvailabilityDTO;
 		}
+	}
+
+	@Override
+	public void cancelSelectedAvailabilities(
+			CancelAvailabilityDTO cancelAvailabilityDTO) {
+		if(cancelAvailabilityDTO != null) {
+			//grab the selected availabilities
+			List<TimeAvailabilities> selectedAvailabilities = Arrays.asList(cancelAvailabilityDTO.getSelectedTimeAvailabilities());
+			
+			for(TimeAvailabilities timeAvailabilities : selectedAvailabilities) {
+				timeAvailabilities.setIsCancelled(true);
+				timeAvailabilities = (TimeAvailabilities) SurgeryAssistUtil.setLastModifiedInfo(timeAvailabilities);
+				timeAvailabilities.persist();
+			}
+			
+			TimeAvailabilities.entityManager().flush();
+		}
+	}
+	
+	public void testThings(CancelAvailabilityDTO availabilityDTO) {
+		int value = 1+1;
+		availabilityDTO.getTimeAvailabilitiesList();
 	}
 
 }

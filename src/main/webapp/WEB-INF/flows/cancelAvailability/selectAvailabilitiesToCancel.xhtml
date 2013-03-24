@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+	
+	<f:view contentType="text/html" />
 
 	<ui:define name="content">
 		<div class="row">
@@ -39,7 +41,16 @@
 						</p:column>
 					</p:dataTable>
 				</h:form>
-			</div>	
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12">
+				<h:form id="submitCancelledForm">
+					<p:commandButton id="goHomeButton" action="cancel" value="Go Back" />
+					<p:commandButton update=":cancelDataTableForm" id="submitCancelledButton" action="submit" value="Confirm Cancellations" />
+				</h:form>
+			</div>
 		</div>
 	
 	</ui:define>

@@ -22,7 +22,7 @@
 	<!-- Confirmation page for new flows -->
 	<view-state id="confirmNewAvailabilities">
 		<transition on="goBack" to="inputAvailabilities" />
-		<transition on="cancel" to="finish" />
+		<transition on="cancel" to="cancel" />
 		<transition on="submit" to="finish">
 			<!-- Add the availabilities to the persistence context -->
 			<evaluate expression="inputAvailabilityService.convertScheduleEventsToTimeAvailabilities(flowScope.scheduleDTO)"
@@ -31,5 +31,6 @@
 	</view-state>
 
 	<end-state id="finish" />
+	<end-state id="cancel" />
 		
 </flow>

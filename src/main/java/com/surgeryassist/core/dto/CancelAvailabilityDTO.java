@@ -1,6 +1,7 @@
 package com.surgeryassist.core.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.surgeryassist.core.entity.TimeAvailabilities;
@@ -19,6 +20,16 @@ public class CancelAvailabilityDTO implements Serializable {
 	
 	TimeAvailabilities[] selectedTimeAvailabilities;
 	
+	public CancelAvailabilityDTO() {
+		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
+		this.selectedTimeAvailabilities = new TimeAvailabilities[10];
+	}
+	
+	public CancelAvailabilityDTO(int arraySize) {
+		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
+		this.selectedTimeAvailabilities = new TimeAvailabilities[arraySize];
+	}
+	
 	public List<TimeAvailabilities> getTimeAvailabilitiesList() {
 		return timeAvailabilitiesList;
 	}
@@ -36,4 +47,5 @@ public class CancelAvailabilityDTO implements Serializable {
 			TimeAvailabilities[] selectedTimeAvailabilities) {
 		this.selectedTimeAvailabilities = selectedTimeAvailabilities;
 	}
+
 }

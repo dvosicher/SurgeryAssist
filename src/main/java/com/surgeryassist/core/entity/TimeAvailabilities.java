@@ -180,9 +180,10 @@ public class TimeAvailabilities implements Serializable {
 		if(ascUser != null) {
 			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
 					"INNER JOIN FETCH o.availabilityId aid " +
-					"WHERE aid.userId = :userId " +
+					"WHERE aid.userId = :userId AND aid.dateOfAvailability > :todaysDate " +
 					"AND o.isBooked = 0 and o.isCancelled = 0", TimeAvailabilities.class)
-					.setParameter("userId", ascUser);
+					.setParameter("userId", ascUser)
+					.setParameter("todaysDate", Calendar.getInstance());
 			List<TimeAvailabilities> result = query.getResultList();
 			return result;
 		}
