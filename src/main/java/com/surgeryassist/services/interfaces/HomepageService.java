@@ -3,6 +3,7 @@ package com.surgeryassist.services.interfaces;
 import java.util.List;
 
 import com.surgeryassist.core.UserTypeCode;
+import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.Bookings;
 
 /**
@@ -20,6 +21,13 @@ public interface HomepageService {
 	 * @return {@link UserTypeCode} of logged in user, otherwise null.
 	 */
 	public UserTypeCode isUserSurgeonOrASC();
+	
+	/**
+	 * Returns the logged in user if not already existing.
+	 * @param loggedInUser The logged in user, if they already exist
+	 * @return An instance of the logged in user.
+	 */
+	public ApplicationUser getLoggedInUser(ApplicationUser loggedInUser);
 	
 	/**
 	 * Returns a list of {@link Bookings}

@@ -17,16 +17,13 @@
 	<ui:define name="content">
 		<div id="home" class="tab-pane active flip">
 			<div class="span12">
-				<h2>Welcome, Reid.</h2>
+				<h2>Welcome, #{loggedInUser.userInfoId.firstName}</h2>
 				<hr />
 				<div class="row">
 					<div class="span8">
 						<h3>Upcoming Reservations</h3>
 						<ul class="nav nav-pills">
 							<li class="active">
-								<a>All</a>
-							</li>
-							<li>
 								<a>Confirmed</a>
 							</li>
 							<li>

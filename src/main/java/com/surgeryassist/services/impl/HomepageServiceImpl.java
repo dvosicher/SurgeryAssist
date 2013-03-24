@@ -26,6 +26,14 @@ public class HomepageServiceImpl implements HomepageService {
 	}
 
 	@Override
+	public ApplicationUser getLoggedInUser(ApplicationUser loggedInUser) {
+		if(loggedInUser != null) {
+			return loggedInUser;
+		}
+		return SurgeryAssistUtil.getLoggedInApplicationUser();
+	}
+	
+	@Override
 	@Transactional(readOnly = true)
 	public List<Bookings> getPendingBookings() {
 		ApplicationUser loggedInUser = 
@@ -54,6 +62,6 @@ public class HomepageServiceImpl implements HomepageService {
 		
 		return confirmedBookings;
 	}
-	
+
 
 }
