@@ -17,8 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,12 +85,18 @@ public class AcceptedInsuranceTypes {
         return entityManager().createQuery("SELECT o FROM AcceptedInsuranceTypes o", AcceptedInsuranceTypes.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
+	/**
+	 * @see EntityManager#persist(Object)
+	 */
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
 
+	/**
+	 * @see EntityManager#remove(Object)
+	 */
 	@Transactional
     public void remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -104,18 +108,27 @@ public class AcceptedInsuranceTypes {
         }
     }
 
+	/**
+	 * @see EntityManager#flush()
+	 */
 	@Transactional
     public void flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
 
+	/**
+	 * @see EntityManager#clear()
+	 */
 	@Transactional
     public void clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
 
+	/**
+	 * @see EntityManager#merge(Object)
+	 */
 	@Transactional
     public AcceptedInsuranceTypes merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -140,34 +153,18 @@ public class AcceptedInsuranceTypes {
         this.version = version;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	/**
-	 * @return the userInfoId
-	 */
 	public UserInfo getUserInfoId() {
 		return userInfoId;
 	}
 
-	/**
-	 * @param userInfoId the userInfoId to set
-	 */
 	public void setUserInfoId(UserInfo userInfoId) {
 		this.userInfoId = userInfoId;
 	}
 
-	/**
-	 * @return the insuranceTypeId
-	 */
 	public InsuranceType getInsuranceTypeId() {
 		return insuranceTypeId;
 	}
 
-	/**
-	 * @param insuranceTypeId the insuranceTypeId to set
-	 */
 	public void setInsuranceTypeId(InsuranceType insuranceTypeId) {
 		this.insuranceTypeId = insuranceTypeId;
 	}

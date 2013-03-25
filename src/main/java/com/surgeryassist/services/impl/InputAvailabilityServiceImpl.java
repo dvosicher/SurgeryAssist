@@ -35,12 +35,12 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 		}
 		//otherwise return a new instance of it
 		else {
-			ScheduleDTO myObject = new ScheduleDTO();
+			ScheduleDTO scheduleDTO = new ScheduleDTO();
 
 			ApplicationUser currentUser = SurgeryAssistUtil.getLoggedInApplicationUser();
 			//grab list of TimeAvailabilities for the week based on the user
 			List<TimeAvailabilities> availabilitiesForUser = 
-					TimeAvailabilities.findOpenTimeAvailabilitiesByASCUser(currentUser);
+					TimeAvailabilities.findNotCancelledTimeAvailabilitiesByASCUser(currentUser);
 
 			//convert that list of TimeAvailabilities to list of DefaultScheduleEvents
 			List<ScheduleEvent> scheduledEvents = new ArrayList<ScheduleEvent>();
@@ -51,9 +51,9 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 			}
 
 			//pass the list of ScheduleEvents into the ScheduleDTO to add into the model
-			myObject.addEvents(scheduledEvents);
+			scheduleDTO.addEvents(scheduledEvents);
 
-			return myObject;
+			return scheduleDTO;
 		}
 	}
 
@@ -68,7 +68,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 					this.getNecessaryDayAvailabilitiesBasedOnScheduleEvents(scheduleEvents);
 
 			List<TimeAvailabilities> timeAvailabilitiesInDatabase = 
-					TimeAvailabilities.findOpenTimeAvailabilitiesByASCUser(
+					TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
 							SurgeryAssistUtil.getLoggedInApplicationUser()); 
 
 			//only go through this logic if there are existing values to add, otherwise just add new availabilities
@@ -79,7 +79,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 						//only add it if it is editable, meaning it's a new availability
 						if(scheduleEvent.isEditable()) {
 							//the two times are not equal, so we have to create a new TimeAvailability
-							if(areTimesNotEqual(scheduleEvent, timeAvailability)) {
+							if(this.areTimesNotEqual(scheduleEvent, timeAvailability)) {
 
 								TimeAvailabilities newTimeAvailability = 
 										this.createNewTimeAvailability(dayAvailabilitiesMap, scheduleEvent);
@@ -240,6 +240,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 			timeAvailabilityToAdd.setAvailabilityId(availabilityFromMap);
 		}
 		timeAvailabilityToAdd.setIsBooked(false);
+		timeAvailabilityToAdd.setIsCancelled(false);
 
 		return timeAvailabilityToAdd;
 	}
