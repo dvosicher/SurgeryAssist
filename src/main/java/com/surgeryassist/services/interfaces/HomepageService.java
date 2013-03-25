@@ -3,6 +3,7 @@ package com.surgeryassist.services.interfaces;
 import java.util.List;
 
 import com.surgeryassist.core.UserTypeCode;
+import com.surgeryassist.core.dto.HomepageDataDTO;
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.Bookings;
 
@@ -21,27 +22,31 @@ public interface HomepageService {
 	 * @return {@link UserTypeCode} of logged in user, otherwise null.
 	 */
 	public UserTypeCode isUserSurgeonOrASC();
-	
-	/**
-	 * Returns the logged in user if not already existing.
-	 * @param loggedInUser The logged in user, if they already exist
-	 * @return An instance of the logged in user.
-	 */
-	public ApplicationUser getLoggedInUser(ApplicationUser loggedInUser);
-	
+
 	/**
 	 * Returns a list of {@link Bookings}
 	 * that are in pending status for the
 	 * currently logged in user
+	 * @param loggedInUser The user that is currently logged in
 	 * @return {@link List} of {@link Bookings}, or empty list
 	 */
-	public List<Bookings> getPendingBookings(); 
+	public List<Bookings> getPendingBookings(ApplicationUser loggedInUser); 
 	
 	/**
 	 * Returns a list of {@link Bookings}
 	 * that are in confirmed status for the
 	 * currently logged in user
+	 * @param loggedInUser The user that is currently logged in
 	 * @return {@link List} of {@link Bookings}, or empty list
 	 */
-	public List<Bookings> getConfirmedBookings();
+	public List<Bookings> getConfirmedBookings(ApplicationUser loggedInUser);
+	
+	/**
+	 * Populates the data object that contains all the necessary data for
+	 * the homepage. Will not repopulate if the object exists.
+	 * @param homepageData The {@link HomepageDataDTO} object, incase it doesn't
+	 * 	need to be repopulated
+	 * @return A fully populated {@link HomepageDataDTO} object.
+	 */
+	public HomepageDataDTO populateSurgeonInfo(HomepageDataDTO homepageData);
 }

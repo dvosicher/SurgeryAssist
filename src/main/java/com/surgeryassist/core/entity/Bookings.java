@@ -44,7 +44,7 @@ public class Bookings implements Serializable {
     @JoinColumn(name = "booking_creator_id", referencedColumnName = "user_id", nullable = false)
     private ApplicationUser bookingCreatorId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "booking_location_id", referencedColumnName = "user_id", nullable = false)
     private ApplicationUser bookingLocationId;
     

@@ -17,7 +17,7 @@
 	<ui:define name="content">
 		<div id="home" class="tab-pane active flip">
 			<div class="span12">
-				<h2>Welcome, #{loggedInUser.userInfoId.firstName}</h2>
+				<h2>Welcome, #{homepageData.loggedInUser.userInfoId.firstName}</h2>
 				<hr />
 				<div class="row">
 					<div class="span9">
@@ -43,7 +43,37 @@
 								</h:form>
 							</div>
 						</div>
-						<c:choose>
+						
+						<h:form>
+
+							<p:dataTable id="confirmedDataTable" value="#{homepageData.confirmedBookings}"
+								var="booking" >
+
+								<p:column id="ascName" headerText="ASC">
+									<h:outputText
+										value="#{booking.bookingLocationId.userInfoId.firstName}" />
+								</p:column>
+								<p:column id="patientName" headerText="Patient">
+									<h:outputText value="#{booking.patientId.firstName}" />
+								</p:column>
+								<p:column id="dateColumn" headerText="Date">
+									<h:outputText id="date"
+										value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+										<f:convertDateTime type="date" timeStyle="default" />
+									</h:outputText>
+								</p:column>
+								<p:column id="timeColumn" headerText="Time">
+									<h:outputText id="time"
+										value="#{booking.timeAvailabilityId.startTime.time}">
+										<f:convertDateTime type="time" timeStyle="default" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+
+						</h:form>
+						
+						<!-- <c:choose>
 							<c:when test="#{empty pendingBookings}">
 								<div>
 									<h4>No Pending Bookings</h4>
@@ -105,6 +135,12 @@
 								</table>
 							</c:when>
 						</c:choose>
+						
+						 -->
+						
+						
+						
+						
 					</div>
 					<div class="span3">
 						<h3>Priority ASCs</h3>
