@@ -21,13 +21,12 @@ public class TimeAvailabilitiesDataModel extends
 
 	private static final long serialVersionUID = -7521862952682554514L;
 
+	public TimeAvailabilitiesDataModel() { }
+	
 	public TimeAvailabilitiesDataModel(List<TimeAvailabilities> data) {
 		super(data);
 	}
 	
-	/** 
-	 * @see org.primefaces.model.SelectableDataModel#getRowKey(java.lang.Object)
-	 */
 	@Override
 	public Object getRowKey(TimeAvailabilities object) {
 		if(object != null) {
@@ -36,9 +35,6 @@ public class TimeAvailabilitiesDataModel extends
 		return null;
 	}
 
-	/** 
-	 * @see org.primefaces.model.SelectableDataModel#getRowData(java.lang.String)
-	 */
 	@Override
 	public TimeAvailabilities getRowData(String rowKey) {
 		if(rowKey != null && StringUtils.isNumeric(rowKey)) {

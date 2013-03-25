@@ -21,13 +21,12 @@
 
 	<!-- Confirmation page -->
 	<view-state id="confirmAvailabilitiesToCancel">
-		<on-entry>
-			<evaluate expression="cancelAvailabilityService.testThings(flowScope.cancelAvailabilityDTO)" />
-		</on-entry>
 		<transition on="cancel" to="cancel" />	
 		<transition on="goBack" to="selectAvailabilitiesToCancel" />
 		<transition on="submit" to="finish">
 			<!-- Set the availabilities to be cancelled -->
+			<evaluate expression="cancelAvailabilityService
+				.cancelSelectedAvailabilities(flowScope.cancelAvailabilityDTO)"></evaluate>
 		</transition>
 	</view-state>
 	

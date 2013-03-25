@@ -20,11 +20,14 @@
 		<div class="row">
 			<div class="span12">
 				<h:form id="cancelDataTableForm">
+				
 					<p:dataTable id="cancelDataTable" var="timeAvailability" style="width: 100%;"
-						value="#{cancelAvailabilityDTO.dataModel}" rowKey="#{timeAvailability.timeAvailabilityID}"
+						value="#{cancelAvailabilityDTO.timeAvailabilitiesList}" rowKey="#{timeAvailability.timeAvailabilityID}"
 						selection="#{cancelAvailabilityDTO.selectedTimeAvailabilities}" selectionMode="multiple"> 
 			
-						<p:column id="dateOfAvailability" headerText="Date" style="width: 24%;" >
+						<p:ajax event="rowSelect" listener="#{cancelAvailabilityDTO.onRowSelect}" />
+			
+						<p:column id="dateOfAvailability" headerText="Date" style="width: 24%;" sortBy="#{timeAvailability.startTime.time}" >
 							<h:outputText value="#{timeAvailability.availabilityId.dateOfAvailability.time}">
 								<f:convertDateTime type="date" dateStyle="medium"/>
 							</h:outputText>
@@ -39,8 +42,8 @@
 								<f:convertDateTime type="time" timeStyle="short"/>
 							</h:outputText>
 						</p:column>
-						
 					</p:dataTable>
+					
 				</h:form>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.surgeryassist.core.dto.CancelAvailabilityDTO;
 import com.surgeryassist.core.entity.TimeAvailabilities;
@@ -35,6 +36,7 @@ public class CancelAvailabilityServiceImpl implements CancelAvailabilityService 
 	}
 
 	@Override
+	@Transactional
 	public void cancelSelectedAvailabilities(
 			CancelAvailabilityDTO cancelAvailabilityDTO) {
 		if(cancelAvailabilityDTO != null) {
@@ -44,16 +46,11 @@ public class CancelAvailabilityServiceImpl implements CancelAvailabilityService 
 			for(TimeAvailabilities timeAvailabilities : selectedAvailabilities) {
 				timeAvailabilities.setIsCancelled(true);
 				timeAvailabilities = (TimeAvailabilities) SurgeryAssistUtil.setLastModifiedInfo(timeAvailabilities);
-				timeAvailabilities.persist();
+				timeAvailabilities.merge();
 			}
 			
 			TimeAvailabilities.entityManager().flush();
 		}
 	}
 	
-	public void testThings(CancelAvailabilityDTO availabilityDTO) {
-		int value = 1+1;
-		availabilityDTO.getTimeAvailabilitiesList();
-	}
-
 }
