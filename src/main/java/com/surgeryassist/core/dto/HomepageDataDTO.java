@@ -23,7 +23,13 @@ public class HomepageDataDTO implements Serializable{
 	
 	private List<Bookings> pendingBookings;
 	
+	private List<ApplicationUser> recentASCs;
+	
+	private List<ApplicationUser> favoriteASCs;
+	
 	private Bookings selectedBooking;
+	
+	private ApplicationUser selectedASC;
 	
 	private ApplicationUser loggedInUser;
 	
@@ -63,12 +69,36 @@ public class HomepageDataDTO implements Serializable{
 		this.pendingBookings = pendingBookings;
 	}
 
+	public List<ApplicationUser> getRecentASCs() {
+		return recentASCs;
+	}
+
+	public void setRecentASCs(List<ApplicationUser> recentASCs) {
+		this.recentASCs = recentASCs;
+	}
+
+	public List<ApplicationUser> getFavoriteASCs() {
+		return favoriteASCs;
+	}
+
+	public void setFavoriteASCs(List<ApplicationUser> favoriteASCs) {
+		this.favoriteASCs = favoriteASCs;
+	}
+
 	public Bookings getSelectedBooking() {
 		return selectedBooking;
 	}
 
 	public void setSelectedBooking(Bookings selectedBooking) {
 		this.selectedBooking = selectedBooking;
+	}
+
+	public ApplicationUser getSelectedASC() {
+		return selectedASC;
+	}
+
+	public void setSelectedASC(ApplicationUser selectedASC) {
+		this.selectedASC = selectedASC;
 	}
 
 	public ApplicationUser getLoggedInUser() {

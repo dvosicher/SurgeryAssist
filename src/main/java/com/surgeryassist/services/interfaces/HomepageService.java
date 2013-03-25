@@ -42,6 +42,24 @@ public interface HomepageService {
 	public List<Bookings> getConfirmedBookings(ApplicationUser loggedInUser);
 	
 	/**
+	 * Returns a list of {@link ApplicationUser}
+	 * corresponding to the ASCs with whom the surgeon 
+	 * has recently booked
+	 * @param loggedInUser The user that is currently logged in
+	 * @return {@link List} of {@link ApplicationUser}, or empty list
+	 */
+	public List<ApplicationUser> getRecentASCs(ApplicationUser loggedInUser);
+	
+	/**
+	 * Returns a list of {@link ApplicationUser}
+	 * corresponding to the ASCs that the surgeon 
+	 * has favorited or declared his affinity for
+	 * @param loggedInUser The user that is currently logged in
+	 * @return {@link List} of {@link ApplicationUser}, or empty list
+	 */
+	public List<ApplicationUser> getFavoriteASCs(ApplicationUser loggedInUser);
+	
+	/**
 	 * Populates the data object that contains all the necessary data for
 	 * the homepage. Will not repopulate if the object exists.
 	 * @param homepageData The {@link HomepageDataDTO} object, incase it doesn't
