@@ -50,7 +50,7 @@ public class Patient implements Serializable {
     @JoinColumn(name = "insurance_code", referencedColumnName = "insurance_id", nullable = false)
     private InsuranceType insuranceCode;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "surgery_type_code", referencedColumnName = "surgery_id", nullable = false)
     private SurgeryType surgeryTypeCode;
     
@@ -274,11 +274,6 @@ public class Patient implements Serializable {
 	 */
 	public void setModifiedDate(Calendar modifiedDate) {
 		this.modifiedDate = modifiedDate;
-	}
-
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	/**

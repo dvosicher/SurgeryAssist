@@ -44,10 +44,14 @@
 							</div>
 						</div>
 						
-						<h:form>
+						<h:form id="confirmedDataForm">
 
 							<p:dataTable id="confirmedDataTable" value="#{homepageData.confirmedBookings}"
-								var="booking" >
+								var="booking" selectionMode="single" selection="#{homepageData.selectedBooking}"
+								rowKey="#{booking.bookingId}">
+								
+								<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
+                    				update=":confirmedDataForm:bookingDialogDisplay" oncomplete="bookingDialog.show()" /> 
 
 								<p:column id="ascName" headerText="ASC">
 									<h:outputText
@@ -68,8 +72,55 @@
 										<f:convertDateTime type="time" timeStyle="default" />
 									</h:outputText>
 								</p:column>
-
 							</p:dataTable>
+
+							<p:dialog id="bookingDialog" widgetVar="bookingDialog" modal="true" resizable="false" closable="true" width="470">
+								<h:panelGroup id="bookingDialogDisplay">
+									<h2>
+										<h:outputText value="Booking Details" />
+									</h2>
+									<table>
+										<tbody>
+											<tr>
+												<td><h:outputText value="ASC" /></td>
+												<td>
+													<h:outputText value="#{homepageData.selectedBooking.bookingLocationId.userInfoId.firstName}" />
+												</td>
+											</tr>
+											<tr>
+												<td><h:outputText value="Procedure" /></td>
+												<td>
+													<h:outputText value="#{homepageData.selectedBooking.patientId.surgeryTypeCode.surgeryFullName}" />
+												</td>
+											</tr>
+											<tr>
+												<td><h:outputText value="Patient" /></td>
+												<td>
+													<h:outputText value="#{homepageData.selectedBooking.patientId.firstName}" />
+												</td>
+											</tr>
+											<tr>
+												<td><h:outputText value="Date" /></td>
+												<td>
+													<h:outputText id="date"
+														value="#{homepageData.selectedBooking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+														<f:convertDateTime type="date" timeStyle="default" />
+													</h:outputText>
+												</td>
+											</tr>
+											<tr>
+												<td><h:outputText value="Time" /></td>
+												<td>
+													<h:outputText id="time"
+														value="#{homepageData.selectedBooking.timeAvailabilityId.startTime.time}">
+														<f:convertDateTime type="time" timeStyle="default" />
+													</h:outputText>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</h:panelGroup>
+							</p:dialog>
 						</h:form>
 					</div>
 					<div class="span3">
@@ -170,27 +221,6 @@
 			<p>Howdy, I'm in Section 4.</p>
 		</div>
 
-		<p:dialog id="bookingDialog" widgetVar="bookingDialog" modal="true" resizable="false" closable="true" width="470">
-			<h2><h:outputText value="Booking Details" /></h2>
-			<table>
-				<tbody>
-					<tr>
-						<td><h:outputText value="ASC" /></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Procedure" /></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Patient" /></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Date" /></td>
-					</tr>
-					<tr>
-						<td><h:outputText value="Time" /></td>
-					</tr>
-				</tbody>
-			</table>
-		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
