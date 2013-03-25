@@ -62,13 +62,13 @@ public class HomepageServiceImpl implements HomepageService {
 			}
 		}
 		//populate homepage
-		HomepageDataDTO newHomepageData = new HomepageDataDTO();
-		
 		ApplicationUser loggedInUser = SurgeryAssistUtil.getLoggedInApplicationUser();
 		
+		List<Bookings> pendingBookings = this.getPendingBookings(loggedInUser);
+		List<Bookings> confirmedBookings = this.getConfirmedBookings(loggedInUser);
+		
+		HomepageDataDTO newHomepageData = new HomepageDataDTO(pendingBookings, confirmedBookings);
 		newHomepageData.setLoggedInUser(loggedInUser);
-		newHomepageData.setPendingBookings(this.getPendingBookings(loggedInUser));
-		newHomepageData.setConfirmedBookings(this.getConfirmedBookings(loggedInUser));
 		
 		return newHomepageData;
 	}

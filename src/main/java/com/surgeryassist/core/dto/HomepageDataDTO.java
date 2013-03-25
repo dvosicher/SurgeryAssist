@@ -1,8 +1,12 @@
 package com.surgeryassist.core.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.primefaces.event.SelectEvent;
+
+import com.surgeryassist.core.datamodel.BookingDataModel;
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.Bookings;
 
@@ -15,13 +19,33 @@ public class HomepageDataDTO implements Serializable{
 
 	private static final long serialVersionUID = -1552229662211651335L;
 
-	List<Bookings> confirmedBookings;
+	private List<Bookings> confirmedBookings;
 	
-	List<Bookings> pendingBookings;
+	private List<Bookings> pendingBookings;
 	
-	Bookings selectedBooking;
+	private Bookings selectedBooking;
 	
-	ApplicationUser loggedInUser;
+	private ApplicationUser loggedInUser;
+	
+	private BookingDataModel bookingDataModel;
+	
+	public HomepageDataDTO() { }
+	
+	public HomepageDataDTO(List<Bookings> pendingBookings, List<Bookings> confirmedBookings) {
+		this.confirmedBookings = confirmedBookings;
+		this.pendingBookings = pendingBookings;
+		
+		List<Bookings> allBookings = new ArrayList<Bookings>();
+		
+		allBookings.addAll(confirmedBookings);
+		allBookings.addAll(pendingBookings);
+		
+		bookingDataModel = new BookingDataModel(allBookings);
+	}
+	
+	public void onRowSelect(SelectEvent event) {
+		//do nothing, for now...
+	}
 
 	public List<Bookings> getConfirmedBookings() {
 		return confirmedBookings;
@@ -53,6 +77,14 @@ public class HomepageDataDTO implements Serializable{
 
 	public void setLoggedInUser(ApplicationUser loggedInUser) {
 		this.loggedInUser = loggedInUser;
+	}
+
+	public BookingDataModel getBookingDataModel() {
+		return bookingDataModel;
+	}
+
+	public void setBookingDataModel(BookingDataModel bookingDataModel) {
+		this.bookingDataModel = bookingDataModel;
 	}
 	
 }
