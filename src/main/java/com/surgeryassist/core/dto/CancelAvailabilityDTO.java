@@ -1,7 +1,6 @@
 package com.surgeryassist.core.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.surgeryassist.core.datamodel.TimeAvailabilitiesDataModel;
@@ -17,22 +16,19 @@ public class CancelAvailabilityDTO implements Serializable {
 
 	private static final long serialVersionUID = 7699468063287433191L;
 
-	List<TimeAvailabilities> timeAvailabilitiesList;
+	private List<TimeAvailabilities> timeAvailabilitiesList;
+
+	private TimeAvailabilities[] selectedTimeAvailabilities;
 	
-	TimeAvailabilities[] selectedTimeAvailabilities;
-	
-	TimeAvailabilitiesDataModel dataModel;
-	
-	public CancelAvailabilityDTO() {
-		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
-		this.selectedTimeAvailabilities = new TimeAvailabilities[10];
-	}
-	
+	private TimeAvailabilitiesDataModel dataModel;
+
+	public CancelAvailabilityDTO() { }
+
 	public CancelAvailabilityDTO(List<TimeAvailabilities> timeAvailabilitiesList) {
 		this.timeAvailabilitiesList = timeAvailabilitiesList;
 		this.dataModel = new TimeAvailabilitiesDataModel(this.timeAvailabilitiesList);
 	}
-	
+
 	public List<TimeAvailabilities> getTimeAvailabilitiesList() {
 		return timeAvailabilitiesList;
 	}

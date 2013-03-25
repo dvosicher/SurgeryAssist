@@ -314,59 +314,43 @@ public class TimeAvailabilities implements Serializable {
         this.version = version;
     }
 
-	/**
-	 * @return the availabilityId
-	 */
 	public DayAvailability getAvailabilityId() {
 		return availabilityId;
 	}
-
-	/**
-	 * @param availabilityId the availabilityId to set
-	 */
+	
 	public void setAvailabilityId(DayAvailability availabilityId) {
 		this.availabilityId = availabilityId;
 	}
 
-	/**
-	 * @return the bookings
-	 */
 	public Set<Bookings> getBookings() {
 		return bookings;
 	}
 
-	/**
-	 * @param bookings the bookings to set
-	 */
 	public void setBookings(Set<Bookings> bookings) {
 		this.bookings = bookings;
 	}
 
-	/**
-	 * @return the isBooked
-	 */
 	public Boolean getIsBooked() {
 		return isBooked;
 	}
 
-	/**
-	 * @param isBooked the isBooked to set
-	 */
 	public void setIsBooked(Boolean isBooked) {
 		this.isBooked = isBooked;
 	}
 
-	/**
-	 * @return the isCancelled
-	 */
 	public Boolean getIsCancelled() {
 		return isCancelled;
 	}
 
-	/**
-	 * @param isCancelled the isCancelled to set
-	 */
 	public void setIsCancelled(Boolean isCancelled) {
 		this.isCancelled = isCancelled;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.timeAvailabilityID.equals(((TimeAvailabilities) obj).timeAvailabilityID)) {
+			return true;
+		}
+		return false;
 	}
 }
