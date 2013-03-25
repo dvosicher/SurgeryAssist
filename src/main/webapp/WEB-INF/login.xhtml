@@ -38,7 +38,7 @@
 					</fieldset>
 					<div class="btn-toolbar">
 						<button type="submit" class="btn btn-large btn-primary"
-							name="login" onclick="waitDialog.show();">LOGIN</button>
+							name="login" onclick="waitDialog_loading.show();">LOGIN</button>
 						<a type="button" class="btn btn-large btn-primary"
 							href="${request.contextPath}/spring/registration">REGISTER</a>
 					</div>
@@ -46,11 +46,7 @@
 			</div>
 		</div>
 		
-		<p:dialog id="modalDialog" widgetVar="waitDialog" modal="true" resizable="false" closable="false" width="470">
-			<h:outputText value="Please wait while we load your data. This may take a few moments." />
-			<div class="modal_dialog_ajax_loader_gif">
-				<img src="${request.contextPath}/images/ajax-loader.gif" /> 
-			</div>
-		</p:dialog>
+		<ui:include src="includes/waitDialog_loading.xhtml" />
+		
 	</ui:define>
 </ui:composition>

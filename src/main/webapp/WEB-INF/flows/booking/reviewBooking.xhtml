@@ -78,7 +78,7 @@
 						</div>
 						<div>
 							<p:commandButton id="confirm" value="CONFIRM"
-								action="confirm" ajax="false" update="@form" onclick="waitDialog.show();" />
+								action="confirm" ajax="false" update="@form" onclick="waitDialog_saving.show();" />
 							<p:commandButton id="revise" value="REVISE"
 								action="revise" ajax="false" immediate="true" />
 							<p:commandButton id="cancel" value="CANCEL" 
@@ -88,12 +88,7 @@
 				</h:form>
 				</div>
 				
-				<p:dialog id="modalDialog" widgetVar="waitDialog" modal="true" resizable="false" closable="false" width="470">
-					<h:outputText value="Please wait while we save your data. This may take a few moments." />
-					<div class="modal_dialog_ajax_loader_gif">
-						<img src="${request.contextPath}/images/ajax-loader.gif" /> 
-					</div>
-				</p:dialog>	
+				<ui:include src="../../includes/waitDialog_saving.xhtml"></ui:include>
 				
 			</div>
 		</ui:define>
