@@ -70,77 +70,7 @@
 								</p:column>
 
 							</p:dataTable>
-
 						</h:form>
-						
-						<!-- <c:choose>
-							<c:when test="#{empty pendingBookings}">
-								<div>
-									<h4>No Pending Bookings</h4>
-								</div>
-							</c:when>
-							<c:when test="#{empty confirmedBookings}">
-								<div>
-									<h4>No Confirmed Bookings</h4>
-								</div>
-							</c:when>
-							<c:when test="#{not empty confirmedBookings or not empty pendingBookings}">
-								<table class="table">
-									<thead>
-										<tr>
-											<th>ASC</th>
-											<th>Patient</th>
-											<th>Date</th>
-											<th>Time</th>
-										</tr>
-									</thead>
-									<tbody>
-										<ui:repeat value="#{pendingBookings}" var="booking">
-											<tr onclick="bookingDialog.show();">
-												<td>
-													<h:outputText value="#{booking.patientId.firstName}" />
-												</td>
-												<td>
-													<h:outputText value="#{booking.patientId.firstName}" />
-												</td>
-												<td>
-													<h:outputText id="date" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
-														<f:convertDateTime type="date" timeStyle="default"/>
-													</h:outputText>
-												</td>
-												<td>
-													<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
-														<f:convertDateTime type="time" timeStyle="default" />
-													</h:outputText>
-												</td>
-											</tr>
-										</ui:repeat>
-										<ui:repeat value="#{confirmedBookings}" var="booking">
-											<tr>
-												<td>
-													<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
-												</td>
-												<td>
-													<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
-														<f:convertDateTime type="date" timeStyle="default"/>
-													</h:outputText>
-													<h:outputText value=" " />
-													<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
-														<f:convertDateTime type="time" timeStyle="default" />
-													</h:outputText>
-												</td>
-											</tr>
-										</ui:repeat>
-									</tbody>
-								</table>
-							</c:when>
-						</c:choose>
-						
-						 -->
-						
-						
-						
-						
 					</div>
 					<div class="span3">
 						<h3>Priority ASCs</h3>
