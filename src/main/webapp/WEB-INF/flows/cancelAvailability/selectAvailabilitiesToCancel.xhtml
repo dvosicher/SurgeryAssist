@@ -20,9 +20,8 @@
 			<div class="span12">
 				<h:form id="cancelDataTableForm">
 					<p:dataTable id="cancelDataTable" var="timeAvailability" style="width: 100%;"
-						value="#{cancelAvailabilityDTO.timeAvailabilitiesList}" 
-						selection="#{cancelAvailabilityDTO.selectedTimeAvailabilities}" 
-						rowKey="#{timeAvailability.timeAvailabilityID}">
+						value="#{cancelAvailabilityDTO.dataModel}" 
+						selection="#{cancelAvailabilityDTO.selectedTimeAvailabilities}"> 
 						<p:column id="selectButton" selectionMode="multiple" style="width: 2%" />
 						<p:column id="dateOfAvailability" headerText="Date" style="width: 24%;" >
 							<h:outputText value="#{timeAvailability.availabilityId.dateOfAvailability.time}">

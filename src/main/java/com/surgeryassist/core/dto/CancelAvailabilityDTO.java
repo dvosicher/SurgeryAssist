@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.surgeryassist.core.datamodel.TimeAvailabilitiesDataModel;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 
 /**
@@ -20,14 +21,16 @@ public class CancelAvailabilityDTO implements Serializable {
 	
 	TimeAvailabilities[] selectedTimeAvailabilities;
 	
+	TimeAvailabilitiesDataModel dataModel;
+	
 	public CancelAvailabilityDTO() {
 		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
 		this.selectedTimeAvailabilities = new TimeAvailabilities[10];
 	}
 	
-	public CancelAvailabilityDTO(int arraySize) {
-		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
-		this.selectedTimeAvailabilities = new TimeAvailabilities[arraySize];
+	public CancelAvailabilityDTO(List<TimeAvailabilities> timeAvailabilitiesList) {
+		this.timeAvailabilitiesList = timeAvailabilitiesList;
+		this.dataModel = new TimeAvailabilitiesDataModel(this.timeAvailabilitiesList);
 	}
 	
 	public List<TimeAvailabilities> getTimeAvailabilitiesList() {
@@ -46,6 +49,14 @@ public class CancelAvailabilityDTO implements Serializable {
 	public void setSelectedTimeAvailabilities(
 			TimeAvailabilities[] selectedTimeAvailabilities) {
 		this.selectedTimeAvailabilities = selectedTimeAvailabilities;
+	}
+
+	public TimeAvailabilitiesDataModel getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(TimeAvailabilitiesDataModel dataModel) {
+		this.dataModel = dataModel;
 	}
 
 }

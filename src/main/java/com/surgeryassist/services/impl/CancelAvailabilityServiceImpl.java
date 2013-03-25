@@ -23,15 +23,13 @@ public class CancelAvailabilityServiceImpl implements CancelAvailabilityService 
 			return existingAvailabilityDTO;
 		}
 		else {
-			List<TimeAvailabilities> timeAvailabilitiesList = TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
+			List<TimeAvailabilities> timeAvailabilitiesList = 
+					TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
 					SurgeryAssistUtil.getLoggedInApplicationUser());
 			
-			CancelAvailabilityDTO cancelAvailabilityDTO = new CancelAvailabilityDTO(timeAvailabilitiesList.size());
+			CancelAvailabilityDTO cancelAvailabilityDTO = 
+					new CancelAvailabilityDTO(timeAvailabilitiesList);
 			
-			cancelAvailabilityDTO.setTimeAvailabilitiesList(
-					TimeAvailabilities.findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(
-							SurgeryAssistUtil.getLoggedInApplicationUser()));
-
 			return cancelAvailabilityDTO;
 		}
 	}
