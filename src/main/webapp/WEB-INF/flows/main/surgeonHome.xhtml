@@ -20,7 +20,7 @@
 				<h2>Welcome, #{loggedInUser.userInfoId.firstName}</h2>
 				<hr />
 				<div class="row">
-					<div class="span8">
+					<div class="span9">
 						<h3>Upcoming Reservations</h3>
 						<ul class="nav nav-pills">
 							<li class="active">
@@ -31,7 +31,7 @@
 							</li>
 						</ul>
 						<div class="row">
-							<div class="span4">
+							<div class="span5">
 								<h:form id="searchNavForm_tab1">
 									<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
 										styleClass="btn btn-block" />
@@ -58,21 +58,27 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Event</th>
+											<th>ASC</th>
+											<th>Patient</th>
+											<th>Date</th>
 											<th>Time</th>
 										</tr>
 									</thead>
 									<tbody>
 										<ui:repeat value="#{pendingBookings}" var="booking">
-											<tr>
+											<tr onclick="bookingDialog.show();">
 												<td>
-													<h:outputText value="#{booking.patientId.firstName} #{booking.patientId.lastName}" />
+													<h:outputText value="#{booking.patientId.firstName}" />
 												</td>
 												<td>
-													<h:outputText id="day" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+													<h:outputText value="#{booking.patientId.firstName}" />
+												</td>
+												<td>
+													<h:outputText id="date" value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
 														<f:convertDateTime type="date" timeStyle="default"/>
 													</h:outputText>
-													<h:outputText value=" " />
+												</td>
+												<td>
 													<h:outputText id="time" value="#{booking.timeAvailabilityId.startTime.time}">
 														<f:convertDateTime type="time" timeStyle="default" />
 													</h:outputText>
@@ -100,19 +106,28 @@
 							</c:when>
 						</c:choose>
 					</div>
-					<div class="span4">
+					<div class="span3">
 						<h3>Priority ASCs</h3>
 						<ul class="nav nav-pills">
 							<li class="active">
-								<a>All</a>
-							</li>
-							<li>
 								<a>Recent</a>
 							</li>
 							<li>
 								<a>Favorite</a>
 							</li>
 						</ul>
+						<div class="row">
+							<div class="span2">
+								<h:form id="editListedASCForm">
+									<p:commandButton id="editListedASCButton" value="Edit List" styleClass="btn btn-block"/>
+								</h:form>
+							</div>
+							<div class="span1">
+								<h:form id="addNewFavoriteForm">
+									<p:commandButton id="addNewFavoriteButton" value="+" styleClass="btn btn-block"/>
+								</h:form>
+							</div>
+						</div>
 						<table class="table">
 							<thead>
 								<tr>
@@ -134,12 +149,6 @@
 								</tr>
 							</tbody>
 						</table>
-						<h:form id="editListedASCForm">
-							<p:commandButton id="editListedASCButton" value="Edit Listed ASCs" styleClass="btn btn-large btn-block"/>
-						</h:form>
-						<h:form id="addNewFavoriteForm">
-							<p:commandButton id="addNewFavoriteButton" value="Add New Favorite" styleClass="btn btn-large btn-block"/>
-						</h:form>
 					</div>
 				</div>
 			</div>
@@ -194,5 +203,28 @@
 		<div id="account" class="tab-pane">
 			<p>Howdy, I'm in Section 4.</p>
 		</div>
+
+		<p:dialog id="bookingDialog" widgetVar="bookingDialog" modal="true" resizable="false" closable="true" width="470">
+			<h2><h:outputText value="Booking Details" /></h2>
+			<table>
+				<tbody>
+					<tr>
+						<td><h:outputText value="ASC" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Procedure" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Patient" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Date" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Time" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

@@ -28,6 +28,15 @@
   background-color: #fff;
   cursor: pointer;
 }
+.flip .nav a {
+  color: #fff;
+}
+.flip .nav .active>a {
+  color: #08c;
+}
+.flip .nav a:hover {
+  color: #08c;
+}
 .table {
   color: #08c;
   background-color: #fff;
