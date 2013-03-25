@@ -1,5 +1,5 @@
 .top-buf {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover,
@@ -27,6 +27,15 @@
   color: #51a6ee;
   background-color: #fff;
   cursor: pointer;
+}
+.flip .nav a {
+  color: #fff;
+}
+.flip .nav .active>a {
+  color: #08c;
+}
+.flip .nav a:hover {
+  color: #08c;
 }
 .table {
   color: #08c;

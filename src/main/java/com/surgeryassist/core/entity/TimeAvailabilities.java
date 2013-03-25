@@ -80,6 +80,9 @@ public class TimeAvailabilities implements Serializable {
     @Column(name = "is_booked")
     private Boolean isBooked;
 
+    @Column(name = "is_cancelled")
+    private Boolean isCancelled;
+    
 	@PersistenceContext
     transient EntityManager entityManager;
 
@@ -99,7 +102,7 @@ public class TimeAvailabilities implements Serializable {
         		"INNER JOIN FETCH aid.userId uid " +
         		"INNER JOIN FETCH uid.userInfoId uiid " +
         		"INNER JOIN FETCH uiid.locationId lid " +
-        		"WHERE o.isBooked = 0", TimeAvailabilities.class).getResultList();
+        		"WHERE o.isBooked = 0 AND o.isCancelled = 0", TimeAvailabilities.class).getResultList();
     }
 
 	public static TimeAvailabilities findTimeAvailabilities(Integer timeAvailabilityID) {
@@ -140,6 +143,7 @@ public class TimeAvailabilities implements Serializable {
 		
 		//make sure they're not booked and that the date is after today
 		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
+		criteria.add(Restrictions.eq("isCancelled", Boolean.FALSE));
 		
 		//add the city
 		if(city != null && !StringUtils.isEmpty(city)) {
@@ -172,12 +176,27 @@ public class TimeAvailabilities implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<TimeAvailabilities> findOpenTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
+	public static List<TimeAvailabilities> findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
 		if(ascUser != null) {
 			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
 					"INNER JOIN FETCH o.availabilityId aid " +
-					"WHERE aid.userId = :userId " +
-					"AND o.isBooked = 0", TimeAvailabilities.class)
+					"WHERE aid.userId = :userId AND aid.dateOfAvailability > :todaysDate " +
+					"AND o.isBooked = 0 and o.isCancelled = 0", TimeAvailabilities.class)
+					.setParameter("userId", ascUser)
+					.setParameter("todaysDate", Calendar.getInstance());
+			List<TimeAvailabilities> result = query.getResultList();
+			return result;
+		}
+		return new ArrayList<TimeAvailabilities>();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<TimeAvailabilities> findNotCancelledTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
+		if(ascUser != null) {
+			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+					"INNER JOIN FETCH o.availabilityId aid " +
+					"WHERE aid.userId = :userId AND " +
+					"o.isCancelled = 0", TimeAvailabilities.class)
 					.setParameter("userId", ascUser);
 			List<TimeAvailabilities> result = query.getResultList();
 			return result;
@@ -295,45 +314,43 @@ public class TimeAvailabilities implements Serializable {
         this.version = version;
     }
 
-	/**
-	 * @return the availabilityId
-	 */
 	public DayAvailability getAvailabilityId() {
 		return availabilityId;
 	}
-
-	/**
-	 * @param availabilityId the availabilityId to set
-	 */
+	
 	public void setAvailabilityId(DayAvailability availabilityId) {
 		this.availabilityId = availabilityId;
 	}
 
-	/**
-	 * @return the bookings
-	 */
 	public Set<Bookings> getBookings() {
 		return bookings;
 	}
 
-	/**
-	 * @param bookings the bookings to set
-	 */
 	public void setBookings(Set<Bookings> bookings) {
 		this.bookings = bookings;
 	}
 
-	/**
-	 * @return the isBooked
-	 */
 	public Boolean getIsBooked() {
 		return isBooked;
 	}
 
-	/**
-	 * @param isBooked the isBooked to set
-	 */
 	public void setIsBooked(Boolean isBooked) {
 		this.isBooked = isBooked;
+	}
+
+	public Boolean getIsCancelled() {
+		return isCancelled;
+	}
+
+	public void setIsCancelled(Boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.timeAvailabilityID.equals(((TimeAvailabilities) obj).timeAvailabilityID)) {
+			return true;
+		}
+		return false;
 	}
 }

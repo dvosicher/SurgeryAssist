@@ -48,8 +48,8 @@ public class TimeAvailabilitiesDataOnDemand {
 
 	private void setIsBooked(TimeAvailabilities obj) {
 		obj.setIsBooked(false);
+		obj.setIsCancelled(false);
 	}
-
 	
 	public void setCreatedBy(TimeAvailabilities obj, int index) {
 		Integer createdBy = new Integer(index);

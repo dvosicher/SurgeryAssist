@@ -5,6 +5,8 @@
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
+	<var name="flowScope.homepageData" class="com.surgeryassist.core.dto.HomepageDataDTO"/>
+	
 	<!-- This is the flow for the home page. -->
 	<!-- Decide which page to go to based on whether the user is an ASC or a surgeon -->
 	<action-state id="decideSurgeonOrASC">
@@ -16,15 +18,14 @@
 	<!-- ASC's home page  -->
 	<view-state id="ascHome">
 		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
+		<transition on="cancelAvailability" to="cancelAvailabilityFlow" />
 	</view-state>
 	
 	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
 		<on-entry>
-			<evaluate expression="homepageService.getPendingBookings()" 
-				result="flowScope.pendingBookings"/>
-			<evaluate expression="homepageService.getConfirmedBookings()" 
-				result="flowScope.confirmedBookings"/>
+			<evaluate expression="homepageService.populateSurgeonInfo(flowScope.homepageData)"
+				result="flowScope.homepageData" />
 		</on-entry>
 		<transition on="goToSearch" to="searchFlow" />
 	</view-state>
@@ -41,6 +42,11 @@
 	
 	<!-- subflow for inputting availabilities -->
 	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<subflow-state id="cancelAvailabilityFlow" subflow="cancelAvailability">
 		<transition on="finish" to="decideSurgeonOrASC" />
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>

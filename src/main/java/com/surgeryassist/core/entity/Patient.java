@@ -21,8 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +48,7 @@ public class Patient implements Serializable {
     @JoinColumn(name = "insurance_code", referencedColumnName = "insurance_id", nullable = false)
     private InsuranceType insuranceCode;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "surgery_type_code", referencedColumnName = "surgery_id", nullable = false)
     private SurgeryType surgeryTypeCode;
     
@@ -274,11 +272,6 @@ public class Patient implements Serializable {
 	 */
 	public void setModifiedDate(Calendar modifiedDate) {
 		this.modifiedDate = modifiedDate;
-	}
-
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	/**

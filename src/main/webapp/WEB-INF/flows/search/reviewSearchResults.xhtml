@@ -23,7 +23,7 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 						value="#{timeAvailabilitiesList}" dynamic="true" rows="5">
 						<p:column sortBy="#{a.availabilityId.dateOfAvailability}" 
-							id="dateColumn" headerText="Date Available">
+							id="dateColumn" headerText="Date">
 							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
 								<f:convertDateTime type="date" dateStyle="default" />
 							</h:outputText>

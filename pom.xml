@@ -16,7 +16,7 @@
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<spring-security.version>3.1.0.RELEASE</spring-security.version>
 		<mojarra-version>2.1.7</mojarra-version>
-		<primefaces-version>3.1.1</primefaces-version>
+		<primefaces-version>3.5</primefaces-version>
 	</properties>
 	<repositories>
 		<repository>

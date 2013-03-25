@@ -1,12 +1,13 @@
 package com.surgeryassist.core.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.primefaces.component.schedule.Schedule;
-import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
@@ -46,8 +47,9 @@ public class ScheduleDTO implements Serializable {
 	 * @param e The {@link DateSelectEvent} that contains the data for the 
 	 * 	date selection
 	 */
-	public void onDateSelect(DateSelectEvent e) {
-		event = new DefaultScheduleEvent(" ", e.getDate(), e.getDate());
+	public void onDateSelect(SelectEvent e) {
+		Date selectedDate = (Date) e.getObject();
+		event = new DefaultScheduleEvent(" ", selectedDate, selectedDate);
 	}
 
 	/**
