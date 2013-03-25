@@ -93,6 +93,11 @@ public class BookingsIntegrationTest {
     	ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
     	Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
     	
+    	List<Bookings> allBookings = Bookings.findAllBookingsByUser(user);
+    	if(allBookings.size() > 0) {
+    		allBookings.get(0).setIsConfirmed(true);
+    		allBookings.get(0).merge();
+    	}
     	List<Bookings> returnList = Bookings.findConfirmedBookingsByUser(user);
     	
     	Assert.assertNotNull("Bookings.findConfirmedBookingsByUser returned null", returnList);
