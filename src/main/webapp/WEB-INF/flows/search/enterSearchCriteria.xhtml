@@ -51,13 +51,13 @@
 					</div>
 					<div class="form-actions">
 						<div class="btn-toolbar">
-							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_saving.show();" />
+							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_loading.show();" />
 							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
 						</div>
 					</div>
 				</h:form>
 				
-				<ui:include src="../../includes/waitDialog_saving.xhtml" />
+				<ui:include src="../../includes/waitDialog_loading.xhtml" />
 				
 			</div>
 		</div>
