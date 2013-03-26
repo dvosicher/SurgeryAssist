@@ -125,8 +125,9 @@ public class Bookings implements Serializable {
     	
     	returnList = entityManager()
     			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
-    					"AND o.isConfirmed = false", Bookings.class)
+    					"AND o.isConfirmed = false AND o.timeAvailabilityId.availabilityId.dateOfAvailability > :currentDate", Bookings.class)
     			.setParameter("currentUser", currentUser)
+    			.setParameter("currentDate", Calendar.getInstance())
     			.getResultList();
     	
     	return returnList;
@@ -137,8 +138,9 @@ public class Bookings implements Serializable {
     	
     	returnList = entityManager()
     			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
-    					"AND o.isConfirmed = true", Bookings.class)
+    					"AND o.isConfirmed = true AND o.timeAvailabilityId.availabilityId.dateOfAvailability > :currentDate", Bookings.class)
     			.setParameter("currentUser", currentUser)
+    			.setParameter("currentDate", Calendar.getInstance())
     			.getResultList();
     	
     	return returnList;
@@ -308,4 +310,12 @@ public class Bookings implements Serializable {
 		this.isConfirmed = isConfirmed;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Bookings bookingsObj = (Bookings) obj;
+		if(this.bookingId.equals(bookingsObj.bookingId)) {
+			return true;
+		}
+		return false;
+	}
 }

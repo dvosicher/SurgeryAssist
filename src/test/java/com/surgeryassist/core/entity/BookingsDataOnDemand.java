@@ -32,6 +32,9 @@ public class BookingsDataOnDemand {
 	@Autowired
 	PatientDataOnDemand patientDataOnDemand;
 
+	@Autowired
+	TimeAvailabilitiesDataOnDemand timeAvailabilitiesDataOnDemand;
+	
 	public Bookings getNewTransientBookings(int index) {
 		Bookings obj = new Bookings();
 		setBookingCreatorId(obj, index);
