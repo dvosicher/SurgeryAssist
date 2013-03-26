@@ -20,8 +20,8 @@
 		<div class="row">
 			<h:form id="scheduleCreatorForm">
 				<p:schedule value="#{scheduleDTO.model}" id="scheduleInput" view="agendaWeek"
-					widgetVar="scheduleInput" editable="true" draggable="true"
-					resizable="true" minTime="7:00am" maxTime="8:00pm">
+					widgetVar="scheduleInput" editable="true" draggable="true" allDaySlot="false"
+					resizable="true" minTime="7:00am" maxTime="8:00pm" timeZone="#{scheduleDTO.timeZone}" >
 					<p:ajax event="dateSelect" listener="#{scheduleDTO.onDateSelect}"
 						update="eventDetails" oncomplete="eventDialog.show();" />
 					<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />

@@ -32,7 +32,10 @@
 	
 	<!-- subflow for search -->
 	<subflow-state id="searchFlow" subflow="search">
-		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="finish" to="decideSurgeonOrASC">
+			<evaluate expression="homepageService.refreshSurgeonInfo(flowScope.homepageData)" 
+				result="flowScope.homepageData"/>
+		</transition>
 	</subflow-state>
 	
 	<!-- subflow for registration -->

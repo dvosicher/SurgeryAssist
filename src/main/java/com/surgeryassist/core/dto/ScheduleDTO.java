@@ -3,6 +3,7 @@ package com.surgeryassist.core.dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.ScheduleEntryMoveEvent;
@@ -26,8 +27,11 @@ public class ScheduleDTO implements Serializable {
 
 	private DefaultScheduleEvent event;
 
+	private TimeZone timeZone;
+	
 	public ScheduleDTO() {
 		this.model = new DefaultScheduleModel();
+		this.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
 
 	/**
@@ -91,5 +95,13 @@ public class ScheduleDTO implements Serializable {
 
 	public ScheduleModel getModel() {
 		return model;
+	}
+
+	public TimeZone getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(TimeZone timeZone) {
+		this.timeZone = timeZone;
 	}
 }

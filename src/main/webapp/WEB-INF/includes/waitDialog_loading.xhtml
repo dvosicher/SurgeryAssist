@@ -1,0 +1,17 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="modalDialog_loading" widgetVar="waitDialog_loading" modal="true"
+		resizable="false" closable="false" width="470">
+		<h:outputText
+			value="Please wait while we load your data. This may take a few moments." />
+		<div class="modal_dialog_ajax_loader_gif">
+			<img src="${request.contextPath}/images/ajax-loader.gif" />
+		</div>
+	</p:dialog>
+
+</ui:composition>
