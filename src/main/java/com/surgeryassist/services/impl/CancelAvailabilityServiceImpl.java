@@ -19,8 +19,11 @@ import com.surgeryassist.util.SurgeryAssistUtil;
 public class CancelAvailabilityServiceImpl implements CancelAvailabilityService {
 
 	@Override
+	@Transactional(readOnly = true)
 	public CancelAvailabilityDTO getListOfAvailabilitiesToCancel(CancelAvailabilityDTO existingAvailabilityDTO) {
-		if(existingAvailabilityDTO != null && existingAvailabilityDTO.getTimeAvailabilitiesList().size() != 0) {
+		if(existingAvailabilityDTO != null 
+				&& existingAvailabilityDTO.getTimeAvailabilitiesList() != null 
+				&& existingAvailabilityDTO.getTimeAvailabilitiesList().size() != 0) {
 			return existingAvailabilityDTO;
 		}
 		else {

@@ -27,6 +27,7 @@
 				<c:if test="${not empty currentUser.name}">
 			    	<a href="${request.contextPath}/spring/logout" class="btn btn-mini pull-right">Logout</a>
 			    </c:if>
+			    <a href="${request.contextPath}/spring/faq" class="btn btn-mini pull-right" style="margin-right: 10px;">Help</a>
 			</div>
 		</div>
 		<ui:insert name="content" />
