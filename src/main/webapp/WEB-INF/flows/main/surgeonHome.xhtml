@@ -52,7 +52,7 @@
 										rowKey="#{booking.bookingId}">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
-		                    				update=":bookingDialogDisplay" oncomplete="bookingDialog.show()" /> 
+		                    				update=":bookingDialogDisplay" oncomplete="bookingDialogWidget.show()" /> 
 		
 										<p:column id="ascName" headerText="ASC">
 											<h:outputText
@@ -70,10 +70,13 @@
 										<p:column id="timeColumn" headerText="Time">
 											<h:outputText id="time"
 												value="#{booking.timeAvailabilityId.startTime.time}">
-												<f:convertDateTime type="time" timeStyle="default" />
+												<f:convertDateTime type="time" timeStyle="short" />
 											</h:outputText>
 										</p:column>
 									</p:dataTable>
+									
+									
+									
 								</h:form>
 							</div>
 							<div class="tab-pane" id="pendingTab">
@@ -83,7 +86,7 @@
 										rowKey="#{booking.bookingId}">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
-		                    				update=":bookingDialogDisplay" oncomplete="bookingDialog.show()" /> 
+		                    				update=":bookingDialogDisplay" oncomplete="bookingDialogWidget.show();" /> 
 		
 										<p:column id="ascName" headerText="ASC">
 											<h:outputText
@@ -101,14 +104,14 @@
 										<p:column id="timeColumn" headerText="Time">
 											<h:outputText id="time"
 												value="#{booking.timeAvailabilityId.startTime.time}">
-												<f:convertDateTime type="time" timeStyle="default" />
+												<f:convertDateTime type="time" timeStyle="short" />
 											</h:outputText>
 										</p:column>
 									</p:dataTable>
 								</h:form>
 							</div>
 						</div>
-						<p:dialog id="bookingDialog" widgetVar="bookingDialog" modal="true" resizable="false" closable="true" width="470">
+						<p:dialog id="bookingDialog" widgetVar="bookingDialogWidget" modal="true" resizable="false" closable="true" width="470">
 							<h:panelGroup id="bookingDialogDisplay">
 								<h2>
 									<h:outputText value="Booking Details" />
@@ -186,7 +189,7 @@
 										rowKey="#{ASC.userID}">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
-		                    				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
+		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
 		
 										<p:column id="ascName" headerText="Surgery Center">
 											<h:outputText
@@ -202,7 +205,7 @@
 										rowKey="#{ASC.userID}">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
-		                    				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
+		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
 		
 										<p:column id="ascName" headerText="Surgery Center">
 											<h:outputText
@@ -212,7 +215,7 @@
 								</h:form>
 							</div>
 						</div>
-						<p:dialog id="ASCDialog" widgetVar="ASCDialog" modal="true" resizable="false" closable="true" width="470">
+						<p:dialog id="ASCDialog" widgetVar="ASCDialogWidget" modal="true" resizable="false" closable="true" width="470">
 							<h:panelGroup id="ASCDialogDisplay">
 								<h2>
 									<h:outputText value="Booking Details" />

@@ -16,14 +16,13 @@
 
 <ui:define name="content">
 <div id="home" class="tab-pane active flip">
-	<h:form id="goToInputAvailability">
-		<p:commandButton action="inputAvailability" value="Add New Availabilities" />
-		<p:commandButton action="cancelAvailability" value="Cancel Availabilities" />
-		<p:commandButton action="confirmBookings" value="Confirm Bookings"/>
-	</h:form>
-	
+	<div style="display: none;">
+		<h:form id="goToInputAvailability">
+			<p:commandButton action="inputAvailability" value="Add New Availabilities" />
+		</h:form>
+	</div>
 	<div class="span12">
-		<h2>Welcome, #{homepageData.loggedInUser.userInfoId.firstName}</h2>
+		<h2>Welcome!</h2>
 		<hr />
 		<div class="row">
 			<div class="span8">
@@ -39,13 +38,13 @@
 				<div class="row">
 					<div class="span4">
 						<h:form id="searchNavForm_tab1">
-							<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Accept Bookings" 
+							<p:commandButton id="searchNavCommandButton_tab1" action="confirmBookings" value="Accept Bookings" 
 								styleClass="btn btn-block" />
 						</h:form>
 					</div>
 					<div class="span4">
 						<h:form id="cancelButtonForm">
-							<p:commandButton id="cancelButton" value="Cancel Booking" styleClass="btn btn-block"/>
+							<p:commandButton id="cancelButton" action="cancelAvailability" value="Cancel Availabilities" styleClass="btn btn-block"/>
 						</h:form>
 					</div>
 				</div>
