@@ -30,6 +30,7 @@
 	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
 		<transition on="goToSearch" to="searchFlow" />
+		<transition on="cancelBookings" to="cancelBookingsFlow" />
 	</view-state>
 	
 	<!-- subflow for search -->
@@ -57,8 +58,14 @@
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
-	<!-- subflow for -->
+	<!-- subflow for confirm bookings -->
 	<subflow-state id="confirmBookingsFlow" subflow="confirmBookings">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<!-- subflow for cancelling bookings -->
+	<subflow-state id="cancelBookingsFlow" subflow="cancelBookings">
 		<transition on="finish" to="decideSurgeonOrASC" />
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>

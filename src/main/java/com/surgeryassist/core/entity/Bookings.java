@@ -119,8 +119,11 @@ public class Bookings implements Serializable {
     	List<Bookings> returnList = new ArrayList<Bookings>();
     	
     	returnList = entityManager()
-    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser ", Bookings.class)
+    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
+    					"AND o.timeAvailabilityId.availabilityId.dateOfAvailability >= :currentDate " +
+    					"AND o.isCanceled = false", Bookings.class)
     			.setParameter("currentUser", currentUser)
+    			.setParameter("currentDate", Calendar.getInstance())
     			.getResultList();
     	
     	return returnList;
@@ -146,6 +149,7 @@ public class Bookings implements Serializable {
 		//add default restrictions
 		criteria.add(Restrictions.eq("isConfirmed", Boolean.FALSE));
 		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		criteria.add(Restrictions.eq("taid.isCanceled", Boolean.FALSE));
 		
 		@SuppressWarnings("unchecked")
 		List<Bookings> returnList = criteria.list();
@@ -173,6 +177,7 @@ public class Bookings implements Serializable {
 		//add default restrictions
 		criteria.add(Restrictions.eq("isConfirmed", Boolean.TRUE));
 		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		criteria.add(Restrictions.eq("taid.isCanceled", Boolean.FALSE));
 		
 		@SuppressWarnings("unchecked")
 		List<Bookings> returnList = criteria.list();
