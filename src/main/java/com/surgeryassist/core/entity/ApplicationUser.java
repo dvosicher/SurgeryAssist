@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -162,7 +164,14 @@ public class ApplicationUser implements Serializable {
 			}
 			catch(NonUniqueResultException e) {
 				e.printStackTrace();
-				
+			}
+			catch (EmptyResultDataAccessException e) {
+				//do nothing since this is acceptable functionality
+				System.err.println("No user found");
+			}
+			catch(NoResultException e) {
+				//do nothing since this is acceptable functionality
+				System.err.println("No user found");
 			}
 		}
 		return returnObj; 

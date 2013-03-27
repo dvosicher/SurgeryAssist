@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.surgeryassist.core.RegistrationResult;
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.ContactInfo;
 import com.surgeryassist.core.entity.Location;
@@ -38,7 +39,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * @param location The {@link Location} entity
 	 * @author Ankit Tyagi
 	 */
-	public void registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
+	public RegistrationResult registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
 	
 	/**
 	 * Creates a default {@link ApplicationUser} based on the parameters
