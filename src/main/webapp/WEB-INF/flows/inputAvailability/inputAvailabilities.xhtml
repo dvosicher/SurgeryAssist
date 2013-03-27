@@ -5,49 +5,49 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+	template="/WEB-INF/layouts/post-login.xhtml">
+	
+	<ui:define name="tabs">
+		<li><a href="${request.contextPath}/spring/main">Home</a></li>
+		<li class="active"><a href="">Calendar</a></li>
+		<li><a href="#upload" data-toggle="tab">Upload</a></li>
+		<li><a href="#profile" data-toggle="tab">Profile</a></li>
+	</ui:define>
 	
 	<ui:define name="content">
-		<div class="row">
-			<div class="span8">
+		<div id="calendar" class="tab-pane active flip">
+			<div class="span12">
 				<h3>Input Availabilities</h3>
 				<p>
 					Note: You cannot edit any availabilities once you save them. You must cancel them separately.
 				</p>
-			</div>
-		</div>
-	
-		<div class="row">
-			<h:form id="scheduleCreatorForm">
-				<p:schedule value="#{scheduleDTO.model}" id="scheduleInput" view="agendaWeek"
-					widgetVar="scheduleInput" editable="true" draggable="true" allDaySlot="false"
-					resizable="true" minTime="7:00am" maxTime="8:00pm" timeZone="#{scheduleDTO.timeZone}" >
-					<p:ajax event="dateSelect" listener="#{scheduleDTO.onDateSelect}"
-						update="eventDetails" oncomplete="eventDialog.show();" />
-					<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
-					<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
-				</p:schedule>
+				<h:form id="scheduleCreatorForm">
+					<p:schedule value="#{scheduleDTO.model}" id="scheduleInput" view="agendaWeek"
+						widgetVar="scheduleInput" editable="true" draggable="true" allDaySlot="false"
+						resizable="true" minTime="7:00am" maxTime="8:00pm" timeZone="#{scheduleDTO.timeZone}">
+						<p:ajax event="dateSelect" listener="#{scheduleDTO.onDateSelect}"
+							update="eventDetails" oncomplete="eventDialog.show();" />
+						<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
+						<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
+					</p:schedule>
+					
+					<p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" resizable="false" closeOnEscape="true">
+						<h:panelGrid id="eventDetails" columns="2">
+							<h:outputLabel for="from" value="From:" />
+							<p:inputText id="from" value="#{scheduleDTO.event.startDate}">
+				            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />
+							</p:inputText>
+							<h:outputLabel for="to" value="To:" />
+							<p:inputText id="to" value="#{scheduleDTO.event.endDate}">
+				            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />
+							</p:inputText>
+							<p:commandButton type="reset" value="Reset" />
+							<p:commandButton value="Save" actionListener="#{scheduleDTO.addEvent}" 
+								oncomplete="scheduleInput.update();eventDialog.hide();"/>
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
 
-				<p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" resizable="false">
-					<h:panelGrid id="eventDetails" columns="2">
-						<h:outputLabel for="from" value="From:" />
-						<p:inputText id="from" value="#{scheduleDTO.event.startDate}">
-			            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />
-						</p:inputText>
-						<h:outputLabel for="to" value="To:" />
-						<p:inputText id="to" value="#{scheduleDTO.event.endDate}">
-			            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />
-						</p:inputText>
-						<p:commandButton type="reset" value="Reset" />
-						<p:commandButton value="Save" actionListener="#{scheduleDTO.addEvent}" 
-							oncomplete="scheduleInput.update();eventDialog.hide();"/>
-					</h:panelGrid>
-				</p:dialog>
-			</h:form>
-		</div>
-		
-		<div class="row">
-			<div class="span 8">
 				<h:form id="submitChangeForm">
 					<p:commandButton id="submitChangesButton" action="submitChanges" value="Save Changes" />
 				</h:form>

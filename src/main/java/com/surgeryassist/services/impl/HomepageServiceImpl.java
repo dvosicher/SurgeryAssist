@@ -67,12 +67,40 @@ public class HomepageServiceImpl implements HomepageService {
 		List<Bookings> pendingBookings = this.getPendingBookings(loggedInUser);
 		List<Bookings> confirmedBookings = this.getConfirmedBookings(loggedInUser);
 		
+		List<ApplicationUser> recentASCs = this.getRecentASCs(loggedInUser);
+		List<ApplicationUser> favoriteASCs = this.getFavoriteASCs(loggedInUser);
+		
 		HomepageDataDTO newHomepageData = new HomepageDataDTO(pendingBookings, confirmedBookings);
 		newHomepageData.setLoggedInUser(loggedInUser);
+		
+		newHomepageData.setRecentASCs(recentASCs);
+		newHomepageData.setFavoriteASCs(favoriteASCs);
 		
 		return newHomepageData;
 	}
 
+	@Override
+	public List<ApplicationUser> getRecentASCs(ApplicationUser loggedInUser) {
+		List<ApplicationUser> recentASCs = null; //TODO fetch ASCs from db
+
+		if(recentASCs == null) {
+			recentASCs = new ArrayList<ApplicationUser>();
+		}
+
+		return recentASCs;
+	}
+
+	@Override
+	public List<ApplicationUser> getFavoriteASCs(ApplicationUser loggedInUser) {
+		List<ApplicationUser> favoriteASCs = null; //TODO fetch ASCs from db
+
+		if(favoriteASCs == null) {
+			favoriteASCs = new ArrayList<ApplicationUser>();
+		}
+
+		return favoriteASCs;
+	}
+	
 	@Override
 	public HomepageDataDTO refreshSurgeonInfo(HomepageDataDTO homepageData) {
 		return this.populateSurgeonInfo(null);
