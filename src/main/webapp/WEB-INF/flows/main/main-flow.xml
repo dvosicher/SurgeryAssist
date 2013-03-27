@@ -13,6 +13,11 @@
 		<evaluate expression="homepageService.isUserSurgeonOrASC()" />
 		<transition on="SURGEON" to="surgeonHome" />
 		<transition on="ASC" to="ascHome" />
+		<on-exit>
+			<!-- Populate the data for the homepage -->
+			<evaluate expression="homepageService.populateHomepageInfo(flowScope.homepageData)"
+				result="flowScope.homepageData" />
+		</on-exit>
 	</action-state>
 	
 	<!-- ASC's home page  -->
@@ -24,10 +29,6 @@
 	
 	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
-		<on-entry>
-			<evaluate expression="homepageService.populateSurgeonInfo(flowScope.homepageData)"
-				result="flowScope.homepageData" />
-		</on-entry>
 		<transition on="goToSearch" to="searchFlow" />
 	</view-state>
 	

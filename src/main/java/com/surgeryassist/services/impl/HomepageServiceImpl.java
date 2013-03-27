@@ -53,7 +53,7 @@ public class HomepageServiceImpl implements HomepageService {
 	}
 
 	@Override
-	public HomepageDataDTO populateSurgeonInfo(HomepageDataDTO homepageData) {
+	public HomepageDataDTO populateHomepageInfo(HomepageDataDTO homepageData) {
 		if(homepageData != null) {
 			if(homepageData.getPendingBookings().size() != 0 && 
 					homepageData.getConfirmedBookings().size() != 0) {
@@ -103,7 +103,7 @@ public class HomepageServiceImpl implements HomepageService {
 	
 	@Override
 	public HomepageDataDTO refreshSurgeonInfo(HomepageDataDTO homepageData) {
-		return this.populateSurgeonInfo(null);
+		return this.populateHomepageInfo(null);
 	}
 
 

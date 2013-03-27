@@ -66,7 +66,7 @@ public interface HomepageService {
 	 * 	need to be repopulated
 	 * @return A fully populated {@link HomepageDataDTO} object.
 	 */
-	public HomepageDataDTO populateSurgeonInfo(HomepageDataDTO homepageData);
+	public HomepageDataDTO populateHomepageInfo(HomepageDataDTO homepageData);
 	
 	/**
 	 * Force refresh of all homepage data.
@@ -74,4 +74,5 @@ public interface HomepageService {
 	 * @return A fully populated {@link HomepageDataDTO}
 	 */
 	public HomepageDataDTO refreshSurgeonInfo(HomepageDataDTO homepageData);
+
 }
