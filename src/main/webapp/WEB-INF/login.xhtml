@@ -32,13 +32,11 @@
 								value="${sessionScope.SPRING_SECURITY_LAST_USERNAME}" />
 						</c:if>
 						<input type="text" name="j_username" value="#{username}" /> <label>Password</label>
-						<input type="password" name="j_password" /> <a
-							href="forgot_password"><small class="help-block">Forgot
-								password?</small></a> 
+						<input type="password" name="j_password" /> 
 					</fieldset>
 					<div class="btn-toolbar">
 						<button type="submit" class="btn btn-large btn-primary"
-							name="login" onclick="waitDialog.show();">LOGIN</button>
+							name="login" onclick="waitDialog_loading.show();">LOGIN</button>
 						<a type="button" class="btn btn-large btn-primary"
 							href="${request.contextPath}/spring/registration">REGISTER</a>
 					</div>
@@ -46,11 +44,9 @@
 			</div>
 		</div>
 		
-		<p:dialog id="modalDialog" widgetVar="waitDialog" modal="true" resizable="false" closable="false" width="470">
-			<h:outputText value="Please wait while we load your data. This may take a few moments." />
-			<div class="modal_dialog_ajax_loader_gif">
-				<img src="${request.contextPath}/images/ajax-loader.gif" /> 
-			</div>
-		</p:dialog>
+		<a href="${request.contextPath}/spring/faq">Questions?</a>
+		
+		<ui:include src="includes/waitDialog_loading.xhtml" />
+		
 	</ui:define>
 </ui:composition>

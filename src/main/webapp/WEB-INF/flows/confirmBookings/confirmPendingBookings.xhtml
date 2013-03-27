@@ -18,28 +18,34 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Date</th>
+						<th>Surgeon Name</th>
+						<th>Booking Date</th>
 						<th>Start Time</th>
 						<th>End Time</th>
 					</tr>
 				</thead>
 				<tbody>
-					<ui:repeat var="timeAvailability" value="#{cancelAvailabilityDTO.selectedTimeAvailabilities}">
+					<ui:repeat var="booking" value="#{confirmBookingDTO.selectedBookings}">
 						<h:panelGroup id="timeAvailabilityRow">
 							<tr>
 								<td>
-									<h:outputText value="#{timeAvailability.availabilityId.dateOfAvailability.time}">
+									<h:outputText value="#{booking.bookingCreatorId.userInfoId.firstName}" />
+									<h:outputText value=" " />
+									<h:outputText value="#{booking.bookingCreatorId.userInfoId.lastName}" />
+								</td>
+								<td>
+									<h:outputText value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
 										<f:convertDateTime type="date" dateStyle="medium"/>
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText value="#{timeAvailability.startTime.time}">
-										<f:convertDateTime timeStyle="short" type="time"/>
+									<h:outputText value="#{booking.timeAvailabilityId.startTime.time}">
+										<f:convertDateTime type="time" timeStyle="short"/>
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText value="#{timeAvailability.endTime.time}">
-										<f:convertDateTime timeStyle="short" type="time"/>
+									<h:outputText value="#{booking.timeAvailabilityId.endTime.time}">
+										<f:convertDateTime type="time" timeStyle="short"/>
 									</h:outputText>
 								</td>
 							</tr>

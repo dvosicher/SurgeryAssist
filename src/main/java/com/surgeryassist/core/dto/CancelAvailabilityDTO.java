@@ -1,8 +1,9 @@
 package com.surgeryassist.core.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.primefaces.event.SelectEvent;
 
 import com.surgeryassist.core.datamodel.TimeAvailabilitiesDataModel;
 import com.surgeryassist.core.entity.TimeAvailabilities;
@@ -17,21 +18,25 @@ public class CancelAvailabilityDTO implements Serializable {
 
 	private static final long serialVersionUID = 7699468063287433191L;
 
-	List<TimeAvailabilities> timeAvailabilitiesList;
+	private List<TimeAvailabilities> timeAvailabilitiesList;
+
+	private TimeAvailabilities[] selectedTimeAvailabilities;
 	
-	TimeAvailabilities[] selectedTimeAvailabilities;
-	
-	TimeAvailabilitiesDataModel dataModel;
-	
-	public CancelAvailabilityDTO() {
-		this.timeAvailabilitiesList = new ArrayList<TimeAvailabilities>();
-		this.selectedTimeAvailabilities = new TimeAvailabilities[10];
-	}
-	
+	private TimeAvailabilitiesDataModel timeAvailabilityDataModel;
+
+	public CancelAvailabilityDTO() { }
+
 	public CancelAvailabilityDTO(List<TimeAvailabilities> timeAvailabilitiesList) {
 		this.timeAvailabilitiesList = timeAvailabilitiesList;
-		this.dataModel = new TimeAvailabilitiesDataModel(this.timeAvailabilitiesList);
+		timeAvailabilityDataModel = 
+				new TimeAvailabilitiesDataModel(timeAvailabilitiesList);
 	}
+
+	public void onRowSelect(SelectEvent event) {
+		//do nothing, because primefaces is stupid
+	}
+	
+	/************************ Getters and Setters *************************/
 	
 	public List<TimeAvailabilities> getTimeAvailabilitiesList() {
 		return timeAvailabilitiesList;
@@ -51,12 +56,12 @@ public class CancelAvailabilityDTO implements Serializable {
 		this.selectedTimeAvailabilities = selectedTimeAvailabilities;
 	}
 
-	public TimeAvailabilitiesDataModel getDataModel() {
-		return dataModel;
+	public TimeAvailabilitiesDataModel getTimeAvailabilityDataModel() {
+		return timeAvailabilityDataModel;
 	}
 
-	public void setDataModel(TimeAvailabilitiesDataModel dataModel) {
-		this.dataModel = dataModel;
+	public void setTimeAvailabilityDataModel(TimeAvailabilitiesDataModel timeAvailabilityDataModel) {
+		this.timeAvailabilityDataModel = timeAvailabilityDataModel;
 	}
 
 }

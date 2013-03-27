@@ -12,10 +12,10 @@ import com.surgeryassist.core.entity.Bookings;
 
 /**
  * Homepage object to maintain data for homepage
- * info, such as confirmed/pending bookings and more 
+ * info, such as confirmed/pending {@link Bookings} and more 
  * @author Reid Roman
  */
-public class HomepageDataDTO implements Serializable{
+public class HomepageDataDTO implements Serializable {
 
 	private static final long serialVersionUID = -1552229662211651335L;
 

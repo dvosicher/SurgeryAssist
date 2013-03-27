@@ -100,6 +100,11 @@ public class HomepageServiceImpl implements HomepageService {
 
 		return favoriteASCs;
 	}
+	
+	@Override
+	public HomepageDataDTO refreshSurgeonInfo(HomepageDataDTO homepageData) {
+		return this.populateSurgeonInfo(null);
+	}
 
 
 }

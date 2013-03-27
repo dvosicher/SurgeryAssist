@@ -68,24 +68,28 @@
 										value="#{selectedAvailability.availabilityId.dateOfAvailability.time}">
 										<f:convertDateTime dateStyle="default" type="date" />
 									</h:outputText>
+									<h:outputText value=" " />
 									<h:outputText id="bookingTime"
 										value="#{selectedAvailability.startTime.time}">
-										<f:convertDateTime dateStyle="default" type="time" />
+										<f:convertDateTime timeStyle="short" type="time" />
 									</h:outputText>
 								</p>
 							</div>
 						</div>
-						<div class="btn-toolbar">
-							<p:commandButton styleClass="btn btn-primary" id="confirm" value="CONFIRM"
-								action="confirm" ajax="false" update="@form" />
-							<p:commandButton styleClass="btn btn-primary" id="revise" value="REVISE"
+						<div>
+							<p:commandButton id="confirm" value="CONFIRM"
+								action="confirm" ajax="false" update="@form" onclick="waitDialog_saving.show();" />
+							<p:commandButton id="revise" value="REVISE"
 								action="revise" ajax="false" immediate="true" />
-							<p:commandButton styleClass="btn btn-primary" id="cancel" value="CANCEL" 
+							<p:commandButton id="cancel" value="CANCEL" 
 								action="cancel" ajax="false" immediate="true" />
 						</div>
 					</p:fieldset>
 				</h:form>
 				</div>
+				
+				<ui:include src="../../includes/waitDialog_saving.xhtml"></ui:include>
+				
 			</div>
 		</ui:define>
 	</ui:composition>

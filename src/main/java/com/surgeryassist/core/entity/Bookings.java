@@ -19,9 +19,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.surgeryassist.core.UserTypeCode;
 
 @Entity
 @Table(schema = "SurgeryAssist", name = "bookings")
@@ -121,27 +127,57 @@ public class Bookings implements Serializable {
     }
     
     public static List<Bookings> findPendingBookingsByUser(ApplicationUser currentUser) {
-    	List<Bookings> returnList = new ArrayList<Bookings>();
-    	
-    	returnList = entityManager()
-    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
-    					"AND o.isConfirmed = false", Bookings.class)
-    			.setParameter("currentUser", currentUser)
-    			.getResultList();
-    	
-    	return returnList;
+    	//create the session and criteria for the query
+		Session session = entityManager().unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Bookings.class);
+		
+		//join tables and set aliases
+		criteria.setFetchMode("timeAvailabilityId", FetchMode.DEFAULT).createAlias("timeAvailabilityId", "taid");
+		criteria.setFetchMode("taid.availabilityId", FetchMode.DEFAULT).createAlias("taid.availabilityId", "aid");
+		
+		//add restriction based on whether the user is a surgeon or ASC
+		if(currentUser.getUserTypeCode().equals(UserTypeCode.SURGEON)) {
+			criteria.add(Restrictions.eq("bookingCreatorId", currentUser));
+		}
+		else if(currentUser.getUserTypeCode().equals(UserTypeCode.ASC)) {
+			criteria.add(Restrictions.eq("bookingLocationId", currentUser));
+		}
+		
+		//add default restrictions
+		criteria.add(Restrictions.eq("isConfirmed", Boolean.FALSE));
+		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		
+		@SuppressWarnings("unchecked")
+		List<Bookings> returnList = criteria.list();
+		
+		return returnList;
     }
     
     public static List<Bookings> findConfirmedBookingsByUser(ApplicationUser currentUser) {
-    	List<Bookings> returnList = new ArrayList<Bookings>();
-    	
-    	returnList = entityManager()
-    			.createQuery("SELECT o FROM Bookings o WHERE o.bookingCreatorId = :currentUser " +
-    					"AND o.isConfirmed = true", Bookings.class)
-    			.setParameter("currentUser", currentUser)
-    			.getResultList();
-    	
-    	return returnList;
+    	//create the session and criteria for the query
+		Session session = entityManager().unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Bookings.class);
+		
+		//join tables and set aliases
+		criteria.setFetchMode("timeAvailabilityId", FetchMode.DEFAULT).createAlias("timeAvailabilityId", "taid");
+		criteria.setFetchMode("taid.availabilityId", FetchMode.DEFAULT).createAlias("taid.availabilityId", "aid");
+		
+		//add restriction based on whether the user is a surgeon or ASC
+		if(currentUser.getUserTypeCode().equals(UserTypeCode.SURGEON)) {
+			criteria.add(Restrictions.eq("bookingCreatorId", currentUser));
+		}
+		else if(currentUser.getUserTypeCode().equals(UserTypeCode.ASC)) {
+			criteria.add(Restrictions.eq("bookingLocationId", currentUser));
+		}
+		
+		//add default restrictions
+		criteria.add(Restrictions.eq("isConfirmed", Boolean.TRUE));
+		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		
+		@SuppressWarnings("unchecked")
+		List<Bookings> returnList = criteria.list();
+		
+		return returnList;
     }
     
     /**
@@ -308,4 +344,12 @@ public class Bookings implements Serializable {
 		this.isConfirmed = isConfirmed;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Bookings bookingsObj = (Bookings) obj;
+		if(this.bookingId.equals(bookingsObj.bookingId)) {
+			return true;
+		}
+		return false;
+	}
 }

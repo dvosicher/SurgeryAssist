@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+      	http://www.springframework.org/schema/webflow
+      	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="flowScope.confirmBookingDTO" class="com.surgeryassist.core.dto.ConfirmBookingsDTO" />
+
+	<!-- Page with multiple selection to select availabilities to cancel -->
+	<view-state id="selectBookingsToConfirm">
+		<on-entry>
+			<evaluate
+				expression="confirmBookingService
+					.getListOfPendingBookings(flowScope.confirmBookingDTO)"
+				result="flowScope.confirmBookingDTO" />
+		</on-entry>
+		<transition on="submit" to="confirmPendingBookings" />
+		<transition on="cancel" to="cancel" />
+	</view-state>
+
+	<!-- Confirmation page -->
+	<view-state id="confirmPendingBookings">
+		<transition on="cancel" to="cancel" />
+		<transition on="goBack" to="selectBookingsToConfirm" />
+		<transition on="submit" to="finish">
+			<!-- Set the availabilities to be cancelled -->
+			<evaluate
+				expression="confirmBookingService
+				.confirmSelectedBookings(flowScope.confirmBookingDTO)" />
+		</transition>
+	</view-state>
+
+	<end-state id="cancel" />
+	<end-state id="finish" />
+
+</flow>

@@ -51,18 +51,12 @@
 					</div>
 					<div class="form-actions">
 						<div class="btn-toolbar">
-							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog.show();" />
+							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_loading.show();" />
 							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
 						</div>
 					</div>
 				</h:form>
 				
-				<p:dialog id="modalDialog" widgetVar="waitDialog" modal="true" resizable="false" closable="false" width="470">
-					<h:outputText value="Please wait while we load your data. This may take a few moments." />
-					<div class="modal_dialog_ajax_loader_gif">
-						<img src="${request.contextPath}/images/ajax-loader.gif" /> 
-					</div>
-				</p:dialog>		
 			</div>
 		</div>
 	</ui:define>

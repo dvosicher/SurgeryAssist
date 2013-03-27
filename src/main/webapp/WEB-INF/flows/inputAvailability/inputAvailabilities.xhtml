@@ -30,7 +30,7 @@
 						<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
 						<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
 					</p:schedule>
-	
+					
 					<p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" resizable="false">
 						<h:panelGrid id="eventDetails" columns="2">
 							<h:outputLabel for="from" value="From:" />
@@ -47,6 +47,7 @@
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>
+
 				<h:form id="submitChangeForm">
 					<p:commandButton id="submitChangesButton" action="submitChanges" value="Save Changes" />
 				</h:form>

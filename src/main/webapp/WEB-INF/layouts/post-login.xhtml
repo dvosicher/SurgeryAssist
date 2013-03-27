@@ -19,7 +19,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span3 top-buf">
-				<a href="${request.contextPath}/spring/main" onclick="waitDialog_homepage.show();">
+				<a href="${request.contextPath}/spring/main" onclick="waitDialog_loading.show();">
 					<img src="${request.contextPath}/images/SurgeryAssistPNG24.png" />
 				</a>
 			</div>
@@ -27,6 +27,7 @@
 				<c:if test="${not empty currentUser.name}">
 			    	<a href="${request.contextPath}/spring/logout" class="btn btn-mini pull-right">Logout</a>
 			    </c:if>
+			    <a href="${request.contextPath}/spring/faq" class="btn btn-mini pull-right" style="margin-right: 10px;">Help</a>
 			</div>
 		</div>
 		<div class="row">
@@ -45,12 +46,7 @@
 		</div>
 	</div>
 	
-	<p:dialog id="modalDialog_homepage" widgetVar="waitDialog_homepage" modal="true" resizable="false" closable="false" width="470">
-		<h:outputText value="Please wait while we load your data. This may take a few moments." />
-		<div class="modal_dialog_ajax_loader_gif">
-			<img src="${request.contextPath}/images/ajax-loader.gif" /> 
-		</div>
-	</p:dialog>
+	<ui:include src="../includes/waitDialog_loading.xhtml" />
 		
 	<script src="${request.contextPath}/scripts/bootstrap.min.js"></script>
 </h:body>

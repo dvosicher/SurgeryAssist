@@ -9,7 +9,7 @@
 	<ui:define name="content">
 		<h:form>
 			<div class="row">
-				<div class="span5 offset2">
+				<div class="span5 offset1">
 					<h3>Review Search Results</h3>
 				</div>
 				<div class="span3">
@@ -18,12 +18,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="span8 offset2">
-					<p:dataTable id="availabilities" var="a" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-						value="#{timeAvailabilitiesList}" dynamic="true" rows="5">
+				<div class="span8 offset1">
+					<p:dataTable id="availabilities" var="a" 
+						value="#{timeAvailabilitiesList}" dynamic="true" >
 						<p:column sortBy="#{a.availabilityId.dateOfAvailability}" 
-							id="dateColumn" headerText="Date Available">
+							id="dateColumn" headerText="Date">
 							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
 								<f:convertDateTime type="date" dateStyle="default" />
 							</h:outputText>
@@ -31,6 +30,12 @@
 						<p:column sortBy="#{a.startTime}" id="startTimeColumn"
 							headerText="Start Time">
 							<h:outputText value="#{a.startTime.time}">
+								<f:convertDateTime type="time" dateStyle="default" />
+							</h:outputText>
+						</p:column>
+						<p:column sortBy="#{a.endTime}" id="endTimeColumn"
+							headerText="End Time">
+							<h:outputText value="#{a.endTime.time}">
 								<f:convertDateTime type="time" dateStyle="default" />
 							</h:outputText>
 						</p:column>
