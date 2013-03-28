@@ -149,7 +149,7 @@ public class Bookings implements Serializable {
 		//add default restrictions
 		criteria.add(Restrictions.eq("isConfirmed", Boolean.FALSE));
 		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
-		criteria.add(Restrictions.eq("taid.isCanceled", Boolean.FALSE));
+		criteria.add(Restrictions.eq("taid.isCancelled", Boolean.FALSE));
 		
 		@SuppressWarnings("unchecked")
 		List<Bookings> returnList = criteria.list();
@@ -177,7 +177,7 @@ public class Bookings implements Serializable {
 		//add default restrictions
 		criteria.add(Restrictions.eq("isConfirmed", Boolean.TRUE));
 		criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
-		criteria.add(Restrictions.eq("taid.isCanceled", Boolean.FALSE));
+		criteria.add(Restrictions.eq("taid.isCancelled", Boolean.FALSE));
 		
 		@SuppressWarnings("unchecked")
 		List<Bookings> returnList = criteria.list();
