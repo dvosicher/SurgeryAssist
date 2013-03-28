@@ -1,0 +1,77 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+	
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8">
+				<h3>Confirm Availabilities To Cancel</h3>
+			</div>
+		</div>
+		
+		<h:form id="actionButtonForms">
+			<div class="row">
+				<h:panelGroup id="cancellationTable">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Patient Name</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Reason of Cancellation</th>
+							</tr>
+						</thead>
+						<tbody>
+							<ui:repeat var="booking" value="#{cancelBookingsDTO.selectedBookings}">
+								<h:panelGroup id="bookingRow">
+									<tr>
+										<td>
+											<h:outputText value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" dateStyle="medium"/>
+											</h:outputText>
+										</td>
+										<td>
+											<h:outputText value="#{booking.patientId.firstName}" />
+											<h:outputText value=" " />
+											<h:outputText value="#{booking.patientId.lastName}" />
+										</td>
+										<td>
+											<h:outputText value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime timeStyle="short" type="time"/>
+											</h:outputText>
+										</td>
+										<td>
+											<h:outputText value="#{booking.timeAvailabilityId.endTime.time}">
+												<f:convertDateTime timeStyle="short" type="time"/>
+											</h:outputText>
+										</td>
+										<td>
+											<p:inputTextarea value="#{booking.cancellationReason}" id="cancellationReason" />
+										</td>
+									</tr>
+								</h:panelGroup>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</h:panelGroup>
+			</div>
+			
+			<div class="row">
+				<div class="span8">
+					<p:commandButton id="cancelButton" action="cancel" value="Cancel" />
+					<p:commandButton id="goBackButton" action="goBack" value="Go Back" />
+					<p:commandButton id="submitButton" action="submit" value="Confirm" onclick="waitDialog_saving.show();" />
+				</div>
+			</div>
+		</h:form>
+		<ui:include src="../../includes/waitDialog_saving.xhtml" />
+		
+	</ui:define>
+	
+</ui:composition>
