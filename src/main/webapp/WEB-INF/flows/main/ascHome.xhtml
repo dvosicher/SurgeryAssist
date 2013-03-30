@@ -188,7 +188,7 @@
 						<h:form id="recentDataForm">
 							<p:dataTable id="recentDataTable" value="#{homepageData.recentASCs}"
 								var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
-								rowKey="#{ASC.userID}">
+								rowKey="#{ASC.userID}" emptyMessage="Under Construction">
 								
 								<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 	                   				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
@@ -204,7 +204,7 @@
 						<h:form id="favoriteDataForm">
 							<p:dataTable id="favoriteDataTable" value="#{homepageData.favoriteASCs}"
 								var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
-								rowKey="#{ASC.userID}">
+								rowKey="#{ASC.userID}" emptyMessage="Under Construction">
 								
 								<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 	                   				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
