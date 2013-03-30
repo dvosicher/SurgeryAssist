@@ -9,7 +9,7 @@
 
 <ui:define name="tabs">
 <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-<li><a href="" onclick="$('#goToInputAvailability>button:first-of-type').click()">Calendar</a></li>
+<li><p:commandLink action="inputAvailability">Calendar</p:commandLink><!-- <a href="" onclick="$('#goToInputAvailability>button:first-of-type').click()">Calendar</a> --></li>
 <li><a href="#upload" data-toggle="tab">Upload</a></li>
 <li><a href="#profile" data-toggle="tab">Profile</a></li>
 </ui:define>
@@ -193,9 +193,14 @@
 								<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 	                   				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
 	
-								<p:column id="ascName" headerText="Surgery Center">
+								<p:column id="doctorName" headerText="Doctor">
 									<h:outputText
-										value="#{ASC.firstName}" />
+										value="" />
+								</p:column>
+								
+								<p:column id="procedureName" headerText="Procedure">
+									<h:outputText
+										value="" />
 								</p:column>
 							</p:dataTable>
 						</h:form>
@@ -209,9 +214,14 @@
 								<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 	                   				update=":ASCDialogDisplay" oncomplete="ASCDialog.show()" /> 
 	
-								<p:column id="ascName" headerText="Surgery Center">
+								<p:column id="doctorName" headerText="Doctor">
 									<h:outputText
-										value="#{ASC.firstName}" />
+										value="" />
+								</p:column>
+								
+								<p:column id="procedureName" headerText="Procedure">
+									<h:outputText
+										value="" />
 								</p:column>
 							</p:dataTable>
 						</h:form>

@@ -56,3 +56,7 @@ div.modal_dialog_ajax_loader_gif {
 	float: left;
 	margin: 5px 0px 0px 107px;
 }
+.ui-widget {
+	font-size: inherit;
+	font-family: inherit;
+}
