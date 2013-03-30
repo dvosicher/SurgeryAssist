@@ -8,10 +8,10 @@
 	template="/WEB-INF/layouts/post-login.xhtml">
 
 	<ui:define name="tabs">
-		<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-		<li><a href="#schedule" data-toggle="tab">Schedule</a></li>
-		<li><a href="#search" data-toggle="tab">Search</a></li>
-		<li><a href="#account" data-toggle="tab">Account</a></li>
+			<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+			<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
+			<li><a href="#search" data-toggle="tab">Search</a></li>
+			<li><a href="#profile" data-toggle="tab">Profile</a></li>
 	</ui:define>
 
 	<ui:define name="content">
@@ -283,7 +283,7 @@
 				</h:form>
 			</div>
 		</div>
-		<div id="account" class="tab-pane">
+		<div id="profile" class="tab-pane">
 			<p>Howdy, I'm in Section 4.</p>
 		</div>
 
