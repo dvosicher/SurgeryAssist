@@ -29,6 +29,7 @@
 	
 	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
+		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
 		<transition on="goToSearch" to="searchFlow" />
 		<transition on="cancelBookings" to="cancelBookingsFlow" />
 	</view-state>
