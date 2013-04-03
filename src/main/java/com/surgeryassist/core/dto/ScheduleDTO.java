@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.joda.time.DateTime;
 import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -53,7 +54,11 @@ public class ScheduleDTO implements Serializable {
 	 */
 	public void onDateSelect(SelectEvent e) {
 		Date selectedDate = (Date) e.getObject();
-		event = new DefaultScheduleEvent(" ", selectedDate, selectedDate);
+		
+		DateTime endDate = new DateTime(selectedDate);
+		endDate = endDate.plusHours(2);
+		
+		event = new DefaultScheduleEvent(" ", selectedDate, endDate.toDate());
 	}
 
 	/**
