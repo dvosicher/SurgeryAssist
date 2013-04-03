@@ -8,10 +8,10 @@
 	template="/WEB-INF/layouts/post-login.xhtml">
 
 	<ui:define name="tabs">
-			<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+			<li class="active"><a href="">Home</a></li>
 			<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
-			<li><a href="#search" data-toggle="tab">Search</a></li>
-			<li><a href="#profile" data-toggle="tab">Profile</a></li>
+			<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+			<li><p:commandLink action="viewProfile">Profile</p:commandLink></li>
 	</ui:define>
 
 	<ui:define name="content">

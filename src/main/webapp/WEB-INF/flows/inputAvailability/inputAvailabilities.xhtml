@@ -10,7 +10,9 @@
 	<ui:define name="tabs">
 		<li><a href="${request.contextPath}/spring/main">Home</a></li>
 		<li class="active"><a href="">Calendar</a></li>
-		<li><a href="${request.contextPath}/spring/main">Upload</a></li>
+		<c:if test="${not empty user.lastName}">
+			<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+		</c:if>
 		<li><a href="${request.contextPath}/spring/main">Profile</a></li>
 	</ui:define>
 	
