@@ -13,7 +13,7 @@
 		<c:if test="${not empty user.lastName}">
 			<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
 		</c:if>
-		<li><a href="${request.contextPath}/spring/main">Profile</a></li>
+		<li><p:commandLink action="goToSearch">Profile</p:commandLink></li>
 	</ui:define>
 	
 	<ui:define name="content">
