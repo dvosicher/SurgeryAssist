@@ -27,10 +27,12 @@
 					<p:schedule value="#{scheduleDTO.model}" id="scheduleInput" view="agendaWeek"
 						widgetVar="scheduleInput" editable="true" draggable="true" allDaySlot="false"
 						resizable="true" minTime="7:00am" maxTime="8:00pm" timeZone="#{scheduleDTO.timeZone}">
+						
 						<p:ajax event="dateSelect" listener="#{scheduleDTO.onDateSelect}"
 							update="eventDetails" oncomplete="eventDialog.show();" />
 						<p:ajax event="eventMove" listener="#{scheduleDTO.onEventMove}" />
 						<p:ajax event="eventResize" listener="#{scheduleDTO.onEventResize}" />
+						
 					</p:schedule>
 					
 					<p:dialog id="eventDialog" widgetVar="eventDialog" header="Event Details" resizable="false" closeOnEscape="true">
