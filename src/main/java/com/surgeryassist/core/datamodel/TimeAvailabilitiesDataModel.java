@@ -12,8 +12,13 @@ import com.surgeryassist.core.entity.TimeAvailabilities;
 
 /**
  * Data Model for the {@link TimeAvailabilities} object,
- * used for Cancelling Availabilities
+ * used for Canceling Availabilities, based off of the
+ * Primefaces data models. Returns a row key and the row data
+ * when necessary based on the referenced object.
  * @author Ankit Tyagi
+ * @see ListDataModel
+ * @see SelectableDataModel
+ * @see Serializable
  */
 public class TimeAvailabilitiesDataModel extends
 		ListDataModel<TimeAvailabilities> implements

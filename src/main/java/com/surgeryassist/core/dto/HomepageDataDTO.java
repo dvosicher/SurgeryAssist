@@ -37,6 +37,13 @@ public class HomepageDataDTO implements Serializable {
 	
 	public HomepageDataDTO() { }
 	
+	/**
+	 * Constructor that creates a bookingDataModel for
+	 * selections by combining all the bookings in a single
+	 * list
+	 * @param pendingBookings List of pending bookings
+	 * @param confirmedBookings List of confirmed bookings
+	 */
 	public HomepageDataDTO(List<Bookings> pendingBookings, List<Bookings> confirmedBookings) {
 		this.confirmedBookings = confirmedBookings;
 		this.pendingBookings = pendingBookings;
@@ -49,6 +56,11 @@ public class HomepageDataDTO implements Serializable {
 		bookingDataModel = new BookingDataModel(allBookings);
 	}
 	
+	/**
+	 * Same Primefaces deficiency, need to create this
+	 * empty method
+	 * @param event 
+	 */
 	public void onRowSelect(SelectEvent event) {
 		//do nothing, for now...
 	}

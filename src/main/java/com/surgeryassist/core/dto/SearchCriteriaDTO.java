@@ -6,9 +6,10 @@ import java.util.Date;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 
 /**
- * DTO to hold SearchCriteria Data
- * @author atyagi
- *
+ * DTO to hold SearchCriteria Data, including
+ * city, zipcode, start day, end day, time of surgery
+ * and more.
+ * @author Ankit Tyagi
  */
 public class SearchCriteriaDTO implements Serializable {
 
