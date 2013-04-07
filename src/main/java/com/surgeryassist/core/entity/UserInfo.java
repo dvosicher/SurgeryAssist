@@ -48,11 +48,11 @@ public class UserInfo implements Serializable {
     @OneToMany(mappedBy = "userInfoId")
     private Set<ApplicationUser> applicationUsers;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_info_id", referencedColumnName = "contact_info_id", nullable = false)
     private ContactInfo contactInfoId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location locationId;
     

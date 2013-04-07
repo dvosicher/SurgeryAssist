@@ -25,12 +25,15 @@
 		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
 		<transition on="cancelAvailability" to="cancelAvailabilityFlow" />
 		<transition on="confirmBookings" to="confirmBookingsFlow" />
+		<transition on="viewProfile" to="viewProfileFlow" />
 	</view-state>
 	
 	<!-- Surgeon's home page -->
 	<view-state id="surgeonHome">
+		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
 		<transition on="goToSearch" to="searchFlow" />
 		<transition on="cancelBookings" to="cancelBookingsFlow" />
+		<transition on="viewProfile" to="viewProfileFlow" />
 	</view-state>
 	
 	<!-- subflow for search -->
@@ -60,7 +63,10 @@
 	
 	<!-- subflow for confirm bookings -->
 	<subflow-state id="confirmBookingsFlow" subflow="confirmBookings">
-		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="finish" to="decideSurgeonOrASC">
+			<evaluate expression="homepageService.refreshSurgeonInfo(flowScope.homepageData)" 
+				result="flowScope.homepageData"/>
+		</transition>
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
@@ -68,6 +74,11 @@
 	<subflow-state id="cancelBookingsFlow" subflow="cancelBookings">
 		<transition on="finish" to="decideSurgeonOrASC" />
 		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<subflow-state id="viewProfileFlow" subflow="viewProfile">
+		<input name="selectedUser" value="homepageData.loggedInUser"/>
+		<transition on="finish" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
 </flow>

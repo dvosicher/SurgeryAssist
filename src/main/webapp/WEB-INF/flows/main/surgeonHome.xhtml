@@ -8,10 +8,9 @@
 	template="/WEB-INF/layouts/post-login.xhtml">
 
 	<ui:define name="tabs">
-		<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-		<li><a href="#schedule" data-toggle="tab">Schedule</a></li>
-		<li><a href="#search" data-toggle="tab">Search</a></li>
-		<li><a href="#account" data-toggle="tab">Account</a></li>
+		<li class="active"><a href="#">Home</a></li>
+		<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+		<li><p:commandLink action="viewProfile">Profile</p:commandLink></li>
 	</ui:define>
 
 	<ui:define name="content">
@@ -186,7 +185,7 @@
 								<h:form id="recentDataForm">
 									<p:dataTable id="recentDataTable" value="#{homepageData.recentASCs}"
 										var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
-										rowKey="#{ASC.userID}">
+										rowKey="#{ASC.userID}" emptyMessage="Under Construction">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
@@ -202,7 +201,7 @@
 								<h:form id="favoriteDataForm">
 									<p:dataTable id="favoriteDataTable" value="#{homepageData.favoriteASCs}"
 										var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
-										rowKey="#{ASC.userID}">
+										rowKey="#{ASC.userID}" emptyMessage="Under Construction">
 										
 										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
 		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
@@ -283,7 +282,7 @@
 				</h:form>
 			</div>
 		</div>
-		<div id="account" class="tab-pane">
+		<div id="profile" class="tab-pane">
 			<p>Howdy, I'm in Section 4.</p>
 		</div>
 

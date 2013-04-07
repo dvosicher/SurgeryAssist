@@ -1,0 +1,136 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login.xhtml">
+	
+	<ui:define name="tabs">
+		<li><a href="${request.contextPath}/spring/main">Home</a></li>
+		<c:choose>
+			<c:when test="#{selectedUser.userTypeCode == 'ASC'}">
+				<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
+			</c:when>
+			<c:otherwise>
+				<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+			</c:otherwise>
+		</c:choose>
+		<li class="active"><a href="">Profile</a></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<div id="profile" class="flip">
+			<div class="span12">
+				<div class="row">
+					<div class="span8">
+						<c:choose>
+							<c:when test="#{selectedUser.userTypeCode == 'ASC'}">
+								<h2>#{selectedUser.userInfoId.firstName}</h2>
+							</c:when>
+							<c:otherwise>
+								<h2>#{selectedUser.userInfoId.firstName} #{selectedUser.userInfoId.lastName}</h2>
+							</c:otherwise>
+						</c:choose>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Email</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userEmail}</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Account Type</h4>
+							</div>
+							<div class="span5">
+								<h4>
+									<h:outputText value="#{selectedUser.userTypeCode}">
+										<f:converter converterId="userTypeCodeConverter"/>
+									</h:outputText>
+								</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Website URL</h4>
+							</div>
+							<div class="span5">
+								<c:choose>
+									<c:when test="#{empty selectedUser.userInfoId.websiteUrl}">
+										<h4>No Website URL set</h4>
+									</c:when>
+									<c:otherwise>
+										<h4>#{selectedUser.userInfoId.websiteUrl}</h4>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Phone Number</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.contactInfoId.phoneNumber}</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Fax Number</h4>
+							</div>
+							<div class="span5">
+								<c:choose>
+									<c:when test="#{empty selectedUser.userInfoId.contactInfoId.faxNumber}">
+										<h4>No Fax Number set</h4>
+									</c:when>
+									<c:otherwise>
+										<h4>#{selectedUser.userInfoId.contactInfoId.faxNumber}</h4>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Address</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.locationId.address}</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">City</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.locationId.city}</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">State</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.locationId.stateCode.stateName}</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">ZIP</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.locationId.zipCode}</h4>
+							</div>
+						</div>
+					</div>
+					<div class="span4">
+						<p:graphicImage value="#{pictureOfMe}" styleClass="pull-right" />
+					</div>
+				</div>
+				<div class="row top-buf">
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

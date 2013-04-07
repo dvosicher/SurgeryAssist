@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<input name="selectedUser" required="true" type="com.surgeryassist.core.entity.ApplicationUser" />
+
+	<view-state id="profile">
+		<transition on="inputAvailability" to="inputAvailabilityFlow"/>
+		<transition on="goToSearch" to="searchFlow" />
+		<transition on="home" to="finish" />
+	</view-state>
+
+	<!-- subflow for inputting availabilities -->
+	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
+		<transition on="finish" to="finish" />
+		<transition on="cancel" to="finish" />
+	</subflow-state>
+	
+	<!-- subflow for search -->
+	<subflow-state id="searchFlow" subflow="search">
+		<transition on="finish" to="finish" />
+		<transition on="cancel" to="finish" />
+	</subflow-state>
+
+	<end-state id="finish" />
+	
+</flow>

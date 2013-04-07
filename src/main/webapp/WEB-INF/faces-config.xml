@@ -18,4 +18,9 @@
 	    	<converter-class>com.surgeryassist.util.faces.converters.SurgeryTypeConverter</converter-class>
 	    </converter>
 	    
+	    <converter>
+	    	<converter-id>userTypeCodeConverter</converter-id>
+	    	<converter-class>com.surgeryassist.util.faces.converters.UserTypeCodeConverter</converter-class>
+	    </converter>
+	    
 </faces-config>
