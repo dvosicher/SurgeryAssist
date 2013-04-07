@@ -24,11 +24,19 @@ public class CancelBookingsDTO implements Serializable {
 	
 	public CancelBookingsDTO() { }
 	
+	/**
+	 * Creates a datamodel based on the passed in list
+	 * @param bookingsList A list of bookings that could be cancelled
+	 */
 	public CancelBookingsDTO(List<Bookings> bookingsList) {
 		this.setBookingsList(bookingsList);
 		this.bookingDataModel = new BookingDataModel(bookingsList);
 	}
 	
+	/**
+	 * Empty method for Primefaces deficiency
+	 * @param event
+	 */
 	public void onRowSelect(SelectEvent event) {
 		//do nothing, because primefaces is stupid
 	}

@@ -10,6 +10,16 @@ import org.primefaces.model.SelectableDataModel;
 
 import com.surgeryassist.core.entity.Bookings;
 
+/**
+ * Data Model for the {@link Bookings} object,
+ * used for Canceling Bookings, based off of the
+ * Primefaces data models. Returns a row key and the row data
+ * when necessary based on the referenced object.
+ * @author Ankit Tyagi
+ * @see ListDataModel
+ * @see SelectableDataModel
+ * @see Serializable
+ */
 public class BookingDataModel extends ListDataModel<Bookings> implements
 		SelectableDataModel<Bookings>, Serializable {
 

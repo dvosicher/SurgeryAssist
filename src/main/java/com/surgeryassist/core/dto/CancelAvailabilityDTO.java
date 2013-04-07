@@ -18,20 +18,40 @@ public class CancelAvailabilityDTO implements Serializable {
 
 	private static final long serialVersionUID = 7699468063287433191L;
 
+	/**
+	 * All the {@link TimeAvailabilities} to be shown
+	 */
 	private List<TimeAvailabilities> timeAvailabilitiesList;
 
+	/**
+	 * The selected {@link TimeAvailabilities} for the next page
+	 */
 	private TimeAvailabilities[] selectedTimeAvailabilities;
 	
+	/**
+	 * The data model to select/unselect data
+	 */
 	private TimeAvailabilitiesDataModel timeAvailabilityDataModel;
 
 	public CancelAvailabilityDTO() { }
 
+	/**
+	 * Constructor that sets the data model based on the
+	 * passed in list 
+	 * @param timeAvailabilitiesList The list of {@link TimeAvailabilities}
+	 */
 	public CancelAvailabilityDTO(List<TimeAvailabilities> timeAvailabilitiesList) {
 		this.timeAvailabilitiesList = timeAvailabilitiesList;
 		timeAvailabilityDataModel = 
 				new TimeAvailabilitiesDataModel(timeAvailabilitiesList);
 	}
 
+	/**
+	 * Empty method that does nothing, but is necessary
+	 * for Primefaces functionality
+	 * @param event {@link SelectEvent} that contains data
+	 * 	about the event
+	 */
 	public void onRowSelect(SelectEvent event) {
 		//do nothing, because primefaces is stupid
 	}

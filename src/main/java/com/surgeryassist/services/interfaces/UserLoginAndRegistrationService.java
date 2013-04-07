@@ -69,6 +69,4 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 */
 	public Map<String, List<SelectItem>> getDropdownMenuValues();
 	
-
-	
 }
