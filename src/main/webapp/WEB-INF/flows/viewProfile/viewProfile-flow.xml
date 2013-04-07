@@ -8,8 +8,22 @@
 	<input name="selectedUser" required="true" type="com.surgeryassist.core.entity.ApplicationUser" />
 
 	<view-state id="profile">
+		<transition on="inputAvailability" to="inputAvailabilityFlow"/>
+		<transition on="goToSearch" to="searchFlow" />
 		<transition on="home" to="finish" />
 	</view-state>
+
+	<!-- subflow for inputting availabilities -->
+	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
+		<transition on="finish" to="finish" />
+		<transition on="cancel" to="finish" />
+	</subflow-state>
+	
+	<!-- subflow for search -->
+	<subflow-state id="searchFlow" subflow="search">
+		<transition on="finish" to="finish" />
+		<transition on="cancel" to="finish" />
+	</subflow-state>
 
 	<end-state id="finish" />
 	

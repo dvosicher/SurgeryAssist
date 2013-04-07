@@ -9,10 +9,14 @@
 	
 	<ui:define name="tabs">
 		<li><a href="${request.contextPath}/spring/main">Home</a></li>
-		<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
-		<c:if test="${not empty user.lastName}">
-			<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
-		</c:if>
+		<c:choose>
+			<c:when test="#{selectedUser.userTypeCode == 'ASC'}">
+				<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
+			</c:when>
+			<c:otherwise>
+				<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+			</c:otherwise>
+		</c:choose>
 		<li class="active"><a href="">Profile</a></li>
 	</ui:define>
 
@@ -22,7 +26,7 @@
 				<div class="row">
 					<div class="span8">
 						<c:choose>
-							<c:when test="#{selectedUser.userTypeCode == ASC}">
+							<c:when test="#{selectedUser.userTypeCode == 'ASC'}">
 								<h2>#{selectedUser.userInfoId.firstName}</h2>
 							</c:when>
 							<c:otherwise>
@@ -54,7 +58,14 @@
 								<h4 class="pull-right">Website URL</h4>
 							</div>
 							<div class="span5">
-								<h4>My Website URL</h4>
+								<c:choose>
+									<c:when test="#{empty selectedUser.userInfoId.websiteUrl}">
+										<h4>No Website URL set</h4>
+									</c:when>
+									<c:otherwise>
+										<h4>#{selectedUser.userInfoId.websiteUrl}</h4>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 						<div class="row">
@@ -62,7 +73,7 @@
 								<h4 class="pull-right">Phone Number</h4>
 							</div>
 							<div class="span5">
-								<h4>My Phone Number</h4>
+								<h4>#{selectedUser.userInfoId.contactInfoId.phoneNumber}</h4>
 							</div>
 						</div>
 						<div class="row">
@@ -70,7 +81,22 @@
 								<h4 class="pull-right">Fax Number</h4>
 							</div>
 							<div class="span5">
-								<h4>My Fax Number</h4>
+								<c:choose>
+									<c:when test="#{empty selectedUser.userInfoId.contactInfoId.faxNumber}">
+										<h4>No Fax Number set</h4>
+									</c:when>
+									<c:otherwise>
+										<h4>#{selectedUser.userInfoId.contactInfoId.faxNumber}</h4>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span3">
+								<h4 class="pull-right">Address</h4>
+							</div>
+							<div class="span5">
+								<h4>#{selectedUser.userInfoId.locationId.address}</h4>
 							</div>
 						</div>
 						<div class="row">
@@ -78,7 +104,7 @@
 								<h4 class="pull-right">City</h4>
 							</div>
 							<div class="span5">
-								<h4>My City</h4>
+								<h4>#{selectedUser.userInfoId.locationId.city}</h4>
 							</div>
 						</div>
 						<div class="row">
@@ -86,7 +112,7 @@
 								<h4 class="pull-right">State</h4>
 							</div>
 							<div class="span5">
-								<h4>My State</h4>
+								<h4>#{selectedUser.userInfoId.locationId.stateCode.stateName}</h4>
 							</div>
 						</div>
 						<div class="row">
@@ -94,7 +120,7 @@
 								<h4 class="pull-right">ZIP</h4>
 							</div>
 							<div class="span5">
-								<h4>My ZIP</h4>
+								<h4>#{selectedUser.userInfoId.locationId.zipCode}</h4>
 							</div>
 						</div>
 					</div>

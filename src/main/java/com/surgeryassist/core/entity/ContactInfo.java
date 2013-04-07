@@ -196,16 +196,10 @@ public class ContactInfo implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-	/**
-	 * @return the userInfoes
-	 */
 	public Set<UserInfo> getUserInfoes() {
 		return userInfoes;
 	}
 
-	/**
-	 * @param userInfoes the userInfoes to set
-	 */
 	public void setUserInfoes(Set<UserInfo> userInfoes) {
 		this.userInfoes = userInfoes;
 	}
