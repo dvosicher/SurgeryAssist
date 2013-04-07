@@ -37,6 +37,7 @@ public interface UserLoginAndRegistrationService extends UserDetailsService {
 	 * @param userInfo The {@link UserInfo} entity
 	 * @param contactInfo The {@link ContactInfo} entity
 	 * @param location The {@link Location} entity
+	 * @return {@link RegistrationResult} the result of the registration
 	 * @author Ankit Tyagi
 	 */
 	public RegistrationResult registerUser(ApplicationUser applicationUser, UserInfo userInfo, ContactInfo contactInfo, Location location);
