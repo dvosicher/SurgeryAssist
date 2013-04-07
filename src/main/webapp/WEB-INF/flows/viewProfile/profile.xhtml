@@ -21,13 +21,20 @@
 			<div class="span12">
 				<div class="row">
 					<div class="span8">
-						<h2>Reid Roman</h2>
+						<c:choose>
+							<c:when test="#{selectedUser.userTypeCode == ASC}">
+								<h2>#{selectedUser.userInfoId.firstName}</h2>
+							</c:when>
+							<c:otherwise>
+								<h2>#{selectedUser.userInfoId.firstName} #{selectedUser.userInfoId.lastName}</h2>
+							</c:otherwise>
+						</c:choose>
 						<div class="row">
 							<div class="span3">
 								<h4 class="pull-right">Email</h4>
 							</div>
 							<div class="span5">
-								<h4>My Email</h4>
+								<h4>#{selectedUser.userEmail}</h4>
 							</div>
 						</div>
 						<div class="row">
@@ -35,7 +42,11 @@
 								<h4 class="pull-right">Account Type</h4>
 							</div>
 							<div class="span5">
-								<h4>My Account Type</h4>
+								<h4>
+									<h:outputText value="#{selectedUser.userTypeCode}">
+										<f:converter converterId="userTypeCodeConverter"/>
+									</h:outputText>
+								</h4>
 							</div>
 						</div>
 						<div class="row">

@@ -63,7 +63,10 @@
 	
 	<!-- subflow for confirm bookings -->
 	<subflow-state id="confirmBookingsFlow" subflow="confirmBookings">
-		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="finish" to="decideSurgeonOrASC">
+			<evaluate expression="homepageService.refreshSurgeonInfo(flowScope.homepageData)" 
+				result="flowScope.homepageData"/>
+		</transition>
 		<transition on="cancel" to="decideSurgeonOrASC" />
 	</subflow-state>
 	
@@ -74,6 +77,7 @@
 	</subflow-state>
 	
 	<subflow-state id="viewProfileFlow" subflow="viewProfile">
+		<input name="selectedUser" value="homepageData.loggedInUser"/>
 		<transition on="finish" to="decideSurgeonOrASC" />
 	</subflow-state>
 	

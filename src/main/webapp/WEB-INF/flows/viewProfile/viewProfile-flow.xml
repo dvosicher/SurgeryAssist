@@ -5,6 +5,8 @@
 		http://www.springframework.org/schema/webflow
 		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
+	<input name="selectedUser" required="true" type="com.surgeryassist.core.entity.ApplicationUser" />
+
 	<view-state id="profile">
 		<transition on="home" to="finish" />
 	</view-state>
