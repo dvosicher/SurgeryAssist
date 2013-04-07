@@ -24,10 +24,19 @@ public class ScheduleDTO implements Serializable {
 
 	private static final long serialVersionUID = -6288968959526039477L;
 
+	/**
+	 * The model that sets the data
+	 */
 	private ScheduleModel model;
 
+	/**
+	 * The singly held event during the context
+	 */
 	private DefaultScheduleEvent event;
 
+	/**
+	 * Force a default time zone to be GMT
+	 */
 	private TimeZone timeZone;
 	
 	public ScheduleDTO() {
@@ -80,6 +89,7 @@ public class ScheduleDTO implements Serializable {
 		event = (DefaultScheduleEvent) e.getScheduleEvent();
 		this.addEvent();
 	}
+	
 	/**
 	 * Ajax function to add new event to the model
 	 * or update the existing event

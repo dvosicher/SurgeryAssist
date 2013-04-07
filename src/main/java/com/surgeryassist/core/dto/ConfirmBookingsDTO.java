@@ -24,11 +24,20 @@ public class ConfirmBookingsDTO implements Serializable {
 	
 	public ConfirmBookingsDTO() { }
 	
+	/**
+	 * Creates a datamodel based on the parameter list
+	 * @param pendingBookings List of Pending {@link Bookings}
+	 */
 	public ConfirmBookingsDTO(List<Bookings> pendingBookings) {
 		this.pendingBookings = pendingBookings;
 		this.bookingDataModel = new BookingDataModel(pendingBookings);
 	}
 	
+	/**
+	 * Empty method to alleviate the Primefaces 
+	 * error
+	 * @param event
+	 */
 	public void onRowSelect(SelectEvent event) {
 		//do nothing, because primefaces is stupid
 	}

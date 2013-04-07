@@ -9,10 +9,6 @@
 	<var name="selectedAvailability" class="com.surgeryassist.core.entity.TimeAvailabilities" />
 	
 	<view-state id="enterSearchCriteria">
-		<on-entry>
-			<evaluate expression="searchService.getSelectItemValues()" result="flowScope.selectItemMap" />
-		</on-entry>
-		
 		<transition on="searchAll" to="reviewSearchResults">
 			<evaluate expression="searchService.searchAll()" result="flowScope.timeAvailabilitiesList" />
 		</transition>
