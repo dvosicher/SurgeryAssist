@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -42,30 +43,48 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="firstName" class="control-label">First Name*:</label>
-						<div class="controls">
-							<p:inputText id="firstName" value="#{newUserInfo.firstName}"
-								required="true" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label for="lastName" class="control-label">Last Name*:</label>
-						<div class="controls">
-							<p:inputText id="lastName" value="#{newUserInfo.lastName}"
-								required="true" />
-						</div>
-					</div>
-					<div class="control-group">
 						<label for="inputUserType" class="control-label">User Type*:</label>
 						<div class="controls">
-							<h:selectOneMenu id="userTypeCode"
+							<p:selectOneMenu id="userTypeCode"
 								value="#{newApplicationUser.userTypeCode}" required="true">
 								<f:selectItems value="#{flowScope.dropdownMap['userTypeCode']}"
 									var="userTypeCodes" itemLabel="#{userTypeCodes}"
 									itemValue="#{userTypeCodes}" />
-							</h:selectOneMenu>
+								<p:ajax update="name_panel_group"  />
+							</p:selectOneMenu>
 						</div>
 					</div>
+					
+					<h:panelGroup id="name_panel_group">
+						<c:choose>
+							<c:when test="#{newApplicationUser.userTypeCode == 'ASC'}">
+								<div class="control-group">
+									<label for="ascName" class="control-label">ASC Name*:</label>
+									<div class="controls">
+										<p:inputText id="ascName" value="#{newUserInfo.firstName}"
+											required="true" />
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="control-group">
+									<label for="firstName" class="control-label">First Name*:</label>
+									<div class="controls">
+										<p:inputText id="firstName" value="#{newUserInfo.firstName}"
+											required="true" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="lastName" class="control-label">Last Name*:</label>
+									<div class="controls">
+										<p:inputText id="lastName" value="#{newUserInfo.lastName}"
+											required="true" />
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</h:panelGroup>
+					
 					<div class="control-group">
 						<label for="photo" class="control-label">Website URL</label>
 						<div class="controls">
@@ -114,13 +133,13 @@
 					<div class="control-group">
 						<label for="inputState" class="control-label">State*:</label>
 						<div class="controls">
-							<h:selectOneMenu id="state" value="#{newLocation.stateCode}"
+							<p:selectOneMenu id="state" value="#{newLocation.stateCode}"
 								required="true">
 								<f:selectItems value="#{flowScope.dropdownMap['stateCode']}"
 									var="stateCode" itemLabel="#{stateCode.stateName}"
 									itemValue="#{stateCode.stateCodeID}" />
 								<f:converter converterId="stateCodeConverter" />
-							</h:selectOneMenu>
+							</p:selectOneMenu>
 						</div>
 					</div>
 					<div class="control-group">
