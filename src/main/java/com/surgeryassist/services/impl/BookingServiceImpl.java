@@ -31,8 +31,10 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	@Transactional
 	public void createBooking(ApplicationUser bookingLocation, Patient patient, 
-			TimeAvailabilities selectedTimeAvailability) {
+			TimeAvailabilities selectedTimeAvailability, InsuranceType insuranceType) {
 
+		this.persistPatient(insuranceType, patient);
+		
 		//create a booking object
 		Bookings newBooking = new Bookings();
 		newBooking.setBookingCreatorId(
@@ -42,30 +44,16 @@ public class BookingServiceImpl implements BookingService {
 		newBooking.setTimeAvailabilityId(selectedTimeAvailability);
 		newBooking.setIsCanceled(false);
 		newBooking.setIsConfirmed(false);
-		
+
 		//merge the availability to be completely caught up
-		try {
-			selectedTimeAvailability.setIsBooked(true);
-			selectedTimeAvailability.merge();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		selectedTimeAvailability.setIsBooked(true);
+		selectedTimeAvailability.merge();
 
 		newBooking = (Bookings) SurgeryAssistUtil.setAllHistoricalInfo(newBooking);
 
 		//persist the booking object and flush it
-		try {
-			newBooking.persist();
-			newBooking.flush();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			//rollback
-			selectedTimeAvailability.setIsBooked(false);
-			selectedTimeAvailability.merge();
-		}
-
+		newBooking.persist();
+		newBooking.flush();
 	}
 
 	@Override
@@ -74,10 +62,10 @@ public class BookingServiceImpl implements BookingService {
 
 		InsuranceType existingInsuranceType = 
 				InsuranceType.findInsuranceType(insuranceType.getInsuranceID());
-		
+
 		Patient existingPatient =
 				Patient.findPatient(patient.getPatientId());
-		
+
 		//store the insurance info if it doesn't exist already, otherwise merge it
 		if(existingInsuranceType == null) {
 			insuranceType = (InsuranceType) SurgeryAssistUtil.setAllHistoricalInfo(insuranceType);
@@ -89,23 +77,15 @@ public class BookingServiceImpl implements BookingService {
 
 		patient = (Patient) SurgeryAssistUtil.setAllHistoricalInfo(patient);
 
-		try {
-			patient.setInsuranceCode(insuranceType);
-			
-			if(existingPatient == null) {
-				patient.persist();
-			}
-			else {
-				patient.merge();
-			}
-			patient.flush();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			//rollback
-			insuranceType.remove();
-		}
+		patient.setInsuranceCode(insuranceType);
 
+		if(existingPatient == null) {
+			patient.persist();
+		}
+		else {
+			patient.merge();
+		}
+		patient.flush();
 	}
 
 	@Override

@@ -26,9 +26,10 @@ public interface BookingService {
 	 * 		of the selected {@link TimeAvailabilities})
 	 * @param selectedTimeAvailability The selected {@link TimeAvailabilities} of the booking
 	 * @param patient The patient that will be treated with said {@link Bookings}
+	 * @param insuranceType The {@link InsuranceType} of the patient
 	 */
 	public void createBooking(ApplicationUser bookingLocation, Patient patient, 
-			TimeAvailabilities selectedTimeAvailability);
+			TimeAvailabilities selectedTimeAvailability, InsuranceType insuranceType);
 	
 	/**
 	 * Persists the patient object

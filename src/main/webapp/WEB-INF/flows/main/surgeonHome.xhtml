@@ -33,12 +33,13 @@
 							<div class="span5">
 								<h:form id="searchNavForm_tab1">
 									<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
-										styleClass="btn btn-block" />
+										styleClass="btn btn-block" onclick="waitDialog_loading.show();" />
 								</h:form>
 							</div>
 							<div class="span4">
 								<h:form id="cancelButtonForm">
-									<p:commandButton id="cancelButton" action="cancelBookings" value="Cancel Booking" styleClass="btn btn-block"/>
+									<p:commandButton id="cancelButton" action="cancelBookings" 
+										value="Cancel Booking" styleClass="btn btn-block" onclick="waitDialog_loading.show();"/>
 								</h:form>
 							</div>
 						</div>
