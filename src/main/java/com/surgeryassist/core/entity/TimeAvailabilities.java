@@ -127,7 +127,7 @@ public class TimeAvailabilities implements Serializable {
     }
 	
 	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
-			Integer zipCode, Date endDate, Integer timeDuration) {
+			Integer zipCode, Date endDate, Integer timeDuration, Date startDate) {
 		
 		//create the session and criteria for the query
 		Session session = entityManager().unwrap(Session.class);
@@ -140,6 +140,7 @@ public class TimeAvailabilities implements Serializable {
 		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
 		
 		Calendar calEndDate = SurgeryAssistUtil.convertDateToCalendar(endDate);
+		Calendar calStartDate = SurgeryAssistUtil.convertDateToCalendar(startDate);
 		
 		//make sure they're not booked and that the date is after today
 		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
@@ -157,8 +158,14 @@ public class TimeAvailabilities implements Serializable {
 		}
 		//check the start/end dates
 		if(endDate != null) {
-			criteria.add(Restrictions
-				.between("aid.dateOfAvailability", Calendar.getInstance(), calEndDate));
+			if(startDate != null) {
+				criteria.add(Restrictions
+					.between("aid.dateOfAvailability", calStartDate, calEndDate));
+			}
+			else {
+				criteria.add(Restrictions
+						.between("aid.dateOfAvailability", Calendar.getInstance(), calEndDate));
+			}
 		}
 		//if the end date doesn't exist, force the end date to include >= GETDATE()
 		else {

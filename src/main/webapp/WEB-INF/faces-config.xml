@@ -23,4 +23,14 @@
 	    	<converter-class>com.surgeryassist.util.faces.converters.UserTypeCodeConverter</converter-class>
 	    </converter>
 	    
+	    <validator>
+	    	<validator-id>cityValidator</validator-id>
+	    	<validator-class>com.surgeryassist.util.faces.validators.CityValidator</validator-class>
+	    </validator>
+	    
+	    <validator>
+	    	<validator-id>zipcodeValidator</validator-id>
+	    	<validator-class>com.surgeryassist.util.faces.validators.ZipcodeValidator</validator-class>
+	    </validator>
+	    
 </faces-config>

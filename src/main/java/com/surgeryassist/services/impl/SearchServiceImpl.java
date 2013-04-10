@@ -49,7 +49,7 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		returnList = TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(
-				city, zipCodeInt, searchCriteria.getEndDate(), timeDuration);
+				city, zipCodeInt, searchCriteria.getEndDate(), timeDuration, searchCriteria.getStartDate());
 
 		return returnList;
 	}

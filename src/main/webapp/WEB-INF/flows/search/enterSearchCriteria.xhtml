@@ -20,6 +20,7 @@
 						<h:outputLabel for="cityName" styleClass="control-label" value="City Name" />
 						<div class="controls">
 							<p:inputText id="cityName" value="#{searchCriteriaDTO.cityName}" validatorMessage="Please enter a valid city name." >
+								<f:validator validatorId="cityValidator"/>
 							</p:inputText>
 						</div>
 					</div>
@@ -27,6 +28,7 @@
 						<h:outputLabel for="zipCode" styleClass="control-label" value="ZIP Code" />
 						<div class="controls">
 							<p:inputText id="zipCode" value="#{searchCriteriaDTO.zipCode}" validatorMessage="Please enter a valid zip code." >
+								<f:validator validatorId="zipcodeValidator" />
 							</p:inputText>
 						</div>
 					</div>
@@ -42,7 +44,14 @@
 								<f:selectItem itemLabel="5 Hour" itemValue="5"/>
 							</p:selectOneMenu>
 						</div>
-					</div>				
+					</div>		
+					<div class="control-group">
+						<h:outputLabel for="startDate" styleClass="control-label" value="Start Date" />
+						<div class="controls">
+							<p:calendar id="startDate"
+								value="#{searchCriteriaDTO.startDate}" />
+						</div>
+					</div>	
 					<div class="control-group">
 						<h:outputLabel for="endDate" styleClass="control-label" value="End Date" />
 						<div class="controls">
@@ -53,7 +62,7 @@
 					<div class="form-actions">
 						<div class="btn-toolbar">
 							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_loading.show();" />
-							<!-- <p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" /> -->
+							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
 						</div>
 					</div>
 				</h:form>
