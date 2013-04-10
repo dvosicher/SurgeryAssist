@@ -20,6 +20,7 @@
 						<h:outputLabel for="cityName" styleClass="control-label" value="City Name" />
 						<div class="controls">
 							<p:inputText id="cityName" value="#{searchCriteriaDTO.cityName}" validatorMessage="Please enter a valid city name." >
+								<f:validator validatorId="cityValidator"/>
 							</p:inputText>
 						</div>
 					</div>
@@ -27,6 +28,7 @@
 						<h:outputLabel for="zipCode" styleClass="control-label" value="ZIP Code" />
 						<div class="controls">
 							<p:inputText id="zipCode" value="#{searchCriteriaDTO.zipCode}" validatorMessage="Please enter a valid zip code." >
+								<f:validator validatorId="zipcodeValidator" />
 							</p:inputText>
 						</div>
 					</div>
