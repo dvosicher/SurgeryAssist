@@ -36,13 +36,13 @@
 						<div class="control-group">
 							<h:outputLabel value="Patient First Name" for="patientFirstName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" required="true" />
+								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" required="true" requiredMessage="Please enter first name." />
 							</div>
 						</div>
 						<div class="control-group">
 							<h:outputLabel value="Patient Last Name" for="patientLastName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="patientLastName" value="#{newPatient.lastName}" required="true" />
+								<p:inputText id="patientLastName" value="#{newPatient.lastName}" required="true" requiredMessage="Please enter first name." />
 							</div>
 						</div>
 						<div class="control-group">
@@ -60,7 +60,7 @@
 						<div class="control-group">
 							<h:outputLabel value="Type Detail" for="surgeryDetailInfo" styleClass="control-label"/>
 							<div class="controls">
-								<p:inputText id="surgeryDetailInfo" required="true" value="#{newPatient.surgeryDetailInfo}"/>
+								<p:inputText id="surgeryDetailInfo" value="#{newPatient.surgeryDetailInfo}" required="true" requiredMessage="Enter surgery details."/>
 							</div>
 						</div>
 						<hr />
@@ -68,14 +68,14 @@
 						<div class="control-group">
 							<h:outputLabel value="Insurance Code" for="insuranceCode" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insuranceCode" required="true" 
+								<p:inputText id="insuranceCode" required="true" requiredMessage="Enter insurance code."
 									value="#{newInsuranceType.insuranceCode}" />
 							</div>
 						</div>
 						<div class="control-group">
 							<h:outputLabel value="Insurance Name" for="insuranceName" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insuranceName" required="true" 
+								<p:inputText id="insuranceName" required="true" requiredMessage="Enter insurance name."
 									value="#{newInsuranceType.insuranceName}" />
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 							<h:outputLabel value="Insurance Policy Number"
 									for="insurancePolicyNumber" styleClass="control-label" />
 							<div class="controls">
-								<p:inputText id="insurancePolicyNumber" required="true" 
+								<p:inputText id="insurancePolicyNumber" required="true" requiredMessage="Enter insurance policy number."
 									value="#{newInsuranceType.insurancePolicyNumber}" />
 							</div>
 						</div>
