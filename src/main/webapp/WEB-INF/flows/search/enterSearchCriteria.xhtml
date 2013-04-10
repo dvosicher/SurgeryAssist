@@ -44,7 +44,14 @@
 								<f:selectItem itemLabel="5 Hour" itemValue="5"/>
 							</p:selectOneMenu>
 						</div>
-					</div>				
+					</div>		
+					<div class="control-group">
+						<h:outputLabel for="startDate" styleClass="control-label" value="Start Date" />
+						<div class="controls">
+							<p:calendar id="startDate"
+								value="#{searchCriteriaDTO.startDate}" />
+						</div>
+					</div>	
 					<div class="control-group">
 						<h:outputLabel for="endDate" styleClass="control-label" value="End Date" />
 						<div class="controls">
@@ -55,7 +62,7 @@
 					<div class="form-actions">
 						<div class="btn-toolbar">
 							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_loading.show();" />
-							<!-- <p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" /> -->
+							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
 						</div>
 					</div>
 				</h:form>
