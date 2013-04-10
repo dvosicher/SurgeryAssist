@@ -83,6 +83,9 @@ public class TimeAvailabilities implements Serializable {
     @Column(name = "is_cancelled")
     private Boolean isCancelled;
     
+    @Column(name = "room_number")
+    private String roomNumber;
+    
 	@PersistenceContext
     transient EntityManager entityManager;
 
@@ -353,6 +356,14 @@ public class TimeAvailabilities implements Serializable {
 		this.isCancelled = isCancelled;
 	}
 	
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(this.timeAvailabilityID.equals(((TimeAvailabilities) obj).timeAvailabilityID)) {

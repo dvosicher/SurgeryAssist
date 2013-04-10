@@ -45,6 +45,7 @@
 							<p:inputText id="to" value="#{scheduleDTO.event.endDate}">
 				            	<f:convertDateTime pattern="MM/dd/yyyy hh:mm a" type="both" />
 							</p:inputText>
+							<p:inputText id="roomNumber" value="#{scheduleDTO.event.roomNumber}" />
 							<p:commandButton type="reset" value="Reset" />
 							<p:commandButton value="Save" actionListener="#{scheduleDTO.addEvent}" 
 								oncomplete="scheduleInput.update();eventDialog.hide();"/>
