@@ -3,6 +3,7 @@ package com.surgeryassist.core.entity;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -84,13 +85,17 @@ public class TimeAvailabilitiesIntegrationTest {
     	//get the city based on the random availability
     	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
     	Integer zipCode = null;
+    	Calendar startDate = Calendar.getInstance();
     	Calendar endDate = Calendar.getInstance();
+    	
+    	DateTime jodaEndDate = new DateTime(endDate);
+    	jodaEndDate.plusYears(1);
     	
     	//2 hour difference
     	Integer duration = 2;
     	
     	List<TimeAvailabilities> timeAvailabilities = 
-    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, endDate.getTime(), duration);
+    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, jodaEndDate.toDate(), duration, startDate.getTime());
     	
     	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
     	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 
