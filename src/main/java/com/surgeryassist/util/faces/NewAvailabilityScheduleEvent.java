@@ -1,10 +1,13 @@
 package com.surgeryassist.util.faces;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.primefaces.model.ScheduleEvent;
 
-public class NewAvailabilityScheduleEvent implements ScheduleEvent {
+public class NewAvailabilityScheduleEvent implements ScheduleEvent, Serializable {
+
+	private static final long serialVersionUID = 1186520150235785361L;
 
 	private String id;
 
