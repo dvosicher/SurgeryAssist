@@ -20,6 +20,7 @@
 					<tr>
 						<th>Start Time</th>
 						<th>End Time</th>
+						<th>Room Number</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,6 +37,9 @@
 									<h:outputText value="#{scheduleEvent.endDate}">
 										<f:convertDateTime dateStyle="full" type="both"/>
 									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{scheduleEvent.roomNumber}" />
 								</td>
 							</tr>
 						</h:panelGroup>

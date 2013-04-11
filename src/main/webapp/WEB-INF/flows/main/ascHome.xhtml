@@ -9,8 +9,8 @@
 
 <ui:define name="tabs">
 	<li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-	<li><p:commandLink action="inputAvailability">Calendar</p:commandLink></li>
-	<li><p:commandLink action="viewProfile">Profile</p:commandLink></li>
+	<li><p:commandLink action="inputAvailability" onclick="waitDialog_loading.show();">Calendar</p:commandLink></li>
+	<li><p:commandLink action="viewProfile" onclick="waitDialog_loading.show();">Profile</p:commandLink></li>
 </ui:define>
 
 <ui:define name="content">

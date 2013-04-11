@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.surgeryassist.core.entity.ApplicationUser;
 import com.surgeryassist.core.entity.TimeAvailabilities;
+import com.surgeryassist.util.faces.NewAvailabilityScheduleEvent;
 
 /**
  * A utility class for the SurgeryAssist application.
@@ -46,14 +46,15 @@ public class SurgeryAssistUtil {
 	 */
 	public static ScheduleEvent convertTimeAvailabilityToScheduleEvent(TimeAvailabilities timeAvailability) {
 		if(timeAvailability != null) {
-			DefaultScheduleEvent scheduleEvent = new DefaultScheduleEvent();
+			NewAvailabilityScheduleEvent scheduleEvent = new NewAvailabilityScheduleEvent();
 			scheduleEvent.setStartDate(timeAvailability.getStartTime().getTime());
 			scheduleEvent.setEndDate(timeAvailability.getEndTime().getTime());
 			scheduleEvent.setTitle("Existing Availability - Cannot Edit");
 			scheduleEvent.setEditable(false);
+			scheduleEvent.setRoomNumber(timeAvailability.getRoomNumber());
 			return scheduleEvent;
 		}
-		return new DefaultScheduleEvent();
+		return new NewAvailabilityScheduleEvent();
 	}
 	
 	/**

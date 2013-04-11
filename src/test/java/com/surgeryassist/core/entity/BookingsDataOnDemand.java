@@ -61,7 +61,7 @@ public class BookingsDataOnDemand {
 	}
 
 	public void setBookingRoom(Bookings obj, int index) {
-		Integer bookingRoom = new Integer(index);
+		String bookingRoom = Integer.toString(index);
 		obj.setBookingRoom(bookingRoom);
 	}
 

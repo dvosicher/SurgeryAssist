@@ -42,11 +42,13 @@ public class BookingServiceImpl implements BookingService {
 		newBooking.setBookingLocationId(bookingLocation);
 		newBooking.setPatientId(patient);
 		newBooking.setTimeAvailabilityId(selectedTimeAvailability);
+		newBooking.setBookingRoom(selectedTimeAvailability.getRoomNumber());
 		newBooking.setIsCanceled(false);
 		newBooking.setIsConfirmed(false);
 
 		//merge the availability to be completely caught up
 		selectedTimeAvailability.setIsBooked(true);
+		selectedTimeAvailability = (TimeAvailabilities) SurgeryAssistUtil.setLastModifiedInfo(selectedTimeAvailability);
 		selectedTimeAvailability.merge();
 
 		newBooking = (Bookings) SurgeryAssistUtil.setAllHistoricalInfo(newBooking);
@@ -72,17 +74,18 @@ public class BookingServiceImpl implements BookingService {
 			insuranceType.persist();
 		}
 		else {
+			insuranceType = (InsuranceType) SurgeryAssistUtil.setLastModifiedInfo(insuranceType);
 			insuranceType.merge();
 		}
-
-		patient = (Patient) SurgeryAssistUtil.setAllHistoricalInfo(patient);
 
 		patient.setInsuranceCode(insuranceType);
 
 		if(existingPatient == null) {
+			patient = (Patient) SurgeryAssistUtil.setAllHistoricalInfo(patient);
 			patient.persist();
 		}
 		else {
+			patient = (Patient) SurgeryAssistUtil.setLastModifiedInfo(patient);
 			patient.merge();
 		}
 		patient.flush();

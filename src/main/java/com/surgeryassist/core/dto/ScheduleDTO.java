@@ -10,10 +10,11 @@ import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+
+import com.surgeryassist.util.faces.NewAvailabilityScheduleEvent;
 
 /**
  * ScheduleDTO object to be used for the 
@@ -32,7 +33,7 @@ public class ScheduleDTO implements Serializable {
 	/**
 	 * The singly held event during the context
 	 */
-	private DefaultScheduleEvent event;
+	private NewAvailabilityScheduleEvent event;
 
 	/**
 	 * Force a default time zone to be GMT
@@ -67,7 +68,7 @@ public class ScheduleDTO implements Serializable {
 		DateTime endDate = new DateTime(selectedDate);
 		endDate = endDate.plusHours(2);
 		
-		event = new DefaultScheduleEvent(" ", selectedDate, endDate.toDate());
+		event = new NewAvailabilityScheduleEvent(" ", selectedDate, endDate.toDate(), "");
 	}
 
 	/**
@@ -76,7 +77,7 @@ public class ScheduleDTO implements Serializable {
 	 * 	event selection
 	 */
 	public void onEventMove(ScheduleEntryMoveEvent e) {
-		event = (DefaultScheduleEvent) e.getScheduleEvent();
+		event = (NewAvailabilityScheduleEvent) e.getScheduleEvent();
 		this.addEvent();
 	}
 
@@ -86,7 +87,7 @@ public class ScheduleDTO implements Serializable {
 	 * 	the event selection
 	 */
 	public void onEventResize(ScheduleEntryResizeEvent e) {
-		event = (DefaultScheduleEvent) e.getScheduleEvent();
+		event = (NewAvailabilityScheduleEvent) e.getScheduleEvent();
 		this.addEvent();
 	}
 	
@@ -101,10 +102,10 @@ public class ScheduleDTO implements Serializable {
 		else {
 			model.updateEvent(event);
 		}
-		event = new DefaultScheduleEvent();
+		event = new NewAvailabilityScheduleEvent();
 	}
 
-	public DefaultScheduleEvent getEvent() {
+	public NewAvailabilityScheduleEvent getEvent() {
 		return event;
 	}
 

@@ -18,6 +18,7 @@ import com.surgeryassist.core.entity.DayAvailability;
 import com.surgeryassist.core.entity.TimeAvailabilities;
 import com.surgeryassist.services.interfaces.InputAvailabilityService;
 import com.surgeryassist.util.SurgeryAssistUtil;
+import com.surgeryassist.util.faces.NewAvailabilityScheduleEvent;
 
 /**
  * @see InputAvailabilityService 
@@ -42,7 +43,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 			List<TimeAvailabilities> availabilitiesForUser = 
 					TimeAvailabilities.findNotCancelledTimeAvailabilitiesByASCUser(currentUser);
 
-			//convert that list of TimeAvailabilities to list of DefaultScheduleEvents
+			//convert that list of TimeAvailabilities to list of NewAvailabilityScheduleEvents
 			List<ScheduleEvent> scheduledEvents = new ArrayList<ScheduleEvent>();
 			for(TimeAvailabilities timeAvailability : availabilitiesForUser) {
 				ScheduleEvent scheduleEvent = 
@@ -200,6 +201,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 	 * @param dateTime The date of the availability
 	 * @return
 	 */
+	@Transactional
 	private DayAvailability createNewDayAvailability(ApplicationUser currentUser, DateTime dateTime) {
 		DayAvailability newDayAvailability = new DayAvailability();
 		newDayAvailability.setUserId(currentUser);
@@ -225,14 +227,16 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 		TimeAvailabilities timeAvailabilityToAdd = new TimeAvailabilities();
 
 		LocalDate mapKey = new LocalDate(scheduleEvent.getStartDate()); 
-
+		NewAvailabilityScheduleEvent customScheduleEvent = (NewAvailabilityScheduleEvent) scheduleEvent;
+		
 		timeAvailabilityToAdd = 
 				(TimeAvailabilities) SurgeryAssistUtil
 				.setAllHistoricalInfo(timeAvailabilityToAdd);
 		timeAvailabilityToAdd.setStartTime(
-				SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getStartDate()));
+				SurgeryAssistUtil.convertDateToCalendar(customScheduleEvent.getStartDate()));
 		timeAvailabilityToAdd.setEndTime(
-				SurgeryAssistUtil.convertDateToCalendar(scheduleEvent.getEndDate()));
+				SurgeryAssistUtil.convertDateToCalendar(customScheduleEvent.getEndDate()));
+		timeAvailabilityToAdd.setRoomNumber(customScheduleEvent.getRoomNumber());
 
 		DayAvailability availabilityFromMap = dayAvailabilitiesMap.get(mapKey);
 
