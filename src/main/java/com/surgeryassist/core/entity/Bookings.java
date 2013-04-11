@@ -58,7 +58,7 @@ public class Bookings implements Serializable {
     private Patient patientId;
     
     @Column(name = "booking_room")
-    private Integer bookingRoom;
+    private String bookingRoom;
     
     @Column(name = "is_canceled")
     private Boolean isCanceled;
@@ -279,11 +279,11 @@ public class Bookings implements Serializable {
 		this.patientId = patientId;
 	}
 
-	public Integer getBookingRoom() {
+	public String getBookingRoom() {
 		return bookingRoom;
 	}
 
-	public void setBookingRoom(Integer bookingRoom) {
+	public void setBookingRoom(String bookingRoom) {
 		this.bookingRoom = bookingRoom;
 	}
 

@@ -51,7 +51,7 @@ public class SurgeryAssistUtil {
 			scheduleEvent.setEndDate(timeAvailability.getEndTime().getTime());
 			scheduleEvent.setTitle("Existing Availability - Cannot Edit");
 			scheduleEvent.setEditable(false);
-			//scheduleEvent.setRoomNumber(timeAvailability.)
+			scheduleEvent.setRoomNumber(timeAvailability.getRoomNumber());
 			return scheduleEvent;
 		}
 		return new NewAvailabilityScheduleEvent();

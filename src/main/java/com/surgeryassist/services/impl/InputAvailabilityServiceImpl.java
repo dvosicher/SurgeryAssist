@@ -201,6 +201,7 @@ public class InputAvailabilityServiceImpl implements InputAvailabilityService {
 	 * @param dateTime The date of the availability
 	 * @return
 	 */
+	@Transactional
 	private DayAvailability createNewDayAvailability(ApplicationUser currentUser, DateTime dateTime) {
 		DayAvailability newDayAvailability = new DayAvailability();
 		newDayAvailability.setUserId(currentUser);

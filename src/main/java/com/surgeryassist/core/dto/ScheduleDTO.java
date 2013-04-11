@@ -68,7 +68,7 @@ public class ScheduleDTO implements Serializable {
 		DateTime endDate = new DateTime(selectedDate);
 		endDate = endDate.plusHours(2);
 		
-		event = new NewAvailabilityScheduleEvent(" ", selectedDate, endDate.toDate(), " ");
+		event = new NewAvailabilityScheduleEvent(" ", selectedDate, endDate.toDate(), "");
 	}
 
 	/**

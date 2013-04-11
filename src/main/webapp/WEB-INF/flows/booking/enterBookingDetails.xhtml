@@ -34,21 +34,21 @@
 						<hr />
 						<legend>Patient Information</legend>
 						<div class="control-group">
-							<h:outputLabel value="Patient First Name" for="patientFirstName" styleClass="control-label" />
+							<h:outputLabel value="Patient First Name*: " for="patientFirstName" styleClass="control-label" />
 							<div class="controls">
 								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" required="true" requiredMessage="Please enter first name." />
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Patient Last Name" for="patientLastName" styleClass="control-label" />
+							<h:outputLabel value="Patient Last Name*: " for="patientLastName" styleClass="control-label" />
 							<div class="controls">
 								<p:inputText id="patientLastName" value="#{newPatient.lastName}" required="true" requiredMessage="Please enter first name." />
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Choose Surgery Case Type" for="surgeryTypeCode" styleClass="control-label"/>
+							<h:outputLabel value="Choose Surgery Case Type*: " for="surgeryTypeCode" styleClass="control-label"/>
 							<div class="controls">
-								<h:selectOneMenu id="surgeryTypeCode" required="true"
+								<h:selectOneMenu id="surgeryTypeCode" required="true" requiredMessage="Please pick a surgery type."
 									value="#{newPatient.surgeryTypeCode}">
 									<f:selectItems value="#{flowScope.selectItemMap['surgeryTypes']}"
 										var="surgeryType" itemLabel="#{surgeryType.surgeryFullName}"
@@ -58,7 +58,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Type Detail" for="surgeryDetailInfo" styleClass="control-label"/>
+							<h:outputLabel value="Type Detail*: " for="surgeryDetailInfo" styleClass="control-label"/>
 							<div class="controls">
 								<p:inputText id="surgeryDetailInfo" value="#{newPatient.surgeryDetailInfo}" required="true" requiredMessage="Enter surgery details."/>
 							</div>
@@ -66,29 +66,29 @@
 						<hr />
 						<legend>Patient Insurance</legend>
 						<div class="control-group">
-							<h:outputLabel value="Insurance Code" for="insuranceCode" styleClass="control-label" />
+							<h:outputLabel value="Insurance Code:* " for="insuranceCode" styleClass="control-label" />
 							<div class="controls">
 								<p:inputText id="insuranceCode" required="true" requiredMessage="Enter insurance code."
 									value="#{newInsuranceType.insuranceCode}" />
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Insurance Name" for="insuranceName" styleClass="control-label" />
+							<h:outputLabel value="Insurance Name*: " for="insuranceName" styleClass="control-label" />
 							<div class="controls">
 								<p:inputText id="insuranceName" required="true" requiredMessage="Enter insurance name."
 									value="#{newInsuranceType.insuranceName}" />
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel for="insuranceDescription" value="Insurance Description"
+							<h:outputLabel for="insuranceDescription" value="Insurance Description*: "
 								styleClass="control-label" />
 							<div class="controls">
-								<p:inputTextarea id="insuranceDescription" 
+								<p:inputTextarea id="insuranceDescription" required="true" requiredMessage="Please add a description for the insurance. "
 									value="#{newInsuranceType.insuranceDescription}" />
 							</div>
 						</div>
 						<div class="control-group">
-							<h:outputLabel value="Insurance Policy Number"
+							<h:outputLabel value="Insurance Policy Number*: "
 									for="insurancePolicyNumber" styleClass="control-label" />
 							<div class="controls">
 								<p:inputText id="insurancePolicyNumber" required="true" requiredMessage="Enter insurance policy number."
@@ -98,7 +98,7 @@
 						<hr />
 						<legend>Extra Notes</legend>
 						<div class="control-group">
-							<h:outputLabel value="Extra Notes"
+							<h:outputLabel value="Extra Notes: "
 									for="extraNotes" styleClass="control-label" />
 							<div class="controls">
 								<p:inputTextarea id="extraNotes" value="#{newPatient.bookingNotes}" />
