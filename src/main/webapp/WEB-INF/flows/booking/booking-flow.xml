@@ -23,23 +23,27 @@
 	
 	<!-- Page 2: finalize and press submit -->
 	<view-state id="reviewBooking">
-		<transition on="confirm" to="bookingConfirmed" />
+		<transition on="confirm" to="bookingConfirmedView" />
 		<transition on="revise" to="enterBookingDetails" />
 		<transition on="cancel" to="bookingCancelled" />
 	</view-state>
 	
 	<!-- Persists the booking and takes user to homepage -->
-	<end-state id="bookingConfirmed">
-		<on-entry>
-			<!-- Save the booking and persist it here -->
-			<!-- Save the patient info -->
-			<evaluate expression="bookingService.createBooking(
-				selectedAvailability.availabilityId.userId,
-				newPatient, selectedAvailability, newInsuranceType)" />
-		</on-entry>
-	</end-state>
+	<action-state id="bookingConfirmedView">
+		<!-- Save the booking and patient info, and persist it here -->
+		<evaluate expression="bookingService.createBooking(
+			selectedAvailability.availabilityId.userId,
+			newPatient, selectedAvailability, newInsuranceType)" />
+		<!-- Handles availabilities that were already booked-->
+		<transition on-exception="javax.persistence.OptimisticLockException" to="reviewBooking">
+			<evaluate expression="bookingService.setAlreadyBookedErrorMessage()" />
+		</transition>
+		<transition to="bookingConfirmed" />
+	</action-state>
 
 	<!-- Cancels the booking and goes to the search page -->
 	<end-state id="bookingCancelled" />
+	
+	<end-state id="bookingConfirmed" />
 		
 </flow>

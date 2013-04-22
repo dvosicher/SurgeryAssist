@@ -40,6 +40,8 @@ public interface BookingService {
 	 */
 	public void persistPatient(InsuranceType insuranceType, Patient patient);
 	
+	public void setAlreadyBookedErrorMessage();
+	
 	/**
 	 * Creates a map that contains key-value pair,
 	 * mapping a {@link String} to a {@link List} of 

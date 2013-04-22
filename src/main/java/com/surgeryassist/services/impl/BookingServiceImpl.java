@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.springframework.stereotype.Service;
@@ -106,6 +108,12 @@ public class BookingServiceImpl implements BookingService {
 		mapOfSelectItems.put("surgeryTypes", surgeryTypeList);
 
 		return mapOfSelectItems;
+	}
+
+	@Override
+	public void setAlreadyBookedErrorMessage() {
+		FacesContext.getCurrentInstance().addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_ERROR,"The Availability Was Already Booked", "Please go back and search again"));
 	}
 
 }
