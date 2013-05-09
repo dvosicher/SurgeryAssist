@@ -32,6 +32,9 @@ public class BookingsDataOnDemand {
 	@Autowired
 	PatientDataOnDemand patientDataOnDemand;
 
+	@Autowired
+	TimeAvailabilitiesDataOnDemand timeAvailabilitiesDataOnDemand;
+	
 	public Bookings getNewTransientBookings(int index) {
 		Bookings obj = new Bookings();
 		setBookingCreatorId(obj, index);
@@ -58,7 +61,7 @@ public class BookingsDataOnDemand {
 	}
 
 	public void setBookingRoom(Bookings obj, int index) {
-		Integer bookingRoom = new Integer(index);
+		String bookingRoom = Integer.toString(index);
 		obj.setBookingRoom(bookingRoom);
 	}
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="flowScope.homepageData" class="com.surgeryassist.core.dto.HomepageDataDTO"/>
+	
+	<!-- This is the flow for the home page. -->
+	<!-- Decide which page to go to based on whether the user is an ASC or a surgeon -->
+	<action-state id="decideSurgeonOrASC">
+		<evaluate expression="homepageService.isUserSurgeonOrASC()" />
+		<transition on="SURGEON" to="surgeonHome" />
+		<transition on="ASC" to="ascHome" />
+		<on-exit>
+			<!-- Populate the data for the homepage -->
+			<evaluate expression="homepageService.populateHomepageInfo(flowScope.homepageData)"
+				result="flowScope.homepageData" />
+		</on-exit>
+	</action-state>
+	
+	<!-- ASC's home page  -->
+	<view-state id="ascHome">
+		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
+		<transition on="cancelAvailability" to="cancelAvailabilityFlow" />
+		<transition on="confirmBookings" to="confirmBookingsFlow" />
+		<transition on="viewProfile" to="viewProfileFlow" />
+	</view-state>
+	
+	<!-- Surgeon's home page -->
+	<view-state id="surgeonHome">
+		<transition on="inputAvailability" to="inputAvailabilityFlow" />	
+		<transition on="goToSearch" to="searchFlow" />
+		<transition on="cancelBookings" to="cancelBookingsFlow" />
+		<transition on="viewProfile" to="viewProfileFlow" />
+	</view-state>
+	
+	<!-- subflow for search -->
+	<subflow-state id="searchFlow" subflow="search">
+		<transition on="finish" to="decideSurgeonOrASC">
+			<evaluate expression="homepageService.refreshSurgeonInfo(flowScope.homepageData)" 
+				result="flowScope.homepageData"/>
+		</transition>
+	</subflow-state>
+	
+	<!-- subflow for registration -->
+	<subflow-state id="registrationFlow" subflow="registration">
+		<transition on="cancel" to="login" />
+	</subflow-state>
+	
+	<!-- subflow for inputting availabilities -->
+	<subflow-state id="inputAvailabilityFlow" subflow="inputAvailability">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<!-- subflow for cancelling availabilities -->
+	<subflow-state id="cancelAvailabilityFlow" subflow="cancelAvailability">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<!-- subflow for confirm bookings -->
+	<subflow-state id="confirmBookingsFlow" subflow="confirmBookings">
+		<transition on="finish" to="decideSurgeonOrASC">
+			<evaluate expression="homepageService.refreshSurgeonInfo(flowScope.homepageData)" 
+				result="flowScope.homepageData"/>
+		</transition>
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<!-- subflow for cancelling bookings -->
+	<subflow-state id="cancelBookingsFlow" subflow="cancelBookings">
+		<transition on="finish" to="decideSurgeonOrASC" />
+		<transition on="cancel" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+	<subflow-state id="viewProfileFlow" subflow="viewProfile">
+		<input name="selectedUser" value="homepageData.loggedInUser"/>
+		<transition on="finish" to="decideSurgeonOrASC" />
+	</subflow-state>
+	
+</flow>

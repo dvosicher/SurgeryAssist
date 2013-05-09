@@ -1,0 +1,66 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+	
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8">
+				<h3>Confirm Availabilities To Cancel</h3>
+			</div>
+		</div>
+		
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Start Time</th>
+						<th>End Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ui:repeat var="timeAvailability" value="#{cancelAvailabilityDTO.selectedTimeAvailabilities}">
+						<h:panelGroup id="timeAvailabilityRow">
+							<tr>
+								<td>
+									<h:outputText value="#{timeAvailability.availabilityId.dateOfAvailability.time}">
+										<f:convertDateTime type="date" dateStyle="medium"/>
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{timeAvailability.startTime.time}">
+										<f:convertDateTime timeStyle="short" type="time"/>
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{timeAvailability.endTime.time}">
+										<f:convertDateTime timeStyle="short" type="time"/>
+									</h:outputText>
+								</td>
+							</tr>
+						</h:panelGroup>
+					</ui:repeat>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="row">
+			<div class="span8">
+				<h:form id="actionButtonForms">
+					<p:commandButton id="cancelButton" action="cancel" value="Cancel" />
+					<p:commandButton id="goBackButton" action="goBack" value="Go Back" />
+					<p:commandButton id="submitButton" action="submit" value="Confirm" onclick="waitDialog_saving.show();" />
+				</h:form>
+			</div>
+		</div>
+		
+		<ui:include src="../../includes/waitDialog_saving.xhtml" />
+		
+	</ui:define>
+	
+</ui:composition>

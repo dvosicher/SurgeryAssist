@@ -3,6 +3,7 @@ package com.surgeryassist.core.entity;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import com.surgeryassist.core.entity.AvailabilityDataOnDemand;
 @Configurable
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath:/META-INF/config/applicationContext*.xml")
 public class AvailabilityIntegrationTest {
 	
 	@Autowired
@@ -104,6 +105,7 @@ public class AvailabilityIntegrationTest {
 	}
 
 	@Test
+	@Ignore //ignoring test because we shouldn't remove availabilities
 	public void testRemove() {
 		DayAvailability obj = dod.getRandomAvailability();
 		Assert.assertNotNull("Data on demand for 'Availability' failed to initialize correctly", obj);

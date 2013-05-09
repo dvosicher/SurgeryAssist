@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<!-- Variables used for the flow -->
+	<var name="flowScope.scheduleDTO" class="com.surgeryassist.core.dto.ScheduleDTO" />
+	<var name="flowScope.newTimeAvailabilitiesList" class="java.util.ArrayList" />
+
+	<!-- Page that has calendars to input new availabilities -->
+	<view-state id="inputAvailabilities">
+		<on-entry>
+			<evaluate
+				expression="inputAvailabilityService.getCurrentScheduleDTO(flowScope.scheduleDTO)"
+				result="flowScope.scheduleDTO" />
+		</on-entry>
+		<transition on="submitChanges" to="confirmNewAvailabilities" />
+	</view-state>
+	
+	<!-- Confirmation page for new flows -->
+	<view-state id="confirmNewAvailabilities">
+		<transition on="goBack" to="inputAvailabilities" />
+		<transition on="cancel" to="cancel" />
+		<transition on="submit" to="finish">
+			<!-- Add the availabilities to the persistence context -->
+			<evaluate expression="inputAvailabilityService.convertScheduleEventsToTimeAvailabilities(flowScope.scheduleDTO)"
+				result="flowScope.newTimeAvailabilitiesList" />
+		</transition>
+	</view-state>
+
+	<end-state id="finish" />
+	<end-state id="cancel" />
+		
+</flow>

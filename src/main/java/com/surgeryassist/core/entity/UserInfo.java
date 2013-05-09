@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "user_info")
 @Configurable
-public class UserInfo {
+public class UserInfo implements Serializable {
+
+	private static final long serialVersionUID = -4253239702030861956L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,11 +48,11 @@ public class UserInfo {
     @OneToMany(mappedBy = "userInfoId")
     private Set<ApplicationUser> applicationUsers;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_info_id", referencedColumnName = "contact_info_id", nullable = false)
     private ContactInfo contactInfoId;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location locationId;
     
@@ -65,20 +69,23 @@ public class UserInfo {
     private String videoFilePath;
 
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
+    
+    @Column(name = "website_url")
+    private String websiteUrl;
 
 	public String getFirstName() {
         return this.firstName;
@@ -272,4 +279,18 @@ public class UserInfo {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	/**
+	 * @return the webisteUrl
+	 */
+	public String getWebsiteUrl() {
+		return websiteUrl;
+	}
+
+	/**
+	 * @param webisteUrl the webisteUrl to set
+	 */
+	public void setWebsiteUrl(String webisteUrl) {
+		this.websiteUrl = webisteUrl;
+	}
 }

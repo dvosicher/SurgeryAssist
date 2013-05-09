@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="newApplicationUser" class="com.surgeryassist.core.entity.ApplicationUser" />
+	<var name="newUserInfo" class="com.surgeryassist.core.entity.UserInfo" />
+	<var name="newContactInfo" class="com.surgeryassist.core.entity.ContactInfo" />
+	<var name="newLocation" class="com.surgeryassist.core.entity.Location" />
+
+	<view-state id="register">
+		<!-- Need to get dropdowns for state codes, plus others -->
+		<on-entry>
+			<evaluate expression="userLoginAndRegistrationService.getDropdownMenuValues()"
+				result="flowScope.dropdownMap" />
+		</on-entry>
+		<transition on="registerUser" to="processRegistration" />
+		<transition on="cancelUser" to="cancel" />
+	</view-state>
+
+	<action-state id="processRegistration">
+		<evaluate
+			expression="userLoginAndRegistrationService.registerUser(newApplicationUser, newUserInfo, newContactInfo, newLocation)" />
+		<transition on="ALREADY_EXISTS" to="register" />
+		<transition on="SUCCESS" to="registrationSuccess" />
+	</action-state>
+
+	<end-state id="registrationSuccess"
+		view="/WEB-INF/flows/registration/registrationSuccess.xhtml" />
+
+	<end-state id="cancel" view="/WEB-INF/login.xhtml" />
+
+</flow>

@@ -1,0 +1,292 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login.xhtml">
+
+	<ui:define name="tabs">
+		<li class="active"><a href="#">Home</a></li>
+		<li><p:commandLink action="goToSearch">Search</p:commandLink></li>
+		<li><p:commandLink action="viewProfile">Profile</p:commandLink></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<div id="home" class="tab-pane active flip">
+			<div class="span12">
+				<h2>Welcome, #{homepageData.loggedInUser.userInfoId.firstName}</h2>
+				<hr />
+				<div class="row">
+					<div class="span9">
+						<h3>Upcoming Reservations</h3>
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a href="#confirmedTab" data-toggle="tab">Confirmed</a>
+							</li>
+							<li>
+								<a href="#pendingTab" data-toggle="tab">Pending</a>
+							</li>
+						</ul>
+						<div class="row">
+							<div class="span5">
+								<h:form id="searchNavForm_tab1">
+									<p:commandButton id="searchNavCommandButton_tab1" action="goToSearch" value="Search for Availabilities" 
+										styleClass="btn btn-block" onclick="waitDialog_loading.show();" />
+								</h:form>
+							</div>
+							<div class="span4">
+								<h:form id="cancelButtonForm">
+									<p:commandButton id="cancelButton" action="cancelBookings" 
+										value="Cancel Booking" styleClass="btn btn-block" onclick="waitDialog_loading.show();"/>
+								</h:form>
+							</div>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane active" id="confirmedTab">
+								<h:form id="confirmedDataForm">
+		
+									<p:dataTable id="confirmedDataTable" value="#{homepageData.confirmedBookings}"
+										var="booking" selectionMode="single" selection="#{homepageData.selectedBooking}"
+										rowKey="#{booking.bookingId}">
+										
+										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
+		                    				update=":bookingDialogDisplay" oncomplete="bookingDialogWidget.show()" /> 
+		
+										<p:column id="ascName" headerText="ASC">
+											<h:outputText
+												value="#{booking.bookingLocationId.userInfoId.firstName}" />
+										</p:column>
+										<p:column id="patientName" headerText="Patient">
+											<h:outputText value="#{booking.patientId.firstName}" />
+										</p:column>
+										<p:column id="dateColumn" headerText="Date">
+											<h:outputText id="date"
+												value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default" />
+											</h:outputText>
+										</p:column>
+										<p:column id="timeColumn" headerText="Time">
+											<h:outputText id="time"
+												value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="short" />
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+									
+									
+									
+								</h:form>
+							</div>
+							<div class="tab-pane" id="pendingTab">
+								<h:form id="pendingDataForm">
+									<p:dataTable id="pendingDataTable" value="#{homepageData.pendingBookings}"
+										var="booking" selectionMode="single" selection="#{homepageData.selectedBooking}"
+										rowKey="#{booking.bookingId}">
+										
+										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
+		                    				update=":bookingDialogDisplay" oncomplete="bookingDialogWidget.show();" /> 
+		
+										<p:column id="ascName" headerText="ASC">
+											<h:outputText
+												value="#{booking.bookingLocationId.userInfoId.firstName}" />
+										</p:column>
+										<p:column id="patientName" headerText="Patient">
+											<h:outputText value="#{booking.patientId.firstName}" />
+										</p:column>
+										<p:column id="dateColumn" headerText="Date">
+											<h:outputText id="date"
+												value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+												<f:convertDateTime type="date" timeStyle="default" />
+											</h:outputText>
+										</p:column>
+										<p:column id="timeColumn" headerText="Time">
+											<h:outputText id="time"
+												value="#{booking.timeAvailabilityId.startTime.time}">
+												<f:convertDateTime type="time" timeStyle="short" />
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</div>
+						</div>
+						<p:dialog id="bookingDialog" widgetVar="bookingDialogWidget" modal="true" resizable="false" closable="true" width="470">
+							<h:panelGroup id="bookingDialogDisplay">
+								<h2>
+									<h:outputText value="Booking Details" />
+								</h2>
+								<table>
+									<tbody>
+										<tr>
+											<td><h:outputText value="ASC" /></td>
+											<td>
+												<h:outputText value="#{homepageData.selectedBooking.bookingLocationId.userInfoId.firstName}" />
+											</td>
+										</tr>
+										<tr>
+											<td><h:outputText value="Procedure" /></td>
+											<td>
+												<h:outputText value="#{homepageData.selectedBooking.patientId.surgeryTypeCode.surgeryFullName}" />
+											</td>
+										</tr>
+										<tr>
+											<td><h:outputText value="Patient" /></td>
+											<td>
+												<h:outputText value="#{homepageData.selectedBooking.patientId.firstName}" />
+											</td>
+										</tr>
+										<tr>
+											<td><h:outputText value="Date" /></td>
+											<td>
+												<h:outputText id="date"
+													value="#{homepageData.selectedBooking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+													<f:convertDateTime type="date" timeStyle="default" />
+												</h:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td><h:outputText value="Time" /></td>
+											<td>
+												<h:outputText id="time"
+													value="#{homepageData.selectedBooking.timeAvailabilityId.startTime.time}">
+													<f:convertDateTime type="time" timeStyle="default" />
+												</h:outputText>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</h:panelGroup>
+						</p:dialog>
+					</div>
+					<div class="span3">
+						<h3>Priority ASCs</h3>
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a href="#recentTab" data-toggle="tab">Recent</a>
+							</li>
+							<li>
+								<a href="#favoriteTab" data-toggle="tab">Favorite</a>
+							</li>
+						</ul>
+						<div class="row">
+							<div class="span2">
+								<h:form id="editListedASCForm">
+									<p:commandButton id="editListedASCButton" value="Edit List" styleClass="btn btn-block"/>
+								</h:form>
+							</div>
+							<div class="span1">
+								<h:form id="addNewFavoriteForm">
+									<p:commandButton id="addNewFavoriteButton" value="+" styleClass="btn btn-block"/>
+								</h:form>
+							</div>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane active" id="recentTab">
+								<h:form id="recentDataForm">
+									<p:dataTable id="recentDataTable" value="#{homepageData.recentASCs}"
+										var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
+										rowKey="#{ASC.userID}" emptyMessage="Under Construction">
+										
+										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
+		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
+		
+										<p:column id="ascName" headerText="Surgery Center">
+											<h:outputText
+												value="#{ASC.firstName}" />
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</div>
+							<div class="tab-pane" id="favoriteTab">
+								<h:form id="favoriteDataForm">
+									<p:dataTable id="favoriteDataTable" value="#{homepageData.favoriteASCs}"
+										var="ASC" selectionMode="single" selection="#{homepageData.selectedASC}"
+										rowKey="#{ASC.userID}" emptyMessage="Under Construction">
+										
+										<p:ajax event="rowSelect" listener="#{homepageData.onRowSelect}"   
+		                    				update=":ASCDialogDisplay" oncomplete="ASCDialogWidget.show()" /> 
+		
+										<p:column id="ascName" headerText="Surgery Center">
+											<h:outputText
+												value="#{ASC.firstName}" />
+										</p:column>
+									</p:dataTable>
+								</h:form>
+							</div>
+						</div>
+						<p:dialog id="ASCDialog" widgetVar="ASCDialogWidget" modal="true" resizable="false" closable="true" width="470">
+							<h:panelGroup id="ASCDialogDisplay">
+								<h2>
+									<h:outputText value="Booking Details" />
+								</h2>
+								<table>
+									<tbody>
+										<tr>
+											<td><h:outputText value="ASC Name" /></td>
+											<td>
+												<h:outputText value="#{homepageData.selectedBooking.bookingLocationId.userInfoId.firstName}" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</h:panelGroup>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="schedule" class="tab-pane flip">
+			<h:form>
+			
+				<p:growl id="messages" showDetail="true" />
+			
+				<p:schedule value="#{scheduleController.eventModel}" widgetVar="myschedule">
+			
+					<p:ajax event="dateSelect" listener="#{scheduleController.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
+					<p:ajax event="eventSelect" listener="#{scheduleController.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
+					<p:ajax event="eventMove" listener="#{scheduleController.onEventMove}" update="messages" />
+					<p:ajax event="eventResize" listener="#{scheduleController.onEventResize}" update="messages" />
+			
+				</p:schedule>
+			
+				<p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+					<h:panelGrid id="eventDetails" columns="2">
+						<h:outputLabel for="title" value="Title:" />
+						<p:inputText id="title" value="#{scheduleController.event.title}" required="true"/>
+			
+						<h:outputLabel for="from" value="From:" />
+						<p:inputMask id="from" value="#{scheduleController.event.startDate}" mask="99/99/9999">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:inputMask>
+			
+						<h:outputLabel for="to" value="To:" />
+						<p:inputMask id="to" value="#{scheduleController.event.endDate}" mask="99/99/9999">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:inputMask>
+			
+						<h:outputLabel for="allDay" value="All Day:" />
+						<h:selectBooleanCheckbox id="allDay" value="#{scheduleController.event.allDay}" />
+			
+						<p:commandButton type="reset" value="Reset" />
+						<p:commandButton value="Save" actionListener="#{scheduleController.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>
+					</h:panelGrid>
+				</p:dialog>
+			
+			</h:form>
+		</div>
+		<div id="search" class="tab-pane flip">
+			<div class="span12">
+				<h3>Search Results - Available Bookings</h3>
+				<h:form id="searchNavForm_tab3">
+					<p:commandButton id="searchNavCommandButton_tab3" action="goToSearch" value="Search for Availabilities" />
+				</h:form>
+			</div>
+		</div>
+		<div id="profile" class="tab-pane">
+			<p>Howdy, I'm in Section 4.</p>
+		</div>
+
+		
+	</ui:define>
+</ui:composition>

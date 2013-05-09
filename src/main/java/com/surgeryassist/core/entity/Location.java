@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "SurgeryAssist", name = "location")
-public class Location {
+public class Location implements Serializable {
 
-	@OneToMany(mappedBy = "locationId")
+	private static final long serialVersionUID = -1731798035243878275L;
+
+	@OneToMany(mappedBy = "locationId", fetch = FetchType.LAZY)
     private Set<UserInfo> userInfoes;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_code", referencedColumnName = "state_code", nullable = false)
     private StateCode stateCode;
     
@@ -44,23 +46,23 @@ public class Location {
     private String city;
     
     @Column(name = "zip_code")
-    private Integer zipCode;
+    private String zipCode;
     
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	public String getAddress() {
         return this.address;
@@ -78,11 +80,11 @@ public class Location {
         this.city = city;
     }
 
-	public Integer getZipCode() {
+	public String getZipCode() {
         return this.zipCode;
     }
 
-	public void setZipCode(Integer zipCode) {
+	public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -145,10 +147,6 @@ public class Location {
 	public void setStateCode(StateCode stateCode) {
 		this.stateCode = stateCode;
 	}
-
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@PersistenceContext
     transient EntityManager entityManager;

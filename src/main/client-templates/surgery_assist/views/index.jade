@@ -1,0 +1,114 @@
+extends layout
+
+append style
+  link(rel='stylesheet', href='/stylesheets/calendar.css')
+  link(rel='stylesheet', type='text/css', href='/stylesheets/jquery-ui-1.8.11.custom.css')
+  link(rel='stylesheet', type='text/css', href='/stylesheets/jquery.weekcalendar.css')
+
+append scripts
+  script(type='text/javascript', src='/javascripts/date.js')
+  script(type='text/javascript', src='/javascripts/jquery.weekcalendar.js')
+
+block content
+  #content
+    br
+    h3 Welcome, Surgery Center!
+    br
+    #calendar
+    //
+      days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      #daytitles
+        - var d = new Date()
+        #date.daytitle
+          span #{d.toDateString()}
+        each day in days
+          .daytitle(id= day + "title")
+            span #{day}
+      #days
+        .day(id= 'times')
+          - for (var i = 0; i < 18; i++) {
+            - d.setHours(4 + i, 0, 0)
+            div(class= i) #{d.toTimeString().slice(0, 5)}
+          - }
+        each day in days
+          .day(id= day)
+            - for (var i = 0; i < 18; i++)
+              div(class= i)
+    #upcomingengagements
+      #upcomingheader.ui-widget-header.wc-toolbar
+        span Upcoming Engagements
+      #upcominglist
+
+block endscripts
+  :coffeescript
+    year = new Date().getFullYear()
+    month = new Date().getMonth()
+    day = new Date().getDate()
+    eventData = events: [
+      id: 1
+      start: new Date(year, month, day, 12)
+      end: new Date(year, month, day, 13, 35)
+      title: "Deviated Septum Reconstruction"
+    ,
+      id: 2
+      start: new Date(year, month, day, 14)
+      end: new Date(year, month, day, 14, 45)
+      title: "Invasive Great Toe"
+    ,
+      id: 3
+      start: new Date(year, month, day + 1, 18)
+      end: new Date(year, month, day + 1, 18, 45)
+      title: "Orthoscopic Scar Tissue Removal"
+    ,
+      id: 4
+      start: new Date(year, month, day - 1, 8)
+      end: new Date(year, month, day - 1, 9, 30)
+      title: "Cheekbone Rebreak and Set"
+    ,
+      id: 5
+      start: new Date(year, month, day + 1, 14)
+      end: new Date(year, month, day + 1, 15)
+      title: "Chainsaw Massacre"
+    ]
+    $(document).ready ->
+    displayMessage = (message) ->
+      $("#message").html(message).fadeIn()
+    $("#calendar").weekCalendar
+      timeslotsPerHour: 6
+      timeslotHeigh: 30
+      hourLine: true
+      data: eventData
+      height: ($calendar) ->
+        $(window).height() - $("h1").outerHeight(true)
+
+    eventRender: (calEvent, $event) ->
+      if calEvent.end.getTime() < new Date().getTime()
+        $event.css "backgroundColor", "#aaa"
+        $event.find(".time").css
+          backgroundColor: "#999"
+          border: "1px solid #888"
+
+
+    eventNew: (calEvent, $event) ->
+      displayMessage "<strong>Added event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+      alert "You've added a new event. You would capture this event, add the logic for creating a new event with your own fields, data and whatever backend persistence you require."
+
+    eventDrop: (calEvent, $event) ->
+      displayMessage "<strong>Moved Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+
+    eventResize: (calEvent, $event) ->
+      displayMessage "<strong>Resized Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+
+    eventClick: (calEvent, $event) ->
+      displayMessage "<strong>Clicked Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+
+    eventMouseover: (calEvent, $event) ->
+      displayMessage "<strong>Mouseover Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+
+    eventMouseout: (calEvent, $event) ->
+      displayMessage "<strong>Mouseout Event</strong><br/>Start: " + calEvent.start + "<br/>End: " + calEvent.end
+
+    noEvents: ->
+      displayMessage "There are no events for this week"
+
+    $("<div id=\"message\" class=\"ui-corner-all\"></div>").prependTo $("body")

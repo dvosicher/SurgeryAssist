@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist" ,name = "availability")
 @Configurable
-public class DayAvailability {
+public class DayAvailability implements Serializable {
 
-    @OneToMany(mappedBy = "availabilityId")
+	private static final long serialVersionUID = 1276990934583890060L;
+
+	@OneToMany(mappedBy = "availabilityId", fetch = FetchType.LAZY)
     private Set<TimeAvailabilities> timeAvailabilitieses;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private ApplicationUser userId;
 
@@ -42,20 +44,20 @@ public class DayAvailability {
     private Calendar dateOfAvailability;
     
 	@Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -82,10 +84,6 @@ public class DayAvailability {
         this.version = version;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 	@PersistenceContext
     transient EntityManager entityManager;
 
@@ -102,6 +100,18 @@ public class DayAvailability {
 	public static List<DayAvailability> findAllDayAvailabilitys() {
         return entityManager().createQuery("SELECT o FROM DayAvailability o", DayAvailability.class).getResultList();
     }
+	
+	public static List<DayAvailability> findAllDayAvailabilitysByCity(String city) {
+		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.city = :city", DayAvailability.class)
+				.setParameter("city", city)
+				.getResultList();
+	}
+	
+	public static List<DayAvailability> findAllDayAvailabilitysByZipCode(Integer zipCode) {
+		return entityManager().createQuery("SELECT av FROM DayAvailability av WHERE av.userId.userInfoId.locationId.zipCode = :zipCode", DayAvailability.class)
+				.setParameter("zipCode", zipCode)
+				.getResultList();
+	}
 
 	public static DayAvailability findDayAvailability(Integer availabilityID) {
         if (availabilityID == null) return null;
@@ -112,6 +122,15 @@ public class DayAvailability {
         return entityManager().createQuery("SELECT o FROM DayAvailability o", DayAvailability.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
+	public static List<DayAvailability> findDayAvailabilitiesByApplicationUser(ApplicationUser applicationUser) {
+		if(applicationUser == null) {
+			return null;
+		}
+		return entityManager().createQuery("SELECT o FROM DayAvailability o WHERE o.userId = :userId", DayAvailability.class)
+				.setParameter("userId", applicationUser)
+				.getResultList();
+	}
+	
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();

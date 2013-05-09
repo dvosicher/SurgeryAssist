@@ -44,7 +44,7 @@ public class ContactInfoDataOnDemand {
 	}
 
 	public void setFaxNumber(ContactInfo obj, int index) {
-		Integer faxNumber = new Integer(index);
+		String faxNumber = String.valueOf(index);
 		obj.setFaxNumber(faxNumber);
 	}
 
@@ -59,7 +59,7 @@ public class ContactInfoDataOnDemand {
 	}
 
 	public void setPhoneNumber(ContactInfo obj, int index) {
-		Integer phoneNumber = new Integer(index);
+		String phoneNumber = String.valueOf(index);
 		obj.setPhoneNumber(phoneNumber);
 	}
 

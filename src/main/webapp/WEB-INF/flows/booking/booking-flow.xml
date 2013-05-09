@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+      	http://www.springframework.org/schema/webflow
+      	http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="newPatient" class="com.surgeryassist.core.entity.Patient" />
+	<var name="newInsuranceType" class="com.surgeryassist.core.entity.InsuranceType" />
+	
+	<input name="selectedAvailability" type="com.surgeryassist.core.entity.TimeAvailabilities" />
+	
+	<!-- Page 1: enter basic information -->
+	<view-state id="enterBookingDetails">
+		<on-entry>
+			<!-- Grab dropdown menu info -->
+			<evaluate expression="bookingService.getDropdownMenuValues()" 
+				result="flowScope.selectItemMap" />
+		</on-entry>
+		<transition on="proceed" to="reviewBooking" />
+		<transition on="cancel" to="bookingCancelled" bind="false" />
+	</view-state>
+	
+	<!-- Page 2: finalize and press submit -->
+	<view-state id="reviewBooking">
+		<transition on="confirm" to="bookingConfirmedView" />
+		<transition on="revise" to="enterBookingDetails" />
+		<transition on="cancel" to="bookingCancelled" />
+	</view-state>
+	
+	<!-- Persists the booking and takes user to homepage -->
+	<action-state id="bookingConfirmedView">
+		<!-- Save the booking and patient info, and persist it here -->
+		<evaluate expression="bookingService.createBooking(
+			selectedAvailability.availabilityId.userId,
+			newPatient, selectedAvailability, newInsuranceType)" />
+		<!-- Handles availabilities that were already booked-->
+		<transition on-exception="javax.persistence.OptimisticLockException" to="reviewBooking">
+			<evaluate expression="bookingService.setAlreadyBookedErrorMessage()" />
+		</transition>
+		<transition to="bookingConfirmed" />
+	</action-state>
+
+	<!-- Cancels the booking and goes to the search page -->
+	<end-state id="bookingCancelled" />
+	
+	<end-state id="bookingConfirmed" />
+		
+</flow>

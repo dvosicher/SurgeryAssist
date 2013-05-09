@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="layouts/pre-login.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8">
+				<h3>Welcome to SurgeryAssist</h3>
+			</div>
+		</div>
+		<c:if test="${not empty param.login_error}">
+			<div class="row">
+				<div class="span8 error">
+					Your login attempt was not successful, try again.<br /> Reason:
+					#{sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+				</div>
+			</div>
+		</c:if>
+		<div class="row">
+			<div class="span8">
+				<form name="f" action="${request.contextPath}/spring/loginProcess"
+					method="post">
+					<fieldset>
+						<label>Login/email</label>
+						<c:if test="${not empty param.login_error}">
+							<c:set var="username"
+								value="${sessionScope.SPRING_SECURITY_LAST_USERNAME}" />
+						</c:if>
+						<input type="text" name="j_username" value="#{username}" /> <label>Password</label>
+						<input type="password" name="j_password" /> 
+					</fieldset>
+					<div class="btn-toolbar">
+						<button type="submit" class="btn btn-large btn-primary"
+							name="login" onclick="waitDialog_loading.show();">LOGIN</button>
+						<a type="button" class="btn btn-large btn-primary"
+							href="${request.contextPath}/spring/registration">REGISTER</a>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<a href="${request.contextPath}/spring/faq">Questions?</a>
+		
+		<ui:include src="includes/waitDialog_loading.xhtml" />
+		
+	</ui:define>
+</ui:composition>

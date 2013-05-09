@@ -1,0 +1,17 @@
+doctype 5
+html
+  head
+    title SurgeryAssist
+    block style
+      link(rel='stylesheet', href='/stylesheets/reset.css')
+      link(rel='stylesheet', href='/stylesheets/header.css')
+      link(rel='stylesheet', href='/stylesheets/footer.css')
+    block scripts
+      script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
+      script(src='//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js')
+  body
+    #wrapper
+      include header
+      block content
+    include footer
+    block endscripts

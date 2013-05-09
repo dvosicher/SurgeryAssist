@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8 offset2">
+				<h3>Review Booking</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+				<h:form styleClass="form-horizontal">
+					<p:messages />
+					<p:fieldset legend="Confirm Booking Details">
+						<div class="control-group">
+							<h:outputLabel value="Name and Address of ASC" for="nameAndAddress" styleClass="control-label "/>
+							<div class="controls">
+								<div id="nameAndAddress">
+									<p>
+										#{selectedAvailability.availabilityId.userId.userInfoId.firstName}
+										#{selectedAvailability.availabilityId.userId.userInfoId.lastName}
+									</p>
+									<address>
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city},
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID},
+										#{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+									</address>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Patient" for="patientInfo" styleClass="control-label" />
+							<div class="controls">
+								<p id="patientInfo">
+									<h:outputText
+										value="#{newPatient.firstName} #{newPatient.lastName}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Insurance Info" for="insuranceInfo" styleClass="control-label" />
+							<div class="controls">
+								<p id="insuranceInfo">
+									<h:outputText
+										value="#{newInsuranceType.insuranceCode}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Surgery Type" for="surgeryType" styleClass="control-label" />
+							<div class="controls">
+								<p id="surgeryType">
+									<h:outputText
+										value="#{newPatient.surgeryTypeCode.surgeryFullName}" />
+								</p>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Date and Time" for="bookingDateAndTime" styleClass="control-label" />
+							<div class="controls">
+								<p id="bookingDateAndTime">
+									<h:outputText id="bookingDate"
+										value="#{selectedAvailability.availabilityId.dateOfAvailability.time}">
+										<f:convertDateTime dateStyle="default" type="date" />
+									</h:outputText>
+									<h:outputText value=" " />
+									<h:outputText id="bookingTime"
+										value="#{selectedAvailability.startTime.time}">
+										<f:convertDateTime timeStyle="short" type="time" />
+									</h:outputText>
+								</p>
+							</div>
+						</div>
+						<div>
+							<p:commandButton id="confirm" value="CONFIRM"
+								action="confirm" ajax="false" update="@form" onclick="waitDialog_saving.show();" />
+							<p:commandButton id="revise" value="REVISE"
+								action="revise" ajax="false" immediate="true" />
+							<p:commandButton id="cancel" value="CANCEL" 
+								action="cancel" ajax="false" immediate="true" />
+						</div>
+					</p:fieldset>
+				</h:form>
+				</div>
+				
+				<ui:include src="../../includes/waitDialog_saving.xhtml"></ui:include>
+				
+			</div>
+		</ui:define>
+	</ui:composition>

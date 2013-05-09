@@ -1,32 +1,53 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.surgeryassist.util.SurgeryAssistUtil;
+
 @Configurable
 @Entity
 @Table(schema = "SurgeryAssist", name = "time_availabilities")
-public class TimeAvailabilities {
+public class TimeAvailabilities implements Serializable {
 
-	@ManyToOne
+	private static final long serialVersionUID = -8110342378591294302L;
+
+	@OneToMany(mappedBy = "timeAvailabilityId", fetch = FetchType.LAZY)
+	private Set<Bookings> bookings; 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "availability_id")
 	private DayAvailability availabilityId;
 	
@@ -41,22 +62,30 @@ public class TimeAvailabilities {
     private Calendar endTime;
     
     @Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
+    
+    @Column(name = "is_booked")
+    private Boolean isBooked;
 
-
+    @Column(name = "is_cancelled")
+    private Boolean isCancelled;
+    
+    @Column(name = "room_number")
+    private String roomNumber;
+    
 	@PersistenceContext
     transient EntityManager entityManager;
 
@@ -71,7 +100,12 @@ public class TimeAvailabilities {
     }
 
 	public static List<TimeAvailabilities> findAllTimeAvailabilitieses() {
-        return entityManager().createQuery("SELECT o FROM TimeAvailabilities o", TimeAvailabilities.class).getResultList();
+        return entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+        		"INNER JOIN FETCH o.availabilityId aid " +
+        		"INNER JOIN FETCH aid.userId uid " +
+        		"INNER JOIN FETCH uid.userInfoId uiid " +
+        		"INNER JOIN FETCH uiid.locationId lid " +
+        		"WHERE o.isBooked = 0 AND o.isCancelled = 0", TimeAvailabilities.class).getResultList();
     }
 
 	public static TimeAvailabilities findTimeAvailabilities(Integer timeAvailabilityID) {
@@ -94,7 +128,92 @@ public class TimeAvailabilities {
 	public static List<TimeAvailabilities> findTimeAvailabilitiesEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM TimeAvailabilities o", TimeAvailabilities.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+	
+	public static List<TimeAvailabilities> findTimeAvailabilitiesBySearchCriteria(String city,
+			Integer zipCode, Date endDate, Integer timeDuration, Date startDate) {
+		
+		//create the session and criteria for the query
+		Session session = entityManager().unwrap(Session.class);
+		Criteria criteria = session.createCriteria(TimeAvailabilities.class);
+		
+		//join all the appropriate tables
+		criteria.setFetchMode("availabilityId", FetchMode.DEFAULT).createAlias("availabilityId", "aid");
+		criteria.setFetchMode("aid.userId", FetchMode.DEFAULT).createAlias("aid.userId", "uid");
+		criteria.setFetchMode("uid.userInfoId", FetchMode.DEFAULT).createAlias("uid.userInfoId", "uiid");
+		criteria.setFetchMode("uiid.locationId", FetchMode.DEFAULT).createAlias("uiid.locationId", "lid");
+		
+		Calendar calEndDate = SurgeryAssistUtil.convertDateToCalendar(endDate);
+		Calendar calStartDate = SurgeryAssistUtil.convertDateToCalendar(startDate);
+		
+		//make sure they're not booked and that the date is after today
+		criteria.add(Restrictions.eq("isBooked", Boolean.FALSE));
+		criteria.add(Restrictions.eq("isCancelled", Boolean.FALSE));
+		
+		//add the city
+		if(city != null && !StringUtils.isEmpty(city)) {
+			criteria.add(Restrictions.ilike(
+				"lid.city", city, MatchMode.ANYWHERE));
+		}
+		//add zip code
+		if(zipCode != null) {
+			criteria.add(Restrictions.ilike(
+				"lid.zipCode", zipCode.toString(), MatchMode.ANYWHERE));
+		}
+		//check the start/end dates
+		if(endDate != null) {
+			if(startDate != null) {
+				criteria.add(Restrictions
+					.between("aid.dateOfAvailability", calStartDate, calEndDate));
+			}
+			else {
+				criteria.add(Restrictions
+						.between("aid.dateOfAvailability", Calendar.getInstance(), calEndDate));
+			}
+		}
+		//if the end date doesn't exist, force the end date to include >= GETDATE()
+		else {
+			criteria.add(Restrictions.ge("aid.dateOfAvailability", Calendar.getInstance()));
+		}
+		if(timeDuration != null) {
+			criteria.add(
+					Restrictions.sqlRestriction(
+							"DATEDIFF(HH, {alias}.start_time, {alias}.end_time) > ?", timeDuration, StandardBasicTypes.INTEGER));
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<TimeAvailabilities> result = criteria.list();
+		return result;
+	}
 
+	@SuppressWarnings("unchecked")
+	public static List<TimeAvailabilities> findUnbookedAndNotCancelledTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
+		if(ascUser != null) {
+			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+					"INNER JOIN FETCH o.availabilityId aid " +
+					"WHERE aid.userId = :userId AND aid.dateOfAvailability > :todaysDate " +
+					"AND o.isBooked = 0 and o.isCancelled = 0", TimeAvailabilities.class)
+					.setParameter("userId", ascUser)
+					.setParameter("todaysDate", Calendar.getInstance());
+			List<TimeAvailabilities> result = query.getResultList();
+			return result;
+		}
+		return new ArrayList<TimeAvailabilities>();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<TimeAvailabilities> findNotCancelledTimeAvailabilitiesByASCUser(ApplicationUser ascUser) {
+		if(ascUser != null) {
+			Query query = entityManager().createQuery("SELECT o FROM TimeAvailabilities o " +
+					"INNER JOIN FETCH o.availabilityId aid " +
+					"WHERE aid.userId = :userId AND " +
+					"o.isCancelled = 0", TimeAvailabilities.class)
+					.setParameter("userId", ascUser);
+			List<TimeAvailabilities> result = query.getResultList();
+			return result;
+		}
+		return new ArrayList<TimeAvailabilities>();
+	}
+	
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
@@ -130,18 +249,6 @@ public class TimeAvailabilities {
         TimeAvailabilities merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
-    }
-
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	public DayAvailability getDayAvailability() {
-        return this.availabilityId;
-    }
-
-	public void setDayAvailability(DayAvailability dayAvailability) {
-        this.availabilityId = dayAvailability;
     }
 
 	public Calendar getStartTime() {
@@ -216,4 +323,52 @@ public class TimeAvailabilities {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	public DayAvailability getAvailabilityId() {
+		return availabilityId;
+	}
+	
+	public void setAvailabilityId(DayAvailability availabilityId) {
+		this.availabilityId = availabilityId;
+	}
+
+	public Set<Bookings> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Bookings> bookings) {
+		this.bookings = bookings;
+	}
+
+	public Boolean getIsBooked() {
+		return isBooked;
+	}
+
+	public void setIsBooked(Boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+
+	public Boolean getIsCancelled() {
+		return isCancelled;
+	}
+
+	public void setIsCancelled(Boolean isCancelled) {
+		this.isCancelled = isCancelled;
+	}
+	
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this.timeAvailabilityID.equals(((TimeAvailabilities) obj).timeAvailabilityID)) {
+			return true;
+		}
+		return false;
+	}
 }

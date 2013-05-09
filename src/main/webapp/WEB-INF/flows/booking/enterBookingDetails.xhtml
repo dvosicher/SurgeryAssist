@@ -1,0 +1,120 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8 offset2">
+				<h3>Enter Booking Details</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+				<h:form id="bookingForm" styleClass="form-horizontal">
+					<p:fieldset>
+						<legend>Book Availability</legend>
+						<div id="name_of_asc">
+							#{selectedAvailability.availabilityId.userId.userInfoId.firstName}
+							#{selectedAvailability.availabilityId.userId.userInfoId.lastName}
+						</div>
+						<div id="address_of_asc">
+							<address>
+								#{selectedAvailability.availabilityId.userId.userInfoId.locationId.address}
+								<br />
+								#{selectedAvailability.availabilityId.userId.userInfoId.locationId.city},
+								#{selectedAvailability.availabilityId.userId.userInfoId.locationId.stateCode.stateCodeID},
+								#{selectedAvailability.availabilityId.userId.userInfoId.locationId.zipCode}
+							</address>
+						</div>
+						<p:messages />
+						<hr />
+						<legend>Patient Information</legend>
+						<div class="control-group">
+							<h:outputLabel value="Patient First Name*: " for="patientFirstName" styleClass="control-label" />
+							<div class="controls">
+								<p:inputText id="patientFirstName" value="#{newPatient.firstName}" required="true" requiredMessage="Please enter first name." />
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Patient Last Name*: " for="patientLastName" styleClass="control-label" />
+							<div class="controls">
+								<p:inputText id="patientLastName" value="#{newPatient.lastName}" required="true" requiredMessage="Please enter first name." />
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Choose Surgery Case Type*: " for="surgeryTypeCode" styleClass="control-label"/>
+							<div class="controls">
+								<h:selectOneMenu id="surgeryTypeCode" required="true" requiredMessage="Please pick a surgery type."
+									value="#{newPatient.surgeryTypeCode}">
+									<f:selectItems value="#{flowScope.selectItemMap['surgeryTypes']}"
+										var="surgeryType" itemLabel="#{surgeryType.surgeryFullName}"
+										itemValue="#{surgeryType.surgeryId}" />
+									<f:converter converterId="surgeryTypeConverter" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Type Detail*: " for="surgeryDetailInfo" styleClass="control-label"/>
+							<div class="controls">
+								<p:inputText id="surgeryDetailInfo" value="#{newPatient.surgeryDetailInfo}" required="true" requiredMessage="Enter surgery details."/>
+							</div>
+						</div>
+						<hr />
+						<legend>Patient Insurance</legend>
+						<div class="control-group">
+							<h:outputLabel value="Insurance Code:* " for="insuranceCode" styleClass="control-label" />
+							<div class="controls">
+								<p:inputText id="insuranceCode" required="true" requiredMessage="Enter insurance code."
+									value="#{newInsuranceType.insuranceCode}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Insurance Name*: " for="insuranceName" styleClass="control-label" />
+							<div class="controls">
+								<p:inputText id="insuranceName" required="true" requiredMessage="Enter insurance name."
+									value="#{newInsuranceType.insuranceName}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel for="insuranceDescription" value="Insurance Description*: "
+								styleClass="control-label" />
+							<div class="controls">
+								<p:inputTextarea id="insuranceDescription" required="true" requiredMessage="Please add a description for the insurance. "
+									value="#{newInsuranceType.insuranceDescription}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<h:outputLabel value="Insurance Policy Number*: "
+									for="insurancePolicyNumber" styleClass="control-label" />
+							<div class="controls">
+								<p:inputText id="insurancePolicyNumber" required="true" requiredMessage="Enter insurance policy number."
+									value="#{newInsuranceType.insurancePolicyNumber}" />
+							</div>
+						</div>
+						<hr />
+						<legend>Extra Notes</legend>
+						<div class="control-group">
+							<h:outputLabel value="Extra Notes: "
+									for="extraNotes" styleClass="control-label" />
+							<div class="controls">
+								<p:inputTextarea id="extraNotes" value="#{newPatient.bookingNotes}" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<p:commandButton id="proceed" action="proceed" value="PROCEED"
+									update="@form" ajax="false" />
+								<p:commandButton id="cancel_preconfirm" value="CANCEL"
+									action="cancel" immediate="true" />
+							</div>
+						</div>
+					</p:fieldset>
+				</h:form>
+			</div>
+		</div>	
+	</ui:define>
+</ui:composition>

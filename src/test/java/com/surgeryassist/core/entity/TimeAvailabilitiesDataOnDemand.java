@@ -36,14 +36,21 @@ public class TimeAvailabilitiesDataOnDemand {
 		setModifiedBy(obj, index);
 		setModifiedDate(obj, index);
 		setStartTime(obj, index);
+		setIsBooked(obj);
 		return obj;
 	}
 
+
 	public void setAvailabilityId(TimeAvailabilities obj, int index) {
 		DayAvailability availabilityId = availabilityDataOnDemand.getRandomAvailability();
-		obj.setDayAvailability(availabilityId);
+		obj.setAvailabilityId(availabilityId);
 	}
 
+	private void setIsBooked(TimeAvailabilities obj) {
+		obj.setIsBooked(false);
+		obj.setIsCancelled(false);
+	}
+	
 	public void setCreatedBy(TimeAvailabilities obj, int index) {
 		Integer createdBy = new Integer(index);
 		obj.setCreatedBy(createdBy);

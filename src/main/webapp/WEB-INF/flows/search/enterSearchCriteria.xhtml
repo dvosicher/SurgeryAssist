@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:p="http://primefaces.org/ui"
+				template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8 offset2">
+				<h3>Enter Search Criteria</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 offset2">
+				<h:form styleClass="form-horizontal" id="searchAllForm">
+					<h:messages errorClass="alert alert-error" />
+					<div class="control-group">
+						<h:outputLabel for="cityName" styleClass="control-label" value="City Name" />
+						<div class="controls">
+							<p:inputText id="cityName" value="#{searchCriteriaDTO.cityName}" validatorMessage="Please enter a valid city name." >
+								<f:validator validatorId="cityValidator"/>
+							</p:inputText>
+						</div>
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="zipCode" styleClass="control-label" value="ZIP Code" />
+						<div class="controls">
+							<p:inputText id="zipCode" value="#{searchCriteriaDTO.zipCode}" validatorMessage="Please enter a valid zip code." >
+								<f:validator validatorId="zipcodeValidator" />
+							</p:inputText>
+						</div>
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="timeForSurgery" styleClass="control-label" value="Duration for Surgery:" />
+						<div class="controls">
+							<p:selectOneMenu id="timeForSurgery" value="#{searchCriteriaDTO.timeDuration}">
+								<f:selectItem itemLabel="All" itemValue="0"/>
+								<f:selectItem itemLabel="1 Hour" itemValue="1"/>
+								<f:selectItem itemLabel="2 Hour" itemValue="2"/>
+								<f:selectItem itemLabel="3 Hour" itemValue="3"/>
+								<f:selectItem itemLabel="4 Hour" itemValue="4"/>
+								<f:selectItem itemLabel="5 Hour" itemValue="5"/>
+							</p:selectOneMenu>
+						</div>
+					</div>		
+					<div class="control-group">
+						<h:outputLabel for="startDate" styleClass="control-label" value="Start Date" />
+						<div class="controls">
+							<p:calendar id="startDate"
+								value="#{searchCriteriaDTO.startDate}" />
+						</div>
+					</div>	
+					<div class="control-group">
+						<h:outputLabel for="endDate" styleClass="control-label" value="End Date" />
+						<div class="controls">
+							<p:calendar id="endDate"
+								value="#{searchCriteriaDTO.endDate}" />
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="btn-toolbar">
+							<p:commandButton id="searchByCriteria" styleClass="btn btn-primary" value="SEARCH" action="searchByCriteria" ajax="false" onclick="waitDialog_loading.show();" />
+							<p:commandButton id="searchAll" styleClass="btn btn-primary" value="SEE ALL AVAILABILITIES" action="searchAll" ajax="false" immediate="true" />
+						</div>
+					</div>
+				</h:form>
+				
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

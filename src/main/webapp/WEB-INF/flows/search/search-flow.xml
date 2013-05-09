@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/webflow
+		http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="searchCriteriaDTO" class="com.surgeryassist.core.dto.SearchCriteriaDTO" />
+	<var name="selectedAvailability" class="com.surgeryassist.core.entity.TimeAvailabilities" />
+	
+	<view-state id="enterSearchCriteria">
+		<transition on="searchAll" to="reviewSearchResults">
+			<evaluate expression="searchService.searchAll()" result="flowScope.timeAvailabilitiesList" />
+		</transition>
+		<transition on="searchByCriteria" to="reviewSearchResults">
+			<evaluate expression="searchService.searchByCriteria(searchCriteriaDTO)" 
+				result="flowScope.timeAvailabilitiesList" />
+		</transition>
+	</view-state>
+	
+	<view-state id="reviewSearchResults">
+		<transition on="changeSearch" to="enterSearchCriteria" />
+		<transition on="selectAvailability" to="reviewAvailability"/>
+	</view-state>
+			
+	<view-state id="reviewAvailability">
+		<on-entry>
+			<set name="selectedAvailability" value="searchCriteriaDTO.selectedAvailability" />
+		</on-entry>
+		<transition on="cancel" to="enterSearchCriteria" />
+		<transition on="book" to="createBooking" />
+	</view-state>
+	
+	<subflow-state id="createBooking" subflow="booking">
+		<input name="selectedAvailability" value="selectedAvailability" />
+		<transition on="bookingCancelled" to="enterSearchCriteria" />
+		<transition on="bookingConfirmed" to="finish" />
+	</subflow-state>
+			
+	<end-state id="finish" />
+	
+</flow>

@@ -1,8 +1,11 @@
 package com.surgeryassist.core.entity;
 
+import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import com.surgeryassist.core.entity.TimeAvailabilities;
 @Configurable
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
+@ContextConfiguration(locations = "classpath:/META-INF/config/applicationContext*.xml")
 public class TimeAvailabilitiesIntegrationTest {
 
     @Autowired
@@ -43,7 +46,7 @@ public class TimeAvailabilitiesIntegrationTest {
     @Test
     public void testFindTimeAvailabilitiesByDayAvailability() {
     	TimeAvailabilities timeAvail = dod.getRandomTimeAvailabilities();
-    	DayAvailability dayAvail = timeAvail.getDayAvailability();
+    	DayAvailability dayAvail = timeAvail.getAvailabilityId();
     	Assert.assertNotNull("Data on demand for 'DayAvailabilities' failed to initialize correctly", dayAvail);
     	List<TimeAvailabilities> obj = TimeAvailabilities.findTimeAvailabilitiesByDayAvailability(dayAvail);
     	Assert.assertNotNull("No time availabilities available for the provided day availability", obj);
@@ -74,6 +77,31 @@ public class TimeAvailabilitiesIntegrationTest {
         Assert.assertNotNull("Find entries method for 'TimeAvailabilities' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'TimeAvailabilities' returned an incorrect number of entries", count, result.size());
     }
+    
+    
+    @Test
+    public void testFindTimeAvailabilitiesBySearchCriteria() {
+    	Assert.assertNotNull("Data on demand for 'TimeAvailabilities' failed to initialize correctly", dod.getRandomTimeAvailabilities());
+    	//get the city based on the random availability
+    	String city = dod.getRandomTimeAvailabilities().getAvailabilityId().getUserId().getUserInfoId().getLocationId().getCity();
+    	Integer zipCode = null;
+    	Calendar startDate = Calendar.getInstance();
+    	Calendar endDate = Calendar.getInstance();
+    	
+    	DateTime jodaEndDate = new DateTime(endDate);
+    	jodaEndDate.plusYears(1);
+    	
+    	//2 hour difference
+    	Integer duration = 2;
+    	
+    	List<TimeAvailabilities> timeAvailabilities = 
+    			TimeAvailabilities.findTimeAvailabilitiesBySearchCriteria(city, zipCode, jodaEndDate.toDate(), duration, startDate.getTime());
+    	
+    	Assert.assertNotNull("Somehow the list is null", timeAvailabilities);
+    	Assert.assertTrue("Find by criteria for 'TimeAvailabilities' failed to return any data", 
+    			timeAvailabilities.size() >= 0);
+    }
+    
     
     @Test
     public void testFlush() {
@@ -116,6 +144,7 @@ public class TimeAvailabilitiesIntegrationTest {
     }
     
     @Test
+    @Ignore //ignoring this test because we shouldn't delete TimeAvailibilities. Ever.
     public void testRemove() {
         TimeAvailabilities obj = dod.getRandomTimeAvailabilities();
         Assert.assertNotNull("Data on demand for 'TimeAvailabilities' failed to initialize correctly", obj);

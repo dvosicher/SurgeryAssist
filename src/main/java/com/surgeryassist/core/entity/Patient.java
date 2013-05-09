@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(schema = "SurgeryAssist", name = "patient")
 @Configurable
-public class Patient {
+public class Patient implements Serializable {
+
+	private static final long serialVersionUID = -7058796247531462151L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,13 +44,16 @@ public class Patient {
 	@OneToMany(mappedBy = "patientId")
     private Set<Bookings> bookingss;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insurance_code", referencedColumnName = "insurance_id", nullable = false)
     private InsuranceType insuranceCode;
     
     @ManyToOne
     @JoinColumn(name = "surgery_type_code", referencedColumnName = "surgery_id", nullable = false)
     private SurgeryType surgeryTypeCode;
+    
+    @Column(name = "surgery_detail_info")
+    private String surgeryDetailInfo;
     
     @Column(name = "first_name", length = 100)
     private String firstName;
@@ -57,21 +62,24 @@ public class Patient {
     private String lastName;
     
     @Column(name = "created_by")
-    private Integer createdBy;
+    public Integer createdBy;
     
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar createdDate;
+    public Calendar createdDate;
     
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+	public Integer modifiedBy;
     
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar modifiedDate;
+    public Calendar modifiedDate;
 	
+    @Column(name = "booking_notes")
+    private String bookingNotes;
+    
 	@PersistenceContext
     transient EntityManager entityManager;
     
@@ -266,8 +274,31 @@ public class Patient {
 		this.modifiedDate = modifiedDate;
 	}
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	/**
+	 * @return the surgeryDetailInfo
+	 */
+	public String getSurgeryDetailInfo() {
+		return surgeryDetailInfo;
+	}
+
+	/**
+	 * @param surgeryDetailInfo the surgeryDetailInfo to set
+	 */
+	public void setSurgeryDetailInfo(String surgeryDetailInfo) {
+		this.surgeryDetailInfo = surgeryDetailInfo;
+	}
+
+	/**
+	 * @return the bookingNotes
+	 */
+	public String getBookingNotes() {
+		return bookingNotes;
+	}
+
+	/**
+	 * @param bookingNotes the bookingNotes to set
+	 */
+	public void setBookingNotes(String bookingNotes) {
+		this.bookingNotes = bookingNotes;
 	}
 }

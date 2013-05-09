@@ -15,6 +15,8 @@
 		<slf4j.version>1.6.4</slf4j.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<spring-security.version>3.1.0.RELEASE</spring-security.version>
+		<mojarra-version>2.1.7</mojarra-version>
+		<primefaces-version>3.5</primefaces-version>
 	</properties>
 	<repositories>
 		<repository>
@@ -31,6 +33,12 @@
 			<id>spring-roo-repository</id>
 			<name>Spring Roo Repository</name>
 			<url>http://spring-roo-repository.springsource.org/release</url>
+		</repository>
+		<repository>
+			<id>primefaces-repository</id>
+			<name>Prime Technology Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -142,6 +150,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -298,11 +311,6 @@
 			<version>1.5</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-webflow</artifactId>
 			<version>2.3.0.RELEASE</version>
@@ -338,6 +346,36 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${mojarra-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${mojarra-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces-version}</version>
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>all-themes</artifactId>  
+		    <version>1.0.9</version>  
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-faces</artifactId>
+			<version>2.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1</version>
 		</dependency>
 	</dependencies>
 	<build>

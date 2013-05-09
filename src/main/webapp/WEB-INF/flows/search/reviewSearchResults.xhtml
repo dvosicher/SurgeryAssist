@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<div class="row">
+				<div class="span5 offset1">
+					<h3>Review Search Results</h3>
+				</div>
+				<div class="span3">
+					<p:commandButton value="MODIFY SEARCH" action="changeSearch"
+						styleClass="btn btn-primary pull-right" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="span8 offset1">
+					<p:dataTable id="availabilities" var="a" 
+						value="#{timeAvailabilitiesList}" dynamic="true" >
+						<p:column sortBy="#{a.availabilityId.dateOfAvailability}" 
+							id="dateColumn" headerText="Date">
+							<h:outputText value="#{a.availabilityId.dateOfAvailability.time}">
+								<f:convertDateTime type="date" dateStyle="default" />
+							</h:outputText>
+						</p:column>
+						<p:column sortBy="#{a.startTime}" id="startTimeColumn"
+							headerText="Start Time">
+							<h:outputText value="#{a.startTime.time}">
+								<f:convertDateTime type="time" dateStyle="default" />
+							</h:outputText>
+						</p:column>
+						<p:column sortBy="#{a.endTime}" id="endTimeColumn"
+							headerText="End Time">
+							<h:outputText value="#{a.endTime.time}">
+								<f:convertDateTime type="time" dateStyle="default" />
+							</h:outputText>
+						</p:column>
+						<p:column id="nameColumn" headerText="ASC Name">
+							<h:outputText
+								value="#{a.availabilityId.userId.userInfoId.firstName}" />
+						</p:column>
+						<p:column id="zipCodeColumn" headerText="Location (City, Zip)">
+							<h:outputText
+								value="#{a.availabilityId.userId.userInfoId.locationId.city},
+								#{a.availabilityId.userId.userInfoId.locationId.zipCode}" />
+						</p:column>
+						<p:column headerText="Action">
+							<p:commandButton id="viewAvailability" value="SELECT"
+								styleClass="btn" action="selectAvailability">
+								<f:setPropertyActionListener
+									target="#{searchCriteriaDTO.selectedAvailability}" value="#{a}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,5 +1,6 @@
 package com.surgeryassist.core.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -17,8 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Configurable
 @Entity
 @Table(schema = "MetaData", name = "insurance_type")
-public class InsuranceType {
+public class InsuranceType implements Serializable {
 	
-    @OneToMany(mappedBy = "insuranceTypeId")
+	private static final long serialVersionUID = -5857695163321192146L;
+
+	@OneToMany(mappedBy = "insuranceTypeId")
     private Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses;
     
     @OneToMany(mappedBy = "insuranceCode")
@@ -47,24 +48,20 @@ public class InsuranceType {
 	private String insurancePolicyNumber;
 	
 	@Column(name = "created_by", updatable = false)
-    private Integer createdBy;
+    public Integer createdBy;
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar createdDate;
+    public Calendar createdDate;
 
     @Column(name = "modified_by")
-    private Integer modifiedBy;
+    public Integer modifiedBy;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
-    private Calendar modifiedDate;
-
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+    public Calendar modifiedDate;
 
 	public String getInsuranceCode() {
         return this.insuranceCode;
@@ -217,4 +214,32 @@ public class InsuranceType {
         this.entityManager.flush();
         return merged;
     }
+
+	/**
+	 * @return the acceptedInsuranceTypeses
+	 */
+	public Set<AcceptedInsuranceTypes> getAcceptedInsuranceTypeses() {
+		return acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @param acceptedInsuranceTypeses the acceptedInsuranceTypeses to set
+	 */
+	public void setAcceptedInsuranceTypeses(Set<AcceptedInsuranceTypes> acceptedInsuranceTypeses) {
+		this.acceptedInsuranceTypeses = acceptedInsuranceTypeses;
+	}
+
+	/**
+	 * @return the patients
+	 */
+	public Set<Patient> getPatients() {
+		return patients;
+	}
+
+	/**
+	 * @param patients the patients to set
+	 */
+	public void setPatients(Set<Patient> patients) {
+		this.patients = patients;
+	}
 }

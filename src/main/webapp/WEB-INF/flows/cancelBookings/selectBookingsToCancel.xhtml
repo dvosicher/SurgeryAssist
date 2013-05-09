@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/layouts/post-login-sans-tabs.xhtml">
+	
+	<f:view contentType="text/html" />
+
+	<ui:define name="content">
+		<div class="row">
+			<div class="span8">
+				<h3>Cancel Bookings</h3>
+				<p>Hold CTRL or COMMAND to select multiple bookings</p>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12">
+				<h:form id="cancelDataTableForm">
+				
+					<p:dataTable id="cancelDataTable" var="booking" style="width: 100%;"
+						value="#{cancelBookingsDTO.bookingsList}" rowKey="#{booking.bookingId}"
+						selection="#{cancelBookingsDTO.selectedBookings}" selectionMode="multiple">
+
+						<p:ajax event="rowSelect"
+							listener="#{cancelBookingsDTO.onRowSelect}" />
+
+						<p:column id="dateOfBooking" headerText="Date" style="width: 24%;" sortBy="#{booking.timeAvailabilityId.startTime.time}" >
+							<h:outputText value="#{booking.timeAvailabilityId.availabilityId.dateOfAvailability.time}">
+								<f:convertDateTime type="date" dateStyle="medium"/>
+							</h:outputText>
+						</p:column>
+						<p:column id="patientInfo" headerText="Patient Name">
+							<h:outputText value="#{booking.patientId.firstName}" />
+							<h:outputText value=" " />
+							<h:outputText value="#{booking.patientId.lastName}" />
+						</p:column>
+						<p:column id="bookingStartTime" headerText="Start Time" style="width: 24%;">
+							<h:outputText value="#{booking.timeAvailabilityId.startTime.time}">
+								<f:convertDateTime type="time" timeStyle="short"/>
+							</h:outputText>
+						</p:column>
+						<p:column id="bookingEndTime" headerText="End Time" style="width: 24%;">
+							<h:outputText value="#{booking.timeAvailabilityId.endTime.time}">
+								<f:convertDateTime type="time" timeStyle="short"/>
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+					
+				</h:form>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span12">
+				<h:form id="submitCancelledForm">
+					<p:commandButton id="goHomeButton" action="cancel" value="Go Back" />
+					<p:commandButton update=":cancelDataTableForm" id="submitCancelledButton" action="submit" value="Confirm Cancellations" />
+				</h:form>
+			</div>
+		</div>
+	
+	</ui:define>
+
+</ui:composition>

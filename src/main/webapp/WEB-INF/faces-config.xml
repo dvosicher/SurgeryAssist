@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+        version="2.0">
+	    
+	    <lifecycle>
+			<phase-listener>com.surgeryassist.util.faces.Primefaces35PhaseListener</phase-listener>
+		</lifecycle>
+	    
+	    <converter>
+	    	<converter-id>stateCodeConverter</converter-id>
+	    	<converter-class>com.surgeryassist.util.faces.converters.StateCodeConverter</converter-class>
+	    </converter>
+	    
+	    <converter>
+	    	<converter-id>surgeryTypeConverter</converter-id>
+	    	<converter-class>com.surgeryassist.util.faces.converters.SurgeryTypeConverter</converter-class>
+	    </converter>
+	    
+	    <converter>
+	    	<converter-id>userTypeCodeConverter</converter-id>
+	    	<converter-class>com.surgeryassist.util.faces.converters.UserTypeCodeConverter</converter-class>
+	    </converter>
+	    
+	    <validator>
+	    	<validator-id>cityValidator</validator-id>
+	    	<validator-class>com.surgeryassist.util.faces.validators.CityValidator</validator-class>
+	    </validator>
+	    
+	    <validator>
+	    	<validator-id>zipcodeValidator</validator-id>
+	    	<validator-class>com.surgeryassist.util.faces.validators.ZipcodeValidator</validator-class>
+	    </validator>
+	    
+</faces-config>
