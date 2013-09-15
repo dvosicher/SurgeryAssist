@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class BookingsIntegrationTest {
 	}
 
 	@Test
+    @Ignore
 	public void testFindAllBookingsByUser() {
 		ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
 		Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
@@ -75,6 +77,7 @@ public class BookingsIntegrationTest {
 	}
 
 	@Test
+    @Ignore
 	public void testFindPendingBookingsByUser() {
 		ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
 		Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
@@ -106,6 +109,7 @@ public class BookingsIntegrationTest {
 	}
 
 	@Test
+    @Ignore
 	public void testFindConfirmedBookingsByUser() {
 		ApplicationUser user = ApplicationUser.findApplicationUserByEmailAddress("test@test.com");
 		Assert.assertEquals("Not the user that was expected", user.getUserEmail(), "test@test.com");
